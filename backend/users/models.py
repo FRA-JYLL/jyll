@@ -3,19 +3,18 @@ from django.contrib.auth.models import AbstractBaseUser, BaseUserManager, Permis
 
 
 class UserManager(BaseUserManager):
-    """ Custom manager for User model """
 
     def create_user(self, username, password=None):
         """
         Creates and saves a User with the given username and password.
         """
         if not username:
-            raise ValueError('Users must have an username')
+            raise ValueError('Users must have a username')
 
         user = self.model(username=username)
 
         user.set_password(password)
-        user.save()  # using=self._db ??
+        user.save()
         return user
 
     def create_superuser(self, username, password=None):
@@ -26,25 +25,21 @@ class UserManager(BaseUserManager):
             username,
             password=password,
         )
-        # make this user part of admin and superuser
-        user.is_admin = True
+        # make this user a superuser
         user.is_superuser = True
-        user.save()  # using=self._db ??
+        user.save()
         return user
 
 
 class User(AbstractBaseUser, PermissionsMixin):
-    """ Custom User model """
+    """ Model used for authentication """
 
     username = models.CharField(max_length=42, unique=True)
     is_active = models.BooleanField(default=True)
-    is_admin = models.BooleanField(default=False)
-    #email = model.EmailField()
 
     USERNAME_FIELD = 'username'
-    #EMAIL_FIELD = email
 
-    objects = UserManager()  # linking to custom manager
+    objects = UserManager()  # linking to custom UserManager
 
     def __str__(self):
         return self.username
@@ -52,5 +47,5 @@ class User(AbstractBaseUser, PermissionsMixin):
     @property
     def is_staff(self):
         """ Is the user a member of staff (i.e. has access to admin)? """
-        # Admins are staff members
-        return self.is_admin
+        # Superusers are staff members
+        return self.is_superuser
