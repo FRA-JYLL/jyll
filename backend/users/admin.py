@@ -1,21 +1,39 @@
 from django.contrib import admin
+from django.contrib.auth.models import Group
 from django.contrib.auth import get_user_model
-from django.contrib.auth.admin import UserAdmin
-
+from django.contrib.auth.admin import UserAdmin as BaseUserAdmin
 from django.contrib.auth.forms import UserCreationForm, UserChangeForm
-from .models import CustomUser
+
+from .models import User
 
 
-class CustomUserAdmin(UserAdmin):
-    add_form = UserCreationForm
+class UserAdmin(BaseUserAdmin):
+    """ Custom user admin for custom user model """
+
+    # The forms to add and change user instances
     form = UserChangeForm
-    model = CustomUser
-    list_display = ['username']
+    add_form = UserCreationForm
 
-    # We only use username and password for user authentication
+    model = User
+
+    list_display = ('username', 'is_admin')
+    list_filter = ('is_admin',)
     fieldsets = (
-        (('User'), {'fields': ('username', 'password')}),
+        (None, {'fields': ('username', 'password')}),
+        ('Permissions', {'fields': ('is_admin',)}),
     )
+    # add_fieldsets is not a standard ModelAdmin attribute. UserAdmin
+    # overrides get_fieldsets to use this attribute when creating a user.
+    add_fieldsets = (
+        (None, {
+            'classes': ('wide',),
+            'fields': ('username', 'password1', 'password2'),
+        }),
+    )
+    search_fields = ('username',)
+    ordering = ('username',)
+    filter_horizontal = ()
 
 
-admin.site.register(CustomUser, CustomUserAdmin)
+admin.site.register(User, UserAdmin)
+admin.site.unregister(Group)

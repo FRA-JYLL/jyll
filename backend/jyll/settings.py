@@ -40,7 +40,7 @@ INSTALLED_APPS = [
     'users.apps.UsersConfig',
 ]
 
-AUTH_USER_MODEL = 'users.CustomUser'  # replcing User by CustomUser
+AUTH_USER_MODEL = 'users.User'  # replacing User by CustomUser
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
