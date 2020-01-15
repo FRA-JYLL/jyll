@@ -6,3 +6,4 @@ mysqlclient==1.4.5
 PyJWT==1.7.1
 pytz==2019.3
 sqlparse==0.3.0
+django-extensions==2.2.5
