@@ -1,6 +1,7 @@
 from django.utils import timezone
 from django.db import models
 from django.contrib.auth.models import AbstractBaseUser, BaseUserManager, PermissionsMixin
+from game.models import Game, Player
 
 
 class UserManager(BaseUserManager):
@@ -52,3 +53,18 @@ class User(AbstractBaseUser, PermissionsMixin):
         """ Is the user a member of staff (i.e. has access to admin)? """
         # Superusers are staff members
         return self.is_superuser
+
+    def create_game(self, name=None):
+        """ create a new game and become admin """
+        if name is None:
+            name = str(self.username) + "'s game"
+        new_game = Game.objects.create(creator=self, name=name)
+        return new_game
+
+    def join_game(self, game):
+        """ Join an already created game """
+        if game.players.filter(user__username=self.username):
+            print('User already controls a player in this game !')
+            return
+        new_player = Player.objects.create(game=game, user=self)
+        return new_player
