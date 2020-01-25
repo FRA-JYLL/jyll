@@ -4,30 +4,21 @@ from game.models import Player
 
 class GameManager(models.Manager):
     """ Custom manager for Game, overwrites create method """
-    def create(self, creator, name='jyll game'):
+    def create(self, creator, name=None):
         """
-        Create a new game instance, with user as admin
-
-        Args:
-            * creator (users.User) : User which creates the new game
+        * creator (users.User) : User which creates the new game
         """
+        if name is None:
+            name = str(creator.username) + "'s game"
         new_game = super().create(name=name)
+        # creator becomes a player and admin of new game
         player = Player.objects.create(game=new_game, user=creator, is_admin=True)
         return new_game
 
 
 class Game(models.Model):
-    """
-    Main game model
-
-    Fields:
-        * name (str)
-        * is_pending (bool): game state
-        * password (str): should be a special field, same as user password ?
-        * creation_date (datetime)
-    """
     name = models.CharField(max_length=42, default='')
-    is_pending = models.BooleanField(default=True)
+    is_pending = models.BooleanField(default=True)  # game state
     password = models.CharField(max_length=100, default='')
     creation_date = models.DateTimeField(auto_now_add=True)
 
