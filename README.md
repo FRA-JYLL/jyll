@@ -34,6 +34,7 @@ In a mysql command prompt, create a new database and user:
 CREATE DATABASE jyll;
 CREATE USER 'jyll'@'localhost' IDENTIFIED BY 'password';
 GRANT ALL PRIVILEGES ON jyll.* TO 'jyll'@'localhost';
+GRANT ALL PRIVILEGES ON test_jyll.* TO 'jyll'@'localhost';
 FLUSH PRIVILEGES;
 ```
 You can now migrate the database using a terminal:
