@@ -36,7 +36,14 @@ class UserManager(BaseUserManager):
 
 
 class User(AbstractBaseUser, PermissionsMixin):
-    """ Model used for authentication """
+    """Model used for authentication
+
+    Args:
+        username: CharField
+        is_active: BooleanField
+
+        players: ForeignKey from game.Player, players controlled by the user
+    """
 
     username = models.CharField(max_length=42, unique=True)
     is_active = models.BooleanField(default=True)

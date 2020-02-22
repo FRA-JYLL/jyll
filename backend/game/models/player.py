@@ -13,6 +13,13 @@ class PlayerManager(models.Manager):
 
 
 class Player(models.Model):
+    """Player model
+
+    Args:
+        game: ForeignKey to game.Game, game in which the player plays
+        user: ForeignKey to users.User, user controlling the player
+        is_admin: BooleanField, tells if the player is admin of his game
+    """
     game = models.ForeignKey('Game', related_name='players', on_delete=models.CASCADE)
     # user controlling the player
     user = models.ForeignKey('users.User', related_name='players', on_delete=models.CASCADE)
