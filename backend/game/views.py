@@ -3,7 +3,6 @@ from game.models import Game, Player
 from game.serializers import GameSerializer, PlayerSerializer
 
 
-# TODO: crete a view folder ?
 class GameViewSet(viewsets.ModelViewSet):
     queryset = Game.objects.all()
     serializer_class = GameSerializer

@@ -23,16 +23,6 @@ class GameManager(models.Manager):
 
 
 class Game(models.Model):
-    """Game model
-
-    Args:
-        name: CharField, game name
-        is_pending: BooleanField
-        password: CharField, game password (empty by default)
-        creation_date: DateTimeField, game creation date
-
-        players: ForeignKey from game.Player, players playing in the game
-    """
     name = models.CharField(max_length=42)
     is_pending = models.BooleanField(default=True)  # game state
     password = models.CharField(max_length=100, default='')

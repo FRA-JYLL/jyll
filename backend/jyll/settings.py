@@ -42,8 +42,8 @@ INSTALLED_APPS = [
     'rest_framework',
     'django_extensions',  # for using shell_plus
     'rest_framework',  # rest framework for api
-    'users.apps.UsersConfig',  # users app
-    'game.apps.GameConfig',  # game app
+    'users.apps.UsersConfig',
+    'game.apps.GameConfig',
 ]
 
 AUTH_USER_MODEL = 'users.User'  # replacing the default django User
