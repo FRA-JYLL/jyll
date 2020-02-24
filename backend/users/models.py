@@ -1,3 +1,4 @@
+from django.utils import timezone
 from django.db import models
 from django.contrib.auth.models import AbstractBaseUser, BaseUserManager, PermissionsMixin
 
@@ -13,6 +14,8 @@ class UserManager(BaseUserManager):
 
         user = self.model(username=username)
 
+        # Users are logged in on account creation
+        user.last_login = timezone.now()
         user.set_password(password)
         user.save()
         return user
