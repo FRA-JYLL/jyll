@@ -1,17 +1,18 @@
-from django.test import TestCase
+from rest_framework.test import APITestCase
 from game.models import Game
 from users.models import User
+from django.urls import reverse
 
 
-class GameTests(TestCase):
+class GameTests(APITestCase):
     @classmethod
     def setUpTestData(cls):
-        User.objects.create_user(username='Paul', password='Atreides')
-
-    def setUp(self):
-        self.une_variable = "Salut !"
+        cls.user = User.objects.create_user(username='Paul', password='Atreides')
 
     def test_game_creation(self):
-        user = User.objects.first()
-        Game.objects.create(creator=user, name='Dune')
+        self.client.force_authenticate(user=GameTests.user)
+        user_id = GameTests.user.id
+        url = reverse('game-list')
+        data = {'name': 'Dune'}
+        response = self.client.post(url, data)
         self.assertEqual(Game.objects.first().name, 'Dune')

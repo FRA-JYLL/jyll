@@ -3,38 +3,101 @@ from rest_framework import status
 from rest_framework.test import APITestCase
 from users.models import User
 from game.models import Player, Game
-from game.serializers import PlayerSerializer
 
 
 class PlayerTests(APITestCase):
     @classmethod
     def setUpTestData(cls):
-        pass
-
-    def setUp(self):
-        self.user = User.objects.create_user(username='Paul', password='Atreides')
-        self.game = Game.objects.create(creator=self.user, name='Arrakis')
+        """Create an User and a game with this user (which also creates a player)"""
+        cls.user = User.objects.create_user(username='Paul', password='Atreides')
+        cls.game = Game.objects.create(creator=cls.user, name='Arrakis', password=None)
 
     def test_player_creation(self):
-        """Test player creation
-        """
-        user = User.objects.create_user(username='Vladimir', password='Harkonnen')
+        new_user = User.objects.create_user(username='Vladimir', password='Harkonnen')
+        self.client.force_authenticate(user=new_user)
 
+        nb_players = Player.objects.count()
         url = reverse('player-list')
-        data = {'game': str(self.game.id), 'user': str(user.id)}
+
+        data = {'game': str(PlayerTests.game.id), 'user': str(new_user.id)}
         response = self.client.post(url, data, format='json')
+
         # Check if a new player was created
         self.assertEqual(response.status_code, status.HTTP_201_CREATED)
-        self.assertEqual(Player.objects.count(), 2)
-        # check the player is not admin
-        new_player = Player.objects.get(user=user, game=self.game)
+        self.assertEqual(Player.objects.count(), nb_players + 1)
+
+        # check if the player is not admin
+        new_player = Player.objects.get(user=new_user, game=PlayerTests.game)
         self.assertFalse(new_player.is_admin)
 
     def test_second_player_creation(self):
-        """Test if an user cannot create (and control) two players in the same game
+        """An user who already controls a player in a game should not be able to create another
+        player in this game
         """
-
+        self.client.force_authenticate(user=self.user)
         url = reverse('player-list')
-        data = {'game': str(self.game.id), 'user': str(self.user.id)}
+
+        data = {'game': str(PlayerTests.game.id), 'user': str(PlayerTests.user.id)}
         response = self.client.post(url, data, format='json')
         self.assertEqual(response.status_code, status.HTTP_403_FORBIDDEN)
+
+    def test_create_player_with_wrong_user(self):
+        """Creating a player with a user who doesn't exist should not be possible
+        """
+        self.client.force_authenticate(user=self.user)
+        wrong_user_id = str(sum([user.id for user in User.objects.all()]) + 1)
+        url = reverse('player-list')
+
+        data = {'game': str(PlayerTests.game.id), 'user': str(wrong_user_id)}
+        response = self.client.post(url, data, format='json')
+        self.assertEqual(response.status_code, status.HTTP_400_BAD_REQUEST)
+
+    def test_create_player_with_wrong_game(self):
+        """Creating a player with a user who doesn't exist should not be possible
+        """
+        self.client.force_authenticate(user=self.user)
+        wrong_game_id = str(sum([game.id for game in Game.objects.all()]) + 1)
+        url = reverse('player-list')
+
+        data = {'game': str(wrong_game_id), 'user': str(PlayerTests.user.id)}
+        response = self.client.post(url, data, format='json')
+        self.assertEqual(response.status_code, status.HTTP_400_BAD_REQUEST)
+
+    # useless ?
+    def test_get(self):
+        self.client.force_authenticate(user=self.user)
+        url = reverse('player-detail', args=[10])
+        response = self.client.get(url)
+        self.assertEqual(response.status_code, status.HTTP_404_NOT_FOUND)
+
+    def test_list_players(self):
+        self.client.force_authenticate(user=self.user)
+        url = reverse('player-list')
+        response = self.client.get(url)
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
+
+    def test_retrieve_player(self):
+        self.client.force_authenticate(user=self.user)
+        player_id = Player.objects.first().id
+        url = reverse('player-detail', args=[player_id])
+        response = self.client.get(url)
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
+
+    def test_delete_player(self):
+        self.client.force_authenticate(user=self.user)
+        nb_players = Player.objects.count()
+        player = Player.objects.first()
+        url = reverse('player-detail', args=[player.id])
+        response = self.client.delete(url)
+        # Check if the player was delete
+        self.assertEqual(response.status_code, status.HTTP_204_NO_CONTENT)
+        self.assertEqual(Player.objects.count(), nb_players - 1)
+
+    def test_create_without_user(self):
+        self.client.force_authenticate(user=self.user)
+        url = reverse('player-list')
+
+        data = {'game': str(PlayerTests.game.id)}
+        response = self.client.post(url, data, format='json')
+
+        print(response.status_code)

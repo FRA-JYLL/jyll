@@ -1,7 +1,6 @@
 from django.utils import timezone
 from django.db import models
 from django.contrib.auth.models import AbstractBaseUser, BaseUserManager, PermissionsMixin
-from game.models import Game, Player
 
 
 class UserManager(BaseUserManager):

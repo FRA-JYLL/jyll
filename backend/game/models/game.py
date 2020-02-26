@@ -4,7 +4,7 @@ from game.models import Player
 
 class GameManager(models.Manager):
     """Custom manager for Game, overwrites create method"""
-    def create(self, creator, name=None, password=''):
+    def create(self, creator, name, password):
         """Create a new game, and a player admin associated with creator
 
         Args:
@@ -25,7 +25,7 @@ class GameManager(models.Manager):
 class Game(models.Model):
     name = models.CharField(max_length=42)
     is_pending = models.BooleanField(default=True)  # game state
-    password = models.CharField(max_length=100, default='')
+    password = models.CharField(max_length=100, blank=True, null=True)
     creation_date = models.DateTimeField(auto_now_add=True)
 
     objects = GameManager()  # link to custom manager
