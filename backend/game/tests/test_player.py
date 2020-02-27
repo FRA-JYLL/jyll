@@ -5,7 +5,7 @@ from users.models import User
 from game.models import Player, Game
 
 
-class PlayerTests(APITestCase):
+class PlayerApiTests(APITestCase):
     @classmethod
     def setUpTestData(cls):
         """Create an User and a game with this user (which also creates a player)"""
@@ -19,7 +19,7 @@ class PlayerTests(APITestCase):
         nb_players = Player.objects.count()
         url = reverse('player-list')
 
-        data = {'game': str(PlayerTests.game.id), 'user': str(new_user.id)}
+        data = {'game': str(PlayerApiTests.game.id), 'user': str(new_user.id)}
         response = self.client.post(url, data, format='json')
 
         # Check if a new player was created
@@ -27,77 +27,79 @@ class PlayerTests(APITestCase):
         self.assertEqual(Player.objects.count(), nb_players + 1)
 
         # check if the player is not admin
-        new_player = Player.objects.get(user=new_user, game=PlayerTests.game)
+        new_player = Player.objects.get(user=new_user, game=PlayerApiTests.game)
         self.assertFalse(new_player.is_admin)
 
     def test_second_player_creation(self):
         """An user who already controls a player in a game should not be able to create another
         player in this game
         """
-        self.client.force_authenticate(user=self.user)
+        self.client.force_authenticate(user=PlayerApiTests.user)
         url = reverse('player-list')
 
-        data = {'game': str(PlayerTests.game.id), 'user': str(PlayerTests.user.id)}
+        data = {'game': str(PlayerApiTests.game.id), 'user': str(PlayerApiTests.user.id)}
         response = self.client.post(url, data, format='json')
         self.assertEqual(response.status_code, status.HTTP_403_FORBIDDEN)
 
-    def test_create_player_with_wrong_user(self):
-        """Creating a player with a user who doesn't exist should not be possible
-        """
-        self.client.force_authenticate(user=self.user)
+    def test_create_player_with_inexistant_user(self):
+        """Creating a player with a user who doesn't exist should not be possible"""
+        self.client.force_authenticate(user=PlayerApiTests.user)
         wrong_user_id = str(sum([user.id for user in User.objects.all()]) + 1)
         url = reverse('player-list')
 
-        data = {'game': str(PlayerTests.game.id), 'user': str(wrong_user_id)}
+        data = {'game': str(PlayerApiTests.game.id), 'user': str(wrong_user_id)}
         response = self.client.post(url, data, format='json')
         self.assertEqual(response.status_code, status.HTTP_400_BAD_REQUEST)
 
-    def test_create_player_with_wrong_game(self):
-        """Creating a player with a user who doesn't exist should not be possible
-        """
-        self.client.force_authenticate(user=self.user)
+    def test_create_player_with_wrong_user(self):
+        """Creating a player with a wrong user should be forbidden"""
+        new_user = User.objects.create_user(username='Vladimir', password='Harkonnen')
+        self.client.force_authenticate(user=new_user)
+        wrong_user = User.objects.create_user(username='Duncan', password='Idaho')
+
+        url = reverse('player-list')
+
+        data = {'game': str(PlayerApiTests.game.id), 'user': str(wrong_user.id)}
+        response = self.client.post(url, data, format='json')
+        self.assertEqual(response.status_code, status.HTTP_403_FORBIDDEN)
+
+    def test_create_player_with_inexistant_game(self):
+        """Creating a player with a user who doesn't exist should not be possible"""
+        self.client.force_authenticate(user=PlayerApiTests.user)
         wrong_game_id = str(sum([game.id for game in Game.objects.all()]) + 1)
         url = reverse('player-list')
 
-        data = {'game': str(wrong_game_id), 'user': str(PlayerTests.user.id)}
+        data = {'game': str(wrong_game_id), 'user': str(PlayerApiTests.user.id)}
         response = self.client.post(url, data, format='json')
         self.assertEqual(response.status_code, status.HTTP_400_BAD_REQUEST)
 
     # useless ?
     def test_get(self):
-        self.client.force_authenticate(user=self.user)
-        url = reverse('player-detail', args=[10])
+        self.client.force_authenticate(user=PlayerApiTests.user)
+        wrong_player_id = str(sum([player.id for player in Player.objects.all()]) + 1)
+        url = reverse('player-detail', args=[wrong_player_id])
         response = self.client.get(url)
         self.assertEqual(response.status_code, status.HTTP_404_NOT_FOUND)
 
     def test_list_players(self):
-        self.client.force_authenticate(user=self.user)
+        self.client.force_authenticate(user=PlayerApiTests.user)
         url = reverse('player-list')
         response = self.client.get(url)
         self.assertEqual(response.status_code, status.HTTP_200_OK)
 
     def test_retrieve_player(self):
-        self.client.force_authenticate(user=self.user)
+        self.client.force_authenticate(user=PlayerApiTests.user)
         player_id = Player.objects.first().id
         url = reverse('player-detail', args=[player_id])
         response = self.client.get(url)
         self.assertEqual(response.status_code, status.HTTP_200_OK)
 
     def test_delete_player(self):
-        self.client.force_authenticate(user=self.user)
+        self.client.force_authenticate(user=PlayerApiTests.user)
         nb_players = Player.objects.count()
         player = Player.objects.first()
         url = reverse('player-detail', args=[player.id])
         response = self.client.delete(url)
-        # Check if the player was delete
+        # Check if the player was deleted
         self.assertEqual(response.status_code, status.HTTP_204_NO_CONTENT)
         self.assertEqual(Player.objects.count(), nb_players - 1)
-
-    def test_create_without_user(self):
-        self.client.force_authenticate(user=self.user)
-        url = reverse('player-list')
-
-        data = {'game': str(PlayerTests.game.id)}
-        response = self.client.post(url, data, format='json')
-
-        print(response.status_code)

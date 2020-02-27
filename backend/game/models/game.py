@@ -9,17 +9,27 @@ class GameManager(models.Manager):
 
         Args:
             creator: users.User, User which creates the new game
-            name: string, game name (optional, set to"creator's game" if not given)
-            password: string, game password (optional, empty by default)
+            name: string, game name (optional, set to "creator's game" set to None)
+            password: string, game password (no password if None)
         """
+        # Set a default name if not provided
         if name is None:
             name = str(creator.username) + "'s game"
 
         new_game = super().create(name=name, password=password)
 
         # creator becomes a player and admin of new game
-        player = Player.objects.create(game=new_game, user=creator, is_admin=True)
+        Player.objects.create(game=new_game, user=creator, is_admin=True)
         return new_game
+
+    def with_user(self, user_id):
+        """Returns all games with a player controlled by user having id=user_id"""
+        ids_with_user = []
+        for game in self.all():
+            # if game has a player controlled by user
+            if game.players.filter(user__id=user_id):
+                ids_with_user.append(game.id)
+        return self.filter(id__in=ids_with_user)
 
 
 class Game(models.Model):
