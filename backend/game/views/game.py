@@ -33,9 +33,9 @@ class PendingGamesViewSet(mixins.ListModelMixin, viewsets.GenericViewSet):
     permission_classes = [IsAuthenticated]
 
 
-class GamesWithUserViewSet(mixins.ListModelMixin, viewsets.GenericViewSet):
+class GamesWithUserViewSet(viewsets.GenericViewSet):
     """ViewSet listing all games in which the requesting user controls a player"""
-    queryset = Game.objects.all()  # is_pending=True ?
+    queryset = Game.objects.all()
     serializer_class = GameSerializer
     permission_classes = [IsAuthenticated]
 

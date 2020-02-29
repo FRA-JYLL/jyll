@@ -4,17 +4,17 @@ from game.models import Player
 
 class GameManager(models.Manager):
     """Custom manager for Game, overwrites create method"""
-    def create(self, creator, name, password):
+    def create(self, creator, name=None, password=None):
         """Create a new game, and a player admin associated with creator
 
         Args:
             creator: users.User, User which creates the new game
-            name: string, game name (optional, set to "creator's game" set to None)
+            name: string, game name (optional, set to "creator's game" if set to None)
             password: string, game password (no password if None)
         """
         # Set a default name if not provided
         if name is None:
-            name = str(creator.username) + "'s game"
+            name = creator.username + "'s game"
 
         new_game = super().create(name=name, password=password)
 
@@ -24,11 +24,7 @@ class GameManager(models.Manager):
 
     def with_user(self, user_id):
         """Returns all games with a player controlled by user having id=user_id"""
-        ids_with_user = []
-        for game in self.all():
-            # if game has a player controlled by user
-            if game.players.filter(user__id=user_id):
-                ids_with_user.append(game.id)
+        ids_with_user = [player.game.id for player in Player.objects.filter(user_id=user_id)]
         return self.filter(id__in=ids_with_user)
 
 

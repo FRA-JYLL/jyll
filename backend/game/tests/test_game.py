@@ -1,6 +1,7 @@
+from django.test import TestCase
 from rest_framework.test import APITestCase
 from rest_framework import status
-from game.models import Game
+from game.models import Game, Player
 from users.models import User
 from django.urls import reverse
 
@@ -14,16 +15,24 @@ class GameApiTests(APITestCase):
     def test_game_creation(self):
         self.client.force_authenticate(user=GameApiTests.user)
         nb_games = Game.objects.count()
-        user_id = GameApiTests.user.id
         url = reverse('game-list')
         data = {'name': 'Dune'}
         response = self.client.post(url, data)
         self.assertEqual(Game.objects.count(), nb_games + 1)
         self.assertEqual(response.status_code, status.HTTP_201_CREATED)
+        game = Game.objects.get(name='Dune')
+        # Test if a corresponding player was created, and if this player is an admin
+        self.assertEqual(game.players.first().user.id, GameApiTests.user.id)
+        self.assertTrue(game.players.first().is_admin)
 
     def test_list_games(self):
-        self.client.force_authenticate(user=GameApiTests.user)
+        # test listing without user authentication
         url = reverse('game-list')
+        response = self.client.get(url)
+        self.assertEqual(response.status_code, status.HTTP_401_UNAUTHORIZED)
+
+        # test with authenticated user
+        self.client.force_authenticate(user=GameApiTests.user)
         response = self.client.get(url)
         self.assertEqual(response.status_code, status.HTTP_200_OK)
 
@@ -44,3 +53,19 @@ class GameApiTests(APITestCase):
         url = reverse('games-with-user')
         response = self.client.get(url)
         self.assertEqual(response.status_code, status.HTTP_200_OK)
+
+
+class TestGameManager(TestCase):
+    @classmethod
+    def setUpTestData(cls):
+        user = User.objects.create_user(username='Paul', password='Atreides')
+        Game.objects.create(creator=user, name='Arrakis', password=None)
+        other_user = User.objects.create_user(username='Duncan', password='Idaho')
+        game = Game.objects.create(creator=other_user, name='Leto', password=None)
+        Game.objects.create(creator=other_user, name='Leto II', password=None)
+        Player.objects.create(game=game, user=user)
+
+    def test_with_user_function(self):
+        games_with_user = [game.name for game in Game.objects.with_user(User.objects.first().id)]
+        self.assertIn('Leto', games_with_user)
+        self.assertIn('Arrakis', games_with_user)

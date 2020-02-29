@@ -8,7 +8,7 @@ from game.models import Player, Game
 class PlayerApiTests(APITestCase):
     @classmethod
     def setUpTestData(cls):
-        """Create an User and a game with this user (which also creates a player)"""
+        """Create a User and a game with this user (which also creates a player)"""
         cls.user = User.objects.create_user(username='Paul', password='Atreides')
         cls.game = Game.objects.create(creator=cls.user, name='Arrakis', password=None)
 
@@ -31,7 +31,7 @@ class PlayerApiTests(APITestCase):
         self.assertFalse(new_player.is_admin)
 
     def test_second_player_creation(self):
-        """An user who already controls a player in a game should not be able to create another
+        """A user who already controls a player in a game should not be able to create another
         player in this game
         """
         self.client.force_authenticate(user=PlayerApiTests.user)
@@ -72,14 +72,6 @@ class PlayerApiTests(APITestCase):
         data = {'game': str(wrong_game_id), 'user': str(PlayerApiTests.user.id)}
         response = self.client.post(url, data, format='json')
         self.assertEqual(response.status_code, status.HTTP_400_BAD_REQUEST)
-
-    # useless ?
-    def test_get(self):
-        self.client.force_authenticate(user=PlayerApiTests.user)
-        wrong_player_id = str(sum([player.id for player in Player.objects.all()]) + 1)
-        url = reverse('player-detail', args=[wrong_player_id])
-        response = self.client.get(url)
-        self.assertEqual(response.status_code, status.HTTP_404_NOT_FOUND)
 
     def test_list_players(self):
         self.client.force_authenticate(user=PlayerApiTests.user)
