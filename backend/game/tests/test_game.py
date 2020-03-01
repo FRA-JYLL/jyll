@@ -26,13 +26,8 @@ class GameApiTests(APITestCase):
         self.assertTrue(game.players.first().is_admin)
 
     def test_list_games(self):
-        # test listing without user authentication
-        url = reverse('game-list')
-        response = self.client.get(url)
-        self.assertEqual(response.status_code, status.HTTP_401_UNAUTHORIZED)
-
-        # test with authenticated user
         self.client.force_authenticate(user=GameApiTests.user)
+        url = reverse('game-list')
         response = self.client.get(url)
         self.assertEqual(response.status_code, status.HTTP_200_OK)
 
@@ -53,6 +48,23 @@ class GameApiTests(APITestCase):
         url = reverse('games-with-user')
         response = self.client.get(url)
         self.assertEqual(response.status_code, status.HTTP_200_OK)
+
+    def test_game_unauthenticated(self):
+        # test listing without user authentication
+        url = reverse('game-list')
+        response = self.client.get(url)
+        self.assertEqual(response.status_code, status.HTTP_401_UNAUTHORIZED)
+
+        # test retrieve without user authentication
+        url = reverse('game-detail', args=[Game.objects.first().id])
+        response = self.client.get(url)
+        self.assertEqual(response.status_code, status.HTTP_401_UNAUTHORIZED)
+
+        # test create without user authentication
+        url = reverse('game-list')
+        data = {'name': 'Dune'}
+        response = self.client.get(url, data)
+        self.assertEqual(response.status_code, status.HTTP_401_UNAUTHORIZED)
 
 
 class TestGameManager(TestCase):

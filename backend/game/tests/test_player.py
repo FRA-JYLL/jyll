@@ -95,3 +95,19 @@ class PlayerApiTests(APITestCase):
         # Check if the player was deleted
         self.assertEqual(response.status_code, status.HTTP_204_NO_CONTENT)
         self.assertEqual(Player.objects.count(), nb_players - 1)
+
+    def test_player_unauthenticated(self):
+        # test listing without user authentication
+        url = reverse('player-list')
+        response = self.client.get(url)
+        self.assertEqual(response.status_code, status.HTTP_401_UNAUTHORIZED)
+
+        # test retrieve without user authentication
+        url = reverse('player-detail', args=[Player.objects.first().id])
+        response = self.client.get(url)
+        self.assertEqual(response.status_code, status.HTTP_401_UNAUTHORIZED)
+
+        # test delete without user authentication
+        url = reverse('player-detail', args=[Player.objects.first().id])
+        response = self.client.get(url)
+        self.assertEqual(response.status_code, status.HTTP_401_UNAUTHORIZED)

@@ -1,7 +1,6 @@
 from rest_framework import viewsets, status, mixins
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
-from django.shortcuts import get_object_or_404
 from game.models import Game, Player
 from game.serializers import PlayerSerializer
 from users.models import User
