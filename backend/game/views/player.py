@@ -19,16 +19,14 @@ class PlayerViewSet(mixins.CreateModelMixin,
         serializer = self.get_serializer(data=request.data)
         serializer.is_valid(raise_exception=True)
 
-        # Retrieve game and user, return a 404 response if at least one doesn't exist
-        game_id, user_id = serializer.data.get('game'), serializer.data.get('user')
-        game, user = Game.objects.get(id=game_id), User.objects.get(id=user_id)
+        game = Game.objects.get(id=serializer.data.get('game'))
 
         headers = self.get_success_headers(serializer.data)
 
-        # Check if user doesn't already controls a player in game, and if user is the author of the request
-        if game.players.filter(user__username=user.username) or request.user.id != user_id:
+        # Check if user doesn't already control a player in this game
+        if game.players.filter(user__username=request.user.username):
             return Response(serializer.data, status=status.HTTP_403_FORBIDDEN, headers=headers)
 
         # else
-        Player.objects.create(user=user, game=game)
+        Player.objects.create(user=request.user, game=game)
         return Response(serializer.data, status=status.HTTP_201_CREATED, headers=headers)

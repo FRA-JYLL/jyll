@@ -19,7 +19,7 @@ class PlayerApiTests(APITestCase):
         nb_players = Player.objects.count()
         url = reverse('player-list')
 
-        data = {'game': str(PlayerApiTests.game.id), 'user': str(new_user.id)}
+        data = {'game': str(PlayerApiTests.game.id)}  #, 'user': str(new_user.id)}
         response = self.client.post(url, data, format='json')
 
         # Check if a new player was created
@@ -38,28 +38,6 @@ class PlayerApiTests(APITestCase):
         url = reverse('player-list')
 
         data = {'game': str(PlayerApiTests.game.id), 'user': str(PlayerApiTests.user.id)}
-        response = self.client.post(url, data, format='json')
-        self.assertEqual(response.status_code, status.HTTP_403_FORBIDDEN)
-
-    def test_create_player_with_inexistant_user(self):
-        """Creating a player with a user who doesn't exist should not be possible"""
-        self.client.force_authenticate(user=PlayerApiTests.user)
-        wrong_user_id = str(sum([user.id for user in User.objects.all()]) + 1)
-        url = reverse('player-list')
-
-        data = {'game': str(PlayerApiTests.game.id), 'user': str(wrong_user_id)}
-        response = self.client.post(url, data, format='json')
-        self.assertEqual(response.status_code, status.HTTP_400_BAD_REQUEST)
-
-    def test_create_player_with_wrong_user(self):
-        """Creating a player with a wrong user should be forbidden"""
-        new_user = User.objects.create_user(username='Vladimir', password='Harkonnen')
-        self.client.force_authenticate(user=new_user)
-        wrong_user = User.objects.create_user(username='Duncan', password='Idaho')
-
-        url = reverse('player-list')
-
-        data = {'game': str(PlayerApiTests.game.id), 'user': str(wrong_user.id)}
         response = self.client.post(url, data, format='json')
         self.assertEqual(response.status_code, status.HTTP_403_FORBIDDEN)
 

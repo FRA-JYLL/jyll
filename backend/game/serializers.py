@@ -14,4 +14,4 @@ class PlayerSerializer(serializers.ModelSerializer):
     class Meta:
         model = Player
         fields = ['id', 'is_admin', 'user', 'game']
-        read_only_fields = ['is_admin']
+        read_only_fields = ['is_admin', 'user']
