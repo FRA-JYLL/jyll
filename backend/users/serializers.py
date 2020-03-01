@@ -4,10 +4,10 @@ from rest_framework_simplejwt.serializers import TokenObtainPairSerializer
 from django.contrib.auth.signals import user_logged_in
 
 
-class UserSerializer(serializers.HyperlinkedModelSerializer):
+class UserSerializer(serializers.ModelSerializer):
     class Meta:
         model = User
-        fields = ['id', 'url', 'username', 'password', 'last_login']
+        fields = ['id', 'username', 'password', 'last_login']
         read_only_fields = ['last_login']
         extra_kwargs = {'password': {'write_only': True}}
 

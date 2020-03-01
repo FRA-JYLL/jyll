@@ -39,8 +39,10 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'rest_framework',
+    'django_extensions',  # for using shell_plus
+    'rest_framework',  # rest framework for api
     'users.apps.UsersConfig',
+    'game.apps.GameConfig',
 ]
 
 AUTH_USER_MODEL = 'users.User'  # replacing the default django User

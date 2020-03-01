@@ -35,8 +35,6 @@ class UserManager(BaseUserManager):
 
 
 class User(AbstractBaseUser, PermissionsMixin):
-    """ Model used for authentication """
-
     username = models.CharField(max_length=42, unique=True)
     is_active = models.BooleanField(default=True)
 
