@@ -19,7 +19,7 @@ class PlayerApiTests(APITestCase):
         nb_players = Player.objects.count()
         url = reverse('player-list')
 
-        data = {'game': str(PlayerApiTests.game.id)}  #, 'user': str(new_user.id)}
+        data = {'game': str(PlayerApiTests.game.id)}
         response = self.client.post(url, data, format='json')
 
         # Check if a new player was created
@@ -37,7 +37,7 @@ class PlayerApiTests(APITestCase):
         self.client.force_authenticate(user=PlayerApiTests.user)
         url = reverse('player-list')
 
-        data = {'game': str(PlayerApiTests.game.id), 'user': str(PlayerApiTests.user.id)}
+        data = {'game': str(PlayerApiTests.game.id)}
         response = self.client.post(url, data, format='json')
         self.assertEqual(response.status_code, status.HTTP_403_FORBIDDEN)
 
@@ -47,7 +47,7 @@ class PlayerApiTests(APITestCase):
         wrong_game_id = str(sum([game.id for game in Game.objects.all()]) + 1)
         url = reverse('player-list')
 
-        data = {'game': str(wrong_game_id), 'user': str(PlayerApiTests.user.id)}
+        data = {'game': str(wrong_game_id)}
         response = self.client.post(url, data, format='json')
         self.assertEqual(response.status_code, status.HTTP_400_BAD_REQUEST)
 
