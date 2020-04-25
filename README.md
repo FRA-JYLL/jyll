@@ -61,4 +61,29 @@ source venv/bin/activate
 
 ## Frontend
 
-Coming soon~
+The website relies on React.js for its frontend. Therefore, an operational node
+installation is required to run it.
+You may use [nvm](https://github.com/nvm-sh/nvm) to easily install and manage
+multiple node versions.
+
+All terminal commands in this section should be run in the frontend/ directory:
+```
+cd frontend
+```
+
+#### Installing node packages (one time)
+Install all packages listed in package-lock.json:
+```
+npm i
+```
+
+#### Running the app (every time)
+Start the React app:
+```
+npm start
+```
+A browser window should automatically open.
+
+#### About package.json
+Additional utility scripts may be added in the package.json file. See the 
+corresponding "scripts" key for an exhaustive list.

@@ -41,6 +41,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'django_extensions',  # for using shell_plus
     'rest_framework',  # rest framework for api
+    'corsheaders',
     'users.apps.UsersConfig',
     'game.apps.GameConfig',
 ]
@@ -48,6 +49,7 @@ INSTALLED_APPS = [
 AUTH_USER_MODEL = 'users.User'  # replacing the default django User
 
 MIDDLEWARE = [
+    'corsheaders.middleware.CorsMiddleware',
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
@@ -149,3 +151,10 @@ SIMPLE_JWT = {
     'REFRESH_TOKEN_LIFETIME': timedelta(days=1),
     'SIGNING_KEY': SIMPLE_JWT_SECRET_KEY,
 }
+
+
+# Corsheaders settings
+
+CORS_ORIGIN_WHITELIST = [
+    "http://localhost:3000",
+]
