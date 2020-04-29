@@ -38,3 +38,20 @@ class Game(models.Model):
 
     def __str__(self):
         return self.name
+
+    def are_all_players_ready(self):
+        """Check if all players are ready"""
+        for player in self.players.all():
+            if not player.is_ready:
+                return False
+        return True
+
+    def _run_setup(self):
+        """Run the game setup"""
+        assert not self.is_pending, "The game is still pending, all players should be ready"
+
+    def start(self):
+        self.is_pending = False
+        self.save()
+        self._run_setup()
+

@@ -41,6 +41,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'django_extensions',  # for using shell_plus
     'rest_framework',  # rest framework for api
+    'django_celery_results',
     'corsheaders',
     'users.apps.UsersConfig',
     'game.apps.GameConfig',
@@ -153,8 +154,14 @@ SIMPLE_JWT = {
 }
 
 
-# Corsheaders settings
+# Celery settings
+CELERY_BROKER_URL = 'amqp://localhost'
+CELERY_ACCEPT_CONTENT = ['json']
+CELERY_TASK_SERIALIZER = 'json'
 
+CELERY_RESULT_BACKEND = 'django-db'
+
+# Corsheaders settings
 CORS_ORIGIN_WHITELIST = [
     "http://localhost:3000",
 ]

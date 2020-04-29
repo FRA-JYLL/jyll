@@ -22,6 +22,7 @@ class Player(models.Model):
     # user controlling the player
     user = models.ForeignKey('users.User', related_name='players', on_delete=models.CASCADE)
     is_admin = models.BooleanField(default=False)
+    is_ready = models.BooleanField(default=False)
 
     objects = PlayerManager()  # link to custom manager
 

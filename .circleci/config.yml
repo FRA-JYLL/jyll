@@ -22,6 +22,10 @@ jobs:
           paths:
             - venv
       - run:
+          name: Installing RabbitMQ
+          command: |
+            sudo apt-get install rabbitmq-server
+      - run:
           name: Installing mariadb client
           command: |
             sudo apt-get update && sudo apt-get install -y mariadb-client
@@ -42,6 +46,7 @@ jobs:
       - run:
           name: Running backend tests
           command: |
+            sudo service rabbitmq-server start
             . venv/bin/activate
             cd backend && python manage.py test
 

@@ -8,3 +8,5 @@ PyJWT==1.7.1
 pytz==2019.3
 sqlparse==0.3.0
 django-extensions==2.2.5
+celery==4.4.2
+django-celery-results==1.2.1

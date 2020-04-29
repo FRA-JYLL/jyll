@@ -28,6 +28,11 @@ Install the backend's dependencies:
 pip install -r requirements.txt
 ```
 
+#### Install RabbitMQ
+```bash
+sudo apt-get install rabbitmq-server
+```
+
 #### Setting up the database and mysql user (one time)
 In a mysql command prompt, create a new database and user:
 ```
@@ -43,11 +48,33 @@ python manage.py migrate
 ```
 
 #### Running the web server (every time)
+Start MQ server
+```
+rabbitmq-server start
+```
+
+Start celery server
+```
+celery -A jyll worker -l info
+```
+
 Start the django web server:
 ```
 python manage.py runserver
 ```
 The project should now be running [at this address](http://localhost:8000/)
+
+#### Running tests
+
+Start MQ server
+```
+rabbitmq-server start
+```
+
+Run the tests
+```
+python manage.py test
+```
 
 #### About the virtual environment
 The virtual environment can be exited using the following command:
