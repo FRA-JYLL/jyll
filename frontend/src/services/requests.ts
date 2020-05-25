@@ -11,11 +11,27 @@ export const signup = async (username: string, password: string) => {
 
   const payload = await response.json();
   if (payload.access && payload.refresh) {
-    localStorage.setItem('access', payload.access);
-    localStorage.setItem('refresh', payload.refresh);
-
-    return { userId: payload.id, username: payload.username };
+    localStorage.setItem('accessToken', payload.access);
+    localStorage.setItem('refreshToken', payload.refresh);
   }
 
-  return null;
+  return !!(payload.access && payload.refresh);
+};
+
+export const login = async (username: string, password: string) => {
+  const response = await fetch(`${apiBaseUrl}/auth/login/`, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify({ username, password }),
+  });
+
+  const payload = await response.json();
+  if (payload.access && payload.refresh) {
+    localStorage.setItem('accessToken', payload.access);
+    localStorage.setItem('refreshToken', payload.refresh);
+  }
+
+  return !!(payload.access && payload.refresh);
 };

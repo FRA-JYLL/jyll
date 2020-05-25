@@ -4,7 +4,7 @@ import Home from 'pages/Home';
 import 'App.scss';
 
 const App = () => {
-  const [shouldShowSignup, setShouldShowSignup] = useState(!localStorage.access);
+  const [shouldShowSignup, setShouldShowSignup] = useState(!localStorage.accessToken);
 
   return (
     <div className="container">
