@@ -6,9 +6,9 @@ from game.serializers import GameSerializer
 from rest_framework.decorators import action
 
 
-class GameViewSet(mixins.CreateModelMixin,
-                  mixins.RetrieveModelMixin,
-                  viewsets.GenericViewSet):
+class GameViewSet(
+    mixins.CreateModelMixin, mixins.RetrieveModelMixin, viewsets.GenericViewSet
+):
     queryset = Game.objects.all()
     serializer_class = GameSerializer
     permission_classes = [IsAuthenticated]
@@ -19,12 +19,16 @@ class GameViewSet(mixins.CreateModelMixin,
         serializer.is_valid(raise_exception=True)
 
         # Call custom manager
-        Game.objects.create(creator=request.user,
-                            name=serializer.validated_data.get('name'),
-                            password=serializer.validated_data.get('password'))
+        Game.objects.create(
+            creator=request.user,
+            name=serializer.validated_data.get("name"),
+            password=serializer.validated_data.get("password"),
+        )
 
         headers = self.get_success_headers(serializer.data)
-        return Response(serializer.data, status=status.HTTP_201_CREATED, headers=headers)
+        return Response(
+            serializer.data, status=status.HTTP_201_CREATED, headers=headers
+        )
 
     def _get_serializer(self, queryset):
         """Get queryset and return the corresponding serializer"""
@@ -36,7 +40,7 @@ class GameViewSet(mixins.CreateModelMixin,
         serializer = self.get_serializer(queryset, many=True)
         return serializer
 
-    @action(detail=False, methods=['get'])
+    @action(detail=False, methods=["get"])
     def pending(self, request, *args, **kwargs):
         """View listing all pending games"""
         # query all pending games
@@ -45,7 +49,7 @@ class GameViewSet(mixins.CreateModelMixin,
         serializer = self._get_serializer(queryset)
         return Response(serializer.data)
 
-    @action(detail=False, methods=['get'])
+    @action(detail=False, methods=["get"])
     def with_user(self, request, *args, **kwargs):
         """View listing all games with the user requesting"""
         # query all games with requesting user
@@ -54,7 +58,7 @@ class GameViewSet(mixins.CreateModelMixin,
         serializer = self._get_serializer(queryset)
         return Response(serializer.data)
 
-    @action(detail=True, methods=['post'])
+    @action(detail=True, methods=["post"])
     def join(self, request, *args, **kwargs):
         """View to join a specific pending game, giving a password if required"""
         # query the game to join
@@ -67,16 +71,26 @@ class GameViewSet(mixins.CreateModelMixin,
 
         # the game should be pending, the requesting user should not already control a player in the game,
         # and should give a correct password
-        if not game.is_pending or game.players.filter(user__username=request.user.username) or \
-                (game.password is not None and serializer.validated_data.get('password') != game.password):
-            return Response(serializer.data, status=status.HTTP_403_FORBIDDEN, headers=headers)
+        if (
+            not game.is_pending
+            or game.players.filter(user__username=request.user.username)
+            or (
+                game.password is not None
+                and serializer.validated_data.get("password") != game.password
+            )
+        ):
+            return Response(
+                serializer.data, status=status.HTTP_403_FORBIDDEN, headers=headers
+            )
 
         # create a new player in game controlled by user
         Player.objects.create(game=game, user=request.user)
 
-        return Response(serializer.data, status=status.HTTP_201_CREATED, headers=headers)
+        return Response(
+            serializer.data, status=status.HTTP_201_CREATED, headers=headers
+        )
 
-    @action(detail=True, methods=['delete'])
+    @action(detail=True, methods=["delete"])
     def leave(self, request, *args, **kwargs):
         """View to quit a game, i.e. deleting a player in the game"""
         # query the player to delete
@@ -95,7 +109,7 @@ class GameViewSet(mixins.CreateModelMixin,
 
         return Response(status=status.HTTP_204_NO_CONTENT)
 
-    @action(detail=True, methods=['get'])
+    @action(detail=True, methods=["get"])
     def players(self, request, *args, **kwargs):
         """View to list players in game"""
         # query the game

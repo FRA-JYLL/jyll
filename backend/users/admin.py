@@ -15,22 +15,22 @@ class UserAdmin(BaseUserAdmin):
 
     model = User
 
-    list_display = ('username', 'is_superuser')
-    list_filter = ('is_superuser',)
+    list_display = ("username", "is_superuser")
+    list_filter = ("is_superuser",)
     fieldsets = (
-        (None, {'fields': ('username', 'password')}),
-        ('Permissions', {'fields': ('is_superuser',)}),
+        (None, {"fields": ("username", "password")}),
+        ("Permissions", {"fields": ("is_superuser",)}),
     )
     # add_fieldsets is not a standard ModelAdmin attribute. UserAdmin
     # overrides get_fieldsets to use this attribute when creating a user.
     add_fieldsets = (
-        (None, {
-            'classes': ('wide',),
-            'fields': ('username', 'password1', 'password2'),
-        }),
+        (
+            None,
+            {"classes": ("wide",), "fields": ("username", "password1", "password2"),},
+        ),
     )
-    search_fields = ('username',)
-    ordering = ('username',)
+    search_fields = ("username",)
+    ordering = ("username",)
     filter_horizontal = ()
 
 

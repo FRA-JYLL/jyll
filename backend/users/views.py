@@ -9,10 +9,12 @@ from rest_framework_simplejwt.tokens import RefreshToken
 from rest_framework_simplejwt import views as jwt_views
 
 
-class UserViewSet(mixins.ListModelMixin,
-                  mixins.CreateModelMixin,
-                  mixins.RetrieveModelMixin,
-                  viewsets.GenericViewSet):
+class UserViewSet(
+    mixins.ListModelMixin,
+    mixins.CreateModelMixin,
+    mixins.RetrieveModelMixin,
+    viewsets.GenericViewSet,
+):
     """ This viewset provides `list`, `create` and `retrieve` actions for the user model. """
 
     queryset = User.objects.all()
@@ -29,11 +31,15 @@ class UserViewSet(mixins.ListModelMixin,
         # Add a new pair of access and refresh tokens to the response payload
         refresh_token = RefreshToken.for_user(serializer.instance)
         tokens = {
-            'refresh': str(refresh_token),
-            'access': str(refresh_token.access_token),
+            "refresh": str(refresh_token),
+            "access": str(refresh_token.access_token),
         }
 
-        return Response({**serializer.data, **tokens}, status=status.HTTP_201_CREATED, headers=headers)
+        return Response(
+            {**serializer.data, **tokens},
+            status=status.HTTP_201_CREATED,
+            headers=headers,
+        )
 
 
 class LoginView(jwt_views.TokenObtainPairView):
@@ -41,4 +47,5 @@ class LoginView(jwt_views.TokenObtainPairView):
     Takes a set of user credentials and returns an access and refresh JSON web
     token pair to prove the authentication of those credentials.
     """
+
     serializer_class = LoginSerializer

@@ -4,6 +4,7 @@ from game.models import Player
 
 class GameManager(models.Manager):
     """Custom manager for Game, overwrites create method"""
+
     def create(self, creator, name=None, password=None):
         """Create a new game, and a player admin associated with creator
 
@@ -24,7 +25,9 @@ class GameManager(models.Manager):
 
     def with_user(self, user_id):
         """Returns all games with a player controlled by user having id=user_id"""
-        ids_with_user = [player.game.id for player in Player.objects.filter(user_id=user_id)]
+        ids_with_user = [
+            player.game.id for player in Player.objects.filter(user_id=user_id)
+        ]
         return self.filter(id__in=ids_with_user)
 
 
@@ -48,10 +51,11 @@ class Game(models.Model):
 
     def _run_setup(self):
         """Run the game setup"""
-        assert not self.is_pending, "The game is still pending, all players should be ready"
+        assert (
+            not self.is_pending
+        ), "The game is still pending, all players should be ready"
 
     def start(self):
         self.is_pending = False
         self.save()
         self._run_setup()
-

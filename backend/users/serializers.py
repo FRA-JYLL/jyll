@@ -7,14 +7,13 @@ from django.contrib.auth.signals import user_logged_in
 class UserSerializer(serializers.ModelSerializer):
     class Meta:
         model = User
-        fields = ['id', 'username', 'password', 'last_login']
-        read_only_fields = ['last_login']
-        extra_kwargs = {'password': {'write_only': True}}
+        fields = ["id", "username", "password", "last_login"]
+        read_only_fields = ["last_login"]
+        extra_kwargs = {"password": {"write_only": True}}
 
     def create(self, validated_data):
         return User.objects.create_user(
-            username=validated_data['username'],
-            password=validated_data['password']
+            username=validated_data["username"], password=validated_data["password"]
         )
 
 
@@ -25,6 +24,7 @@ class LoginSerializer(TokenObtainPairSerializer):
     See https://github.com/davesque/django-rest-framework-simplejwt/issues/132
     and https://github.com/davesque/django-rest-framework-simplejwt/pull/136 for more information.
     """
+
     def validate(self, attrs):
         data = super().validate(attrs)
         user_logged_in.send(User, user=self.user)

@@ -11,34 +11,41 @@ class AuthTests(APITestCase):
     def setUpTestData(cls):
         # Save a user in the database
         cls.user_raw_password = "Finch"
-        cls.user = User.objects.create_user(username="Atticus", password=cls.user_raw_password)
+        cls.user = User.objects.create_user(
+            username="Atticus", password=cls.user_raw_password
+        )
 
     def test_login(self):
-        url = reverse('login')
-        data = {'username': self.user.username, 'password': self.user_raw_password}
+        url = reverse("login")
+        data = {"username": self.user.username, "password": self.user_raw_password}
 
-        time.sleep(0.050)  # Sleep to make sure that the user's last_login attribute will be updated
+        time.sleep(
+            0.050
+        )  # Sleep to make sure that the user's last_login attribute will be updated
 
         # Check that the request was accepted.
-        response = self.client.post(url, data, format='json')
+        response = self.client.post(url, data, format="json")
         self.assertEqual(response.status_code, status.HTTP_200_OK)
 
         # Check that the response contains valid tokens.
         # SimpleJWT token classes throw exceptions when instantiated with invalid tokens.
-        AccessToken(response.data.get('access'))
-        RefreshToken(response.data.get('refresh'))
+        AccessToken(response.data.get("access"))
+        RefreshToken(response.data.get("refresh"))
 
         # Check that the user's last_login attribute was updated
-        self.assertTrue(User.objects.get(username=self.user.username).last_login > self.user.last_login)
+        self.assertTrue(
+            User.objects.get(username=self.user.username).last_login
+            > self.user.last_login
+        )
 
     def test_refresh(self):
         refresh_token = RefreshToken.for_user(self.user)
-        url = reverse('refresh')
-        data = {'refresh': str(refresh_token)}
+        url = reverse("refresh")
+        data = {"refresh": str(refresh_token)}
 
         # Check that the request was accepted.
-        response = self.client.post(url, data, format='json')
+        response = self.client.post(url, data, format="json")
         self.assertEqual(response.status_code, status.HTTP_200_OK)
 
         # Check that the response contains a valid access token.
-        AccessToken(response.data.get('access'))
+        AccessToken(response.data.get("access"))

@@ -1,16 +1,19 @@
 from django.utils import timezone
 from django.db import models
-from django.contrib.auth.models import AbstractBaseUser, BaseUserManager, PermissionsMixin
+from django.contrib.auth.models import (
+    AbstractBaseUser,
+    BaseUserManager,
+    PermissionsMixin,
+)
 
 
 class UserManager(BaseUserManager):
-
     def create_user(self, username, password=None):
         """
         Creates and saves a User with the given username and password.
         """
         if not username:
-            raise ValueError('Users must have a username')
+            raise ValueError("Users must have a username")
 
         user = self.model(username=username)
 
@@ -24,10 +27,7 @@ class UserManager(BaseUserManager):
         """
         Creates and saves a superuser with the given username and password.
         """
-        user = self.create_user(
-            username,
-            password=password,
-        )
+        user = self.create_user(username, password=password,)
         # make this user a superuser
         user.is_superuser = True
         user.save()
@@ -38,7 +38,7 @@ class User(AbstractBaseUser, PermissionsMixin):
     username = models.CharField(max_length=42, unique=True)
     is_active = models.BooleanField(default=True)
 
-    USERNAME_FIELD = 'username'
+    USERNAME_FIELD = "username"
 
     objects = UserManager()  # linking to custom UserManager
 
