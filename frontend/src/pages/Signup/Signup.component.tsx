@@ -1,5 +1,5 @@
 import React, { Dispatch, SetStateAction } from 'react';
-import SignupForm from 'components/forms/SignupForm';
+import CredentialsForm from 'components/forms/CredentialsForm';
 import './Signup.scss';
 
 const Signup = ({
@@ -11,8 +11,8 @@ const Signup = ({
     <h1 className="signup-title">You aren't logged in!</h1>
     <p className="signup-subtitle">You bad turtle</p>
     <div className="forms-container">
-      <SignupForm setShouldShowSignup={setShouldShowSignup} />
-      <SignupForm setShouldShowSignup={setShouldShowSignup} isLogin />
+      <CredentialsForm setShouldShowSignup={setShouldShowSignup} />
+      <CredentialsForm setShouldShowSignup={setShouldShowSignup} isLogin />
     </div>
   </div>
 );

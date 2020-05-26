@@ -1,8 +1,8 @@
 import React, { useState, Dispatch, SetStateAction } from 'react';
 import { signup, login } from 'services/requests';
-import './SignupForm.scss';
+import './CredentialsForm.scss';
 
-const SignupForm = ({
+const CredentialsForm = ({
   setShouldShowSignup,
   isLogin,
 }: {
@@ -28,26 +28,26 @@ const SignupForm = ({
   };
 
   return (
-    <div className="signupForm-container">
-      <h1 className="signupForm-title">{isLogin ? 'Login' : 'Signup'}</h1>
-      <form className="signupForm-form" onSubmit={handleSubmit}>
-        <p className="signupForm-label">Username</p>
+    <div className="credentialsForm-container">
+      <h1 className="credentialsForm-title">{isLogin ? 'Login' : 'Signup'}</h1>
+      <form className="credentialsForm-form" onSubmit={handleSubmit}>
+        <p className="credentialsForm-label">Username</p>
         <input
-          className="signupForm-input"
+          className="credentialsForm-input"
           type="text"
           onChange={(e) => setUsername(e.target.value)}
         />
-        <p className="signupForm-label">Password</p>
+        <p className="credentialsForm-label">Password</p>
         <input
-          className="signupForm-input"
+          className="credentialsForm-input"
           type="password"
           onChange={(e) => setPassword(e.target.value)}
         />
-        {error && <p className="signupForm-error">Error: this username is already taken!</p>}
-        <input className="signupForm-input" type="submit" />
+        {error && <p className="credentialsForm-error">Error: this username is already taken!</p>}
+        <input className="credentialsForm-input" type="submit" />
       </form>
     </div>
   );
 };
 
-export default SignupForm;
+export default CredentialsForm;
