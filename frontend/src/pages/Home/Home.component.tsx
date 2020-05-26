@@ -1,23 +1,27 @@
 import React from 'react';
 import { LoginState } from 'redux/Login';
+import { useTranslation } from 'react-i18next';
 import './Home.scss';
 
-const Home = ({ username }: { username: LoginState['username'] }) => (
-  <div className="home-container">
-    <h1 className="home-title">{`${
-      username ? `Welcome ${username}!` : ''
-    } You finally logged in.`}</h1>
-    <p className="home-subtitle">You good turtle.</p>
-    <p className="home-text">Now enjoy staring at a blank page \(°-° )/</p>
-    <button
-      onClick={() => {
-        localStorage.clear();
-        window.location.reload();
-      }}
-    >
-      Clear localStorage
-    </button>
-  </div>
-);
+const Home = ({ username }: { username: LoginState['username'] }) => {
+  const { t } = useTranslation();
+  return (
+    <div className="home-container">
+      <h1 className="home-title">
+        {t('pages.home.welcome', { username: username || 'stranger' })}
+      </h1>
+      <p className="home-subtitle">{t('pages.home.subtitle')}</p>
+      <p className="home-text">{t('pages.home.enjoy')}</p>
+      <button
+        onClick={() => {
+          localStorage.clear();
+          window.location.reload();
+        }}
+      >
+        {t('pages.home.clearButton')}
+      </button>
+    </div>
+  );
+};
 
 export default Home;
