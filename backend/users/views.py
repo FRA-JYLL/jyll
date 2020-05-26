@@ -7,6 +7,7 @@ from rest_framework import mixins
 from rest_framework import viewsets
 from rest_framework_simplejwt.tokens import RefreshToken
 from rest_framework_simplejwt import views as jwt_views
+from rest_framework.decorators import action
 
 
 class UserViewSet(
@@ -35,11 +36,12 @@ class UserViewSet(
             "access": str(refresh_token.access_token),
         }
 
-        return Response(
-            {**serializer.data, **tokens},
-            status=status.HTTP_201_CREATED,
-            headers=headers,
-        )
+        return Response(tokens, status=status.HTTP_201_CREATED, headers=headers)
+
+    @action(detail=False, methods=["get"])
+    def me(self, request, *args, **kwargs):
+        """Get the user authenticating the request"""
+        return Response(self.get_serializer(request.user).data)
 
 
 class LoginView(jwt_views.TokenObtainPairView):

@@ -63,3 +63,25 @@ class UserTests(APITestCase):
         # Check that the request was rejected.
         response = self.client.get(url)
         self.assertEqual(response.status_code, status.HTTP_401_UNAUTHORIZED)
+
+    def test_retrieve_user_from_auth_token(self):
+        access_token = AccessToken.for_user(self.user)
+        self.client.credentials(
+            HTTP_AUTHORIZATION="Bearer " + str(access_token)
+        )  # Add token to request headers
+        url = reverse("user-me")
+
+        # Check that the request was accepted.
+        response = self.client.get(url)
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
+
+        # Check that the user_id and username in the response are correct
+        self.assertEqual(response.data.get("id"), self.user.id)
+        self.assertEqual(response.data.get("username"), self.user.username)
+
+    def test_unauthorized_retrieve_user_from_auth_token(self):
+        url = reverse("user-me")
+
+        # Check that the request was accepted.
+        response = self.client.get(url)
+        self.assertEqual(response.status_code, status.HTTP_401_UNAUTHORIZED)
