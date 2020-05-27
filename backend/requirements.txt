@@ -11,3 +11,4 @@ django-extensions==2.2.5
 celery==4.4.2
 django-celery-results==1.2.1
 black==19.10b0
+flake8==3.8.2

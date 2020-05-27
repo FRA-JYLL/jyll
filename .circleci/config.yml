@@ -44,10 +44,16 @@ jobs:
                   GRANT ALL PRIVILEGES ON test_jyll.* TO 'jyll'@'127.0.0.1';
                   FLUSH PRIVILEGES;" | mysql -h 127.0.0.1 -u root
       - run:
-          name: style checks
+          name: style
           command: |
             pip install black==19.10b0
             black --check backend
+
+      - run:
+          name: linting
+          command: |
+            pip install flake8==3.8.2
+            flake8 --config=.flake8 .
 
       - run:
           name: Running backend tests

@@ -1,0 +1,8 @@
+[flake8]
+ignore = E231, W503, E501, E203
+select = C,E,F,W,B,B950
+max-line-length = 88
+exclude =
+    frontend
+    */migrations/*
+    venv
