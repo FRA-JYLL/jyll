@@ -1,10 +1,14 @@
-import React from 'react';
-import { AuthenticationState } from 'redux/authentication';
+import React, { useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import './Home.scss';
+import { Props } from './Home.container';
 
-const Home = ({ username }: { username: AuthenticationState['username'] }) => {
+const Home = ({ username, getUserInfo }: Props) => {
   const { t } = useTranslation();
+
+  useEffect(() => {
+    getUserInfo();
+  }, [getUserInfo]);
 
   return (
     <div className="home-container">
