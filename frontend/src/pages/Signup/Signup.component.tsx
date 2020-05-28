@@ -1,14 +1,14 @@
 import React, { Dispatch, SetStateAction } from 'react';
-import { signup, login } from 'services/requests';
 import CredentialsForm from 'components/forms/CredentialsForm';
 import './Signup.scss';
 import { useTranslation } from 'react-i18next';
+import { Props } from './Signup.container';
 
-const Signup = ({
-  setShouldShowSignup,
-}: {
+interface ComponentProps extends Props {
   setShouldShowSignup: Dispatch<SetStateAction<boolean>>;
-}) => {
+}
+
+const Signup = ({ setShouldShowSignup, signup, login }: ComponentProps) => {
   const { t } = useTranslation();
   return (
     <div className="signup-container">

@@ -1,6 +1,7 @@
 import React, { useState, Dispatch, SetStateAction } from 'react';
 import { useTranslation } from 'react-i18next';
 import './CredentialsForm.scss';
+import { SignupRequest, LoginRequest } from 'redux/authentication/types';
 
 const CredentialsForm = ({
   setShouldShowSignup,
@@ -9,7 +10,7 @@ const CredentialsForm = ({
   errorMessage,
 }: {
   setShouldShowSignup: Dispatch<SetStateAction<boolean>>;
-  requireTokens: (username: string, password: string) => Promise<boolean>;
+  requireTokens: (username: string, password: string) => SignupRequest | LoginRequest;
   title: string;
   errorMessage: string;
 }) => {
