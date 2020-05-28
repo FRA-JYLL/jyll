@@ -3,12 +3,12 @@ import { useTranslation } from 'react-i18next';
 import './Home.scss';
 import { Props } from './Home.container';
 
-const Home = ({ username, getUserInfo }: Props) => {
+const Home = ({ username, getUserInfo, accessToken }: Props) => {
   const { t } = useTranslation();
 
   useEffect(() => {
     getUserInfo();
-  }, [getUserInfo]);
+  }, [getUserInfo, accessToken]);
 
   return (
     <div className="home-container">

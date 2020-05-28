@@ -1,9 +1,10 @@
 export const LOGIN_REQUEST = 'LOGIN_REQUEST';
 export const SIGNUP_REQUEST = 'SIGNUP_REQUEST';
+export const GET_TOKENS_SUCCESS = 'GET_TOKENS_SUCCESS';
 export const GET_USER_INFO_REQUEST = 'GET_USER_INFO_REQUEST';
 export const GET_USER_INFO_SUCCESS = 'GET_USER_INFO_SUCCESS';
 
-export type AuthenticationActions = GetUserInfoSuccess; // Add more with the | operator
+export type AuthenticationActions = GetUserInfoSuccess | GetTokensSuccess;
 
 export interface SignupRequest {
   type: typeof SIGNUP_REQUEST;
@@ -18,6 +19,14 @@ export interface LoginRequest {
   payload: {
     username: string;
     password: string;
+  };
+}
+
+export interface GetTokensSuccess {
+  type: typeof GET_TOKENS_SUCCESS;
+  payload: {
+    accessToken: string;
+    refreshToken: string;
   };
 }
 
@@ -38,4 +47,6 @@ export interface AuthenticationState {
   userId?: number;
   username?: string;
   lastLogin?: string;
+  accessToken?: string;
+  refreshToken?: string;
 }

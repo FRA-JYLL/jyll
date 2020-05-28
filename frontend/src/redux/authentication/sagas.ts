@@ -1,4 +1,4 @@
-import { put, takeEvery, call } from 'redux-saga/effects';
+import { put, takeEvery, call, select } from 'redux-saga/effects';
 import { SagaIterator } from 'redux-saga';
 import {
   SignupRequest,
@@ -7,17 +7,22 @@ import {
   LOGIN_REQUEST,
   GET_USER_INFO_REQUEST,
   GET_USER_INFO_SUCCESS,
+  GET_TOKENS_SUCCESS,
 } from './types';
 import { signupRequest, loginRequest, getUserInfoRequest } from 'services/requests';
+import { setTokens } from 'services/utils';
+import { accessTokenSelector } from './selectors';
 
 function* signupSaga(action: SignupRequest): SagaIterator {
   try {
     const response = yield call(signupRequest, action.payload);
 
-    if (response.access && response.refresh) {
-      localStorage.setItem('accessToken', response.access);
-      localStorage.setItem('refreshToken', response.refresh);
-    }
+    setTokens(response.accessToken, response.refreshToken);
+
+    yield put({
+      type: GET_TOKENS_SUCCESS,
+      payload: { accessToken: response.access, refreshToken: response.refresh },
+    });
   } catch (error) {}
 }
 
@@ -25,15 +30,17 @@ function* loginSaga(action: LoginRequest): SagaIterator {
   try {
     const response = yield call(loginRequest, action.payload);
 
-    if (response.access && response.refresh) {
-      localStorage.setItem('accessToken', response.access);
-      localStorage.setItem('refreshToken', response.refresh);
-    }
+    setTokens(response.accessToken, response.refreshToken);
+
+    yield put({
+      type: GET_TOKENS_SUCCESS,
+      payload: { accessToken: response.access, refreshToken: response.refresh },
+    });
   } catch (error) {}
 }
 
 function* getUserInfoSaga(): SagaIterator {
-  const accessToken = localStorage.accessToken;
+  const accessToken = yield select(accessTokenSelector) || localStorage.accessToken;
   try {
     const response = yield call(getUserInfoRequest, accessToken);
 
