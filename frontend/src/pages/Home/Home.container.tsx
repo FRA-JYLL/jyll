@@ -1,11 +1,11 @@
 import { connect } from 'react-redux';
-import { getUsername } from 'redux/Login';
+import { usernameSelector } from 'redux/authentication';
 import { RootState } from 'redux/root';
 import Home from './Home.component';
 
 const mapStateToProps = (state: RootState) => {
   return {
-    username: getUsername(state),
+    username: usernameSelector(state),
   };
 };
 

@@ -1,10 +1,11 @@
 import React from 'react';
-import { LoginState } from 'redux/Login';
+import { AuthenticationState } from 'redux/authentication';
 import { useTranslation } from 'react-i18next';
 import './Home.scss';
 
-const Home = ({ username }: { username: LoginState['username'] }) => {
+const Home = ({ username }: { username: AuthenticationState['username'] }) => {
   const { t } = useTranslation();
+
   return (
     <div className="home-container">
       <h1 className="home-title">
