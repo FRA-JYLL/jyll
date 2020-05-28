@@ -1,18 +1,23 @@
-export const GET_USERNAME_AND_ID = 'GET_USERNAME_AND_ID';
+export const GET_USER_INFO_REQUEST = 'GET_USER_INFO_REQUEST';
+export const GET_USER_INFO_SUCCESS = 'GET_USER_INFO_SUCCESS';
 
-export interface User {
-  userId: number;
-  username: string;
+export type AuthenticationActions = GetUserInfoSuccess; // Add more with the | operator
+
+export interface GetUserInfoRequest {
+  type: typeof GET_USER_INFO_REQUEST;
 }
 
-export type AuthenticationActions = GetUsernameAndIdAction; // Add more with the | operator
-
-export interface GetUsernameAndIdAction {
-  type: typeof GET_USERNAME_AND_ID;
-  payload: User;
+export interface GetUserInfoSuccess {
+  type: typeof GET_USER_INFO_SUCCESS;
+  payload: {
+    userId: number;
+    username: string;
+    lastLogin: string;
+  };
 }
 
 export interface AuthenticationState {
-  userId: number | null;
-  username: string | null;
+  userId?: number;
+  username?: string;
+  lastLogin?: string;
 }

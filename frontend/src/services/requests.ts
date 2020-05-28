@@ -1,6 +1,7 @@
 const apiBaseUrl = process.env.REACT_APP_API_BASE_URL || '';
 
 export const signup = async (username: string, password: string) => {
+  // TODO: Rename to signupRequest
   const response = await fetch(`${apiBaseUrl}/users/`, {
     method: 'POST',
     headers: {
@@ -19,6 +20,7 @@ export const signup = async (username: string, password: string) => {
 };
 
 export const login = async (username: string, password: string) => {
+  // TODO: Rename to loginRequest
   const response = await fetch(`${apiBaseUrl}/auth/login/`, {
     method: 'POST',
     headers: {
@@ -34,4 +36,17 @@ export const login = async (username: string, password: string) => {
   }
 
   return !!(payload.access && payload.refresh);
+};
+
+export const getUserInfoRequest = async (accessToken: string) => {
+  const response = await fetch(`${apiBaseUrl}/users/me/`, {
+    method: 'GET',
+    headers: {
+      Authorization: `Bearer ${accessToken}`,
+    },
+  });
+
+  const payload = await response.json();
+
+  return payload;
 };

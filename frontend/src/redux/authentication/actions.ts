@@ -1,7 +1,7 @@
-import { GET_USERNAME_AND_ID, User, GetUsernameAndIdAction } from './types';
+import { GET_USER_INFO_REQUEST, GetUserInfoRequest } from './types';
 
-export function getUsernameAndId(user: User): GetUsernameAndIdAction {
-  return { type: GET_USERNAME_AND_ID, payload: user };
+export function getUserInfoActionCreator(): GetUserInfoRequest {
+  return { type: GET_USER_INFO_REQUEST };
 }
 
-export type getUsernameAndIdType = typeof getUsernameAndId;
+export type GetUserInfoActionCreator = typeof getUserInfoActionCreator;
