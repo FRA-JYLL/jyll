@@ -9,6 +9,7 @@ import {
   accessTokenSelector,
 } from 'redux/authentication';
 import 'App.scss';
+import FullScreenLoader from 'components/loaders';
 
 const mapStateToProps = (state: RootState) => {
   return {
@@ -27,7 +28,12 @@ const App = ({ getUserInfo, username, accessToken }: AppProps) => {
   useEffect(() => {
     getUserInfo();
   }, [getUserInfo, accessToken]);
-  return <div className="container">{username ? <Home /> : <Signup />}</div>;
+  return (
+    <div className="container">
+      <FullScreenLoader isVisible={!username && !!localStorage.accessToken} />
+      {username ? <Home /> : <Signup />}
+    </div>
+  );
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(App);
