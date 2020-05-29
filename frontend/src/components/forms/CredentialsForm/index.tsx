@@ -1,3 +1,1 @@
-import CredentialsForm from './CredentialsForm.container';
-
-export default CredentialsForm;
+export { default } from './CredentialsForm.component';

@@ -15,7 +15,7 @@ export default {
       welcome: 'Welcome, {{username}}! You finally logged in',
       subtitle: 'You good turtle',
       enjoy: 'Now enjoy staring at a blank page \\(°-° )/',
-      clearButton: 'Clear localStorage',
+      logout: 'Log out',
     },
   },
 };

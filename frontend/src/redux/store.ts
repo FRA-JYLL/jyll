@@ -1,9 +1,25 @@
-import { createStore } from 'redux';
+import { createStore, applyMiddleware } from 'redux';
+import createSagaMiddleware from 'redux-saga';
+import { all } from 'redux-saga/effects';
 import { rootReducer } from './root';
+import { watchAuthentication } from './authentication/sagas';
+
+const sagaMiddleware = createSagaMiddleware();
+
+const createStoreWithMiddleware = applyMiddleware(sagaMiddleware)(createStore);
 
 const not_so_typed_window = window as any;
 
-export default createStore(
+const store = createStoreWithMiddleware(
   rootReducer,
-  not_so_typed_window.__REDUX_DEVTOOLS_EXTENSION__ && not_so_typed_window.__REDUX_DEVTOOLS_EXTENSION__()
+  not_so_typed_window.__REDUX_DEVTOOLS_EXTENSION__ &&
+    not_so_typed_window.__REDUX_DEVTOOLS_EXTENSION__()
 );
+
+function* watchAll() {
+  yield all([watchAuthentication()]);
+}
+
+sagaMiddleware.run(watchAll);
+
+export default store;
