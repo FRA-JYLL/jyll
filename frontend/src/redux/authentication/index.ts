@@ -12,14 +12,16 @@ export type {
   AuthenticationActions,
   SignupRequest,
   LoginRequest,
+  LogoutRequest,
+  LogoutSuccess,
   GetUserInfoRequest,
   GetUserInfoSuccess,
-  LogoutSuccess,
 } from './types';
 export {
   SIGNUP_REQUEST,
   LOGIN_REQUEST,
+  LOGOUT_REQUEST,
+  LOGOUT_SUCCESS,
   GET_USER_INFO_REQUEST,
   GET_USER_INFO_SUCCESS,
-  LOGOUT_SUCCESS,
 } from './types';

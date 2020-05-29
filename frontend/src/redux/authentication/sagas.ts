@@ -5,12 +5,14 @@ import {
   SIGNUP_REQUEST,
   LoginRequest,
   LOGIN_REQUEST,
+  LOGOUT_REQUEST,
+  LOGOUT_SUCCESS,
   GET_USER_INFO_REQUEST,
   GET_USER_INFO_SUCCESS,
   GET_TOKENS_SUCCESS,
 } from './types';
 import { signupRequest, loginRequest, getUserInfoRequest } from 'services/requests';
-import { setTokens } from 'services/utils';
+import { setTokens, clearTokens } from 'services/utils';
 import { accessTokenSelector } from './selectors';
 
 function* signupSaga(action: SignupRequest): SagaIterator {
@@ -43,6 +45,12 @@ function* loginSaga(action: LoginRequest): SagaIterator {
   }
 }
 
+function* logoutSaga(): SagaIterator {
+  clearTokens();
+
+  yield put({ type: LOGOUT_SUCCESS });
+}
+
 function* getUserInfoSaga(): SagaIterator {
   const accessToken = (yield select(accessTokenSelector)) || localStorage.accessToken;
   try {
@@ -62,7 +70,8 @@ function* getUserInfoSaga(): SagaIterator {
 }
 
 export function* watchAuthentication() {
-  yield takeEvery(LOGIN_REQUEST, loginSaga);
   yield takeEvery(SIGNUP_REQUEST, signupSaga);
+  yield takeEvery(LOGIN_REQUEST, loginSaga);
+  yield takeEvery(LOGOUT_REQUEST, logoutSaga);
   yield takeEvery(GET_USER_INFO_REQUEST, getUserInfoSaga);
 }

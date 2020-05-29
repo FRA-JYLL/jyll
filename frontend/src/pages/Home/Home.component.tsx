@@ -13,15 +13,7 @@ const Home = ({ username, logout }: Props) => {
       </h1>
       <p className="home-subtitle">{t('pages.home.subtitle')}</p>
       <p className="home-text">{t('pages.home.enjoy')}</p>
-      <button
-        onClick={() => {
-          localStorage.clear();
-          logout();
-          window.location.reload();
-        }}
-      >
-        {t('pages.home.logout')}
-      </button>
+      <button onClick={logout}>{t('pages.home.logout')}</button>
     </div>
   );
 };
