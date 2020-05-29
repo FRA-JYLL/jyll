@@ -17,30 +17,34 @@ function* signupSaga(action: SignupRequest): SagaIterator {
   try {
     const response = yield call(signupRequest, action.payload);
 
-    setTokens(response.accessToken, response.refreshToken);
+    setTokens(response.access, response.refresh);
 
     yield put({
       type: GET_TOKENS_SUCCESS,
       payload: { accessToken: response.access, refreshToken: response.refresh },
     });
-  } catch (error) {}
+  } catch (error) {
+    // TODO: Display translated error in a banner
+  }
 }
 
 function* loginSaga(action: LoginRequest): SagaIterator {
   try {
     const response = yield call(loginRequest, action.payload);
 
-    setTokens(response.accessToken, response.refreshToken);
+    setTokens(response.access, response.refresh);
 
     yield put({
       type: GET_TOKENS_SUCCESS,
       payload: { accessToken: response.access, refreshToken: response.refresh },
     });
-  } catch (error) {}
+  } catch (error) {
+    // TODO: Display translated error in a banner
+  }
 }
 
 function* getUserInfoSaga(): SagaIterator {
-  const accessToken = yield select(accessTokenSelector) || localStorage.accessToken;
+  const accessToken = (yield select(accessTokenSelector)) || localStorage.accessToken;
   try {
     const response = yield call(getUserInfoRequest, accessToken);
 
@@ -52,7 +56,9 @@ function* getUserInfoSaga(): SagaIterator {
         lastLogin: response.last_login,
       },
     });
-  } catch (error) {}
+  } catch (error) {
+    // TODO: Display translated error in a banner
+  }
 }
 
 export function* watchAuthentication() {
