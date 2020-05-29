@@ -1,5 +1,4 @@
 import React, { useEffect } from 'react';
-import { Dispatch } from 'redux';
 import { connect } from 'react-redux';
 import Signup from 'pages/Signup';
 import Home from 'pages/Home';
@@ -18,11 +17,11 @@ const mapStateToProps = (state: RootState) => {
   };
 };
 
-const mapDispatchToProps = (dispatch: Dispatch) => ({
-  getUserInfo: () => dispatch(getUserInfoActionCreator()),
-});
+const mapDispatchToProps = {
+  getUserInfo: getUserInfoActionCreator,
+};
 
-type AppProps = ReturnType<typeof mapStateToProps> & ReturnType<typeof mapDispatchToProps>;
+type AppProps = ReturnType<typeof mapStateToProps> & typeof mapDispatchToProps;
 
 const App = ({ getUserInfo, username, accessToken }: AppProps) => {
   useEffect(() => {
