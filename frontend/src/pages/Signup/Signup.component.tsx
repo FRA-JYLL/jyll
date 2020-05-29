@@ -11,16 +11,8 @@ const Signup = ({ signup, login }: Props) => {
       <h1 className="signup-title">{t('pages.signup.title')}</h1>
       <p className="signup-subtitle">{t('pages.signup.subtitle')}</p>
       <div className="forms-container">
-        <CredentialsForm
-          requireTokens={signup}
-          title={t('pages.signup.signup')}
-          errorMessage={t('pages.signup.usernameAlreadyTaken')}
-        />
-        <CredentialsForm
-          requireTokens={login}
-          title={t('pages.signup.login')}
-          errorMessage={t('pages.signup.invalidCredentials')}
-        />
+        <CredentialsForm requireTokens={signup} title={t('pages.signup.signup')} />
+        <CredentialsForm requireTokens={login} title={t('pages.signup.login')} />
       </div>
     </div>
   );

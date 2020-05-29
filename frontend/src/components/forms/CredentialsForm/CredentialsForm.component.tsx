@@ -6,28 +6,18 @@ import { SignupRequest, LoginRequest } from 'redux/authentication/types';
 const CredentialsForm = ({
   requireTokens,
   title,
-  errorMessage,
 }: {
   requireTokens: (username: string, password: string) => SignupRequest | LoginRequest;
   title: string;
-  errorMessage: string;
 }) => {
   const { t } = useTranslation();
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
-  const [error, setError] = useState(false);
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
-    const success = await requireTokens(username, password);
-
-    // TODO: Handle error through sagas
-    if (!success) {
-      setError(true);
-
-      return;
-    }
+    requireTokens(username, password);
   };
 
   return (
@@ -46,7 +36,6 @@ const CredentialsForm = ({
           type="password"
           onChange={(e) => setPassword(e.target.value)}
         />
-        {error && <p className="credentialsForm-error">{errorMessage}</p>}
         <input className="credentialsForm-input" type="submit" />
       </form>
     </div>
