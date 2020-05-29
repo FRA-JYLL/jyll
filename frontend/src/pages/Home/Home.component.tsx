@@ -1,14 +1,10 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import { useTranslation } from 'react-i18next';
 import './Home.scss';
 import { Props } from './Home.container';
 
-const Home = ({ username, getUserInfo, accessToken }: Props) => {
+const Home = ({ username, logout }: Props) => {
   const { t } = useTranslation();
-
-  useEffect(() => {
-    getUserInfo();
-  }, [getUserInfo, accessToken]);
 
   return (
     <div className="home-container">
@@ -20,10 +16,11 @@ const Home = ({ username, getUserInfo, accessToken }: Props) => {
       <button
         onClick={() => {
           localStorage.clear();
+          logout();
           window.location.reload();
         }}
       >
-        {t('pages.home.clearButton')}
+        {t('pages.home.logout')}
       </button>
     </div>
   );

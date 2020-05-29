@@ -3,10 +3,13 @@ import {
   AuthenticationActions,
   AuthenticationState,
   GET_TOKENS_SUCCESS,
+  LOGOUT_SUCCESS,
 } from './types';
 
+const initialAuthenticationState: AuthenticationState = {};
+
 export const authenticationReducer = (
-  state: AuthenticationState = {},
+  state: AuthenticationState = initialAuthenticationState,
   action: AuthenticationActions
 ) => {
   switch (action.type) {
@@ -17,6 +20,8 @@ export const authenticationReducer = (
         username: action.payload.username,
         lastLogin: action.payload.lastLogin,
       };
+    case LOGOUT_SUCCESS:
+      return initialAuthenticationState;
     case GET_TOKENS_SUCCESS:
       return {
         ...state,

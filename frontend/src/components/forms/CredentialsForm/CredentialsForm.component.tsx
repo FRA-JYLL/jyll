@@ -1,15 +1,13 @@
-import React, { useState, Dispatch, SetStateAction } from 'react';
+import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import './CredentialsForm.scss';
 import { SignupRequest, LoginRequest } from 'redux/authentication/types';
 
 const CredentialsForm = ({
-  setShouldShowSignup,
   requireTokens,
   title,
   errorMessage,
 }: {
-  setShouldShowSignup: Dispatch<SetStateAction<boolean>>;
   requireTokens: (username: string, password: string) => SignupRequest | LoginRequest;
   title: string;
   errorMessage: string;
@@ -24,13 +22,12 @@ const CredentialsForm = ({
 
     const success = await requireTokens(username, password);
 
+    // TODO: Handle error through sagas
     if (!success) {
       setError(true);
 
       return;
     }
-
-    setShouldShowSignup(false);
   };
 
   return (
