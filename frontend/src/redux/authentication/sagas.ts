@@ -89,7 +89,7 @@ function* getNewAccessTokenSaga(): SagaIterator {
       },
     });
   } catch (error) {
-    put(logoutActionCreator());
+    yield put(logoutActionCreator());
   }
 }
 
