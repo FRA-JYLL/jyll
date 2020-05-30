@@ -9,6 +9,8 @@ export const signupRequest = async (credentials: { username: string; password: s
     body: JSON.stringify(credentials),
   });
 
+  if (!response.ok) throw response.status;
+
   const payload = await response.json();
 
   return payload;
@@ -23,6 +25,8 @@ export const loginRequest = async (credentials: { username: string; password: st
     body: JSON.stringify(credentials),
   });
 
+  if (!response.ok) throw response.status;
+
   const payload = await response.json();
 
   return payload;
@@ -36,9 +40,9 @@ export const getUserInfoRequest = async (accessToken: string) => {
     },
   });
 
-  const payload = await response.json();
+  if (!response.ok) throw response.status;
 
-  if (payload.code) throw payload.code;
+  const payload = await response.json();
 
   return payload;
 };
@@ -52,9 +56,9 @@ export const getNewAccessTokenRequest = async (refreshToken: string) => {
     body: JSON.stringify({ refresh: refreshToken }),
   });
 
-  const payload = await response.json();
+  if (!response.ok) throw response.status;
 
-  if (payload.code) throw payload.code;
+  const payload = await response.json();
 
   return payload;
 };

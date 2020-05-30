@@ -20,7 +20,7 @@ import {
 } from 'services/requests';
 import { setTokens, clearTokens } from 'services/utils';
 import { accessTokenSelector, refreshTokenSelector } from './selectors';
-import { getNewAccessTokenActionCreator } from './actions';
+import { getNewAccessTokenActionCreator, logoutActionCreator } from './actions';
 
 function* signupSaga(action: SignupRequest): SagaIterator {
   try {
@@ -33,7 +33,7 @@ function* signupSaga(action: SignupRequest): SagaIterator {
       payload: { accessToken: response.access, refreshToken: response.refresh },
     });
   } catch (error) {
-    // TODO: Display translated error in a banner
+    // TODO: Display translated error in a toaster
   }
 }
 
@@ -48,7 +48,7 @@ function* loginSaga(action: LoginRequest): SagaIterator {
       payload: { accessToken: response.access, refreshToken: response.refresh },
     });
   } catch (error) {
-    // TODO: Display translated error in a banner
+    // TODO: Display translated error in a toaster
   }
 }
 
@@ -89,7 +89,7 @@ function* getNewAccessTokenSaga(): SagaIterator {
       },
     });
   } catch (error) {
-    // TODO: Display translated error in a banner
+    put(logoutActionCreator());
   }
 }
 
