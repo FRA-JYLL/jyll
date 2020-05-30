@@ -10,10 +10,17 @@ import {
   GET_USER_INFO_REQUEST,
   GET_USER_INFO_SUCCESS,
   GET_TOKENS_SUCCESS,
+  GET_NEW_ACCESS_TOKEN_REQUEST,
 } from './types';
-import { signupRequest, loginRequest, getUserInfoRequest } from 'services/requests';
+import {
+  signupRequest,
+  loginRequest,
+  getUserInfoRequest,
+  getNewAccessTokenRequest,
+} from 'services/requests';
 import { setTokens, clearTokens } from 'services/utils';
-import { accessTokenSelector } from './selectors';
+import { accessTokenSelector, refreshTokenSelector } from './selectors';
+import { getNewAccessTokenActionCreator, logoutActionCreator } from './actions';
 
 function* signupSaga(action: SignupRequest): SagaIterator {
   try {
@@ -26,7 +33,7 @@ function* signupSaga(action: SignupRequest): SagaIterator {
       payload: { accessToken: response.access, refreshToken: response.refresh },
     });
   } catch (error) {
-    // TODO: Display translated error in a banner
+    // TODO: Display translated error in a toaster
   }
 }
 
@@ -41,7 +48,7 @@ function* loginSaga(action: LoginRequest): SagaIterator {
       payload: { accessToken: response.access, refreshToken: response.refresh },
     });
   } catch (error) {
-    // TODO: Display translated error in a banner
+    // TODO: Display translated error in a toaster
   }
 }
 
@@ -65,7 +72,24 @@ function* getUserInfoSaga(): SagaIterator {
       },
     });
   } catch (error) {
-    // TODO: Display translated error in a banner
+    yield put(getNewAccessTokenActionCreator());
+  }
+}
+
+function* getNewAccessTokenSaga(): SagaIterator {
+  const refreshToken = (yield select(refreshTokenSelector)) || localStorage.refreshToken;
+  try {
+    const response = yield call(getNewAccessTokenRequest, refreshToken);
+
+    yield put({
+      type: GET_TOKENS_SUCCESS,
+      payload: {
+        accessToken: response.access,
+        refreshToken: refreshToken,
+      },
+    });
+  } catch (error) {
+    yield put(logoutActionCreator());
   }
 }
 
@@ -74,4 +98,5 @@ export function* watchAuthentication() {
   yield takeEvery(LOGIN_REQUEST, loginSaga);
   yield takeEvery(LOGOUT_REQUEST, logoutSaga);
   yield takeEvery(GET_USER_INFO_REQUEST, getUserInfoSaga);
+  yield takeEvery(GET_NEW_ACCESS_TOKEN_REQUEST, getNewAccessTokenSaga);
 }

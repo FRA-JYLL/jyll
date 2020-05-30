@@ -9,6 +9,8 @@ export const signupRequest = async (credentials: { username: string; password: s
     body: JSON.stringify(credentials),
   });
 
+  if (!response.ok) throw response.status;
+
   const payload = await response.json();
 
   return payload;
@@ -23,6 +25,8 @@ export const loginRequest = async (credentials: { username: string; password: st
     body: JSON.stringify(credentials),
   });
 
+  if (!response.ok) throw response.status;
+
   const payload = await response.json();
 
   return payload;
@@ -35,6 +39,24 @@ export const getUserInfoRequest = async (accessToken: string) => {
       Authorization: `Bearer ${accessToken}`,
     },
   });
+
+  if (!response.ok) throw response.status;
+
+  const payload = await response.json();
+
+  return payload;
+};
+
+export const getNewAccessTokenRequest = async (refreshToken: string) => {
+  const response = await fetch(`${apiBaseUrl}/auth/refresh/`, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify({ refresh: refreshToken }),
+  });
+
+  if (!response.ok) throw response.status;
 
   const payload = await response.json();
 
