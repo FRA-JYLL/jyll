@@ -6,20 +6,20 @@
   height: 100%;
 }
 
-.signup-enter {
+.authentication-enter {
   position: absolute;
   opacity: 0;
 }
-.signup-enter-active {
+.authentication-enter-active {
   position: absolute;
   opacity: 1;
   transition: opacity 500ms ease-in;
 }
-.signup-exit {
+.authentication-exit {
   position: absolute;
   opacity: 1;
 }
-.signup-exit-active {
+.authentication-exit-active {
   position: absolute;
   opacity: 0;
   transition: opacity 500ms ease-in;

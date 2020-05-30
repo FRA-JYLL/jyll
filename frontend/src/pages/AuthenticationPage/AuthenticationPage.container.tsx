@@ -1,6 +1,6 @@
 import { connect } from 'react-redux';
 import { signupActionCreator, loginActionCreator } from 'redux/authentication';
-import Signup from './Signup.component';
+import AuthenticationPage from './AuthenticationPage.component';
 
 const mapDispatchToProps = {
   signup: signupActionCreator,
@@ -9,4 +9,4 @@ const mapDispatchToProps = {
 
 export type Props = typeof mapDispatchToProps;
 
-export default connect(null, mapDispatchToProps)(Signup);
+export default connect(null, mapDispatchToProps)(AuthenticationPage);

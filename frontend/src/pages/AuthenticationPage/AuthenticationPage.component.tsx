@@ -1,10 +1,10 @@
 import React from 'react';
 import CredentialsForm from 'components/forms/CredentialsForm';
-import './Signup.scss';
+import './AuthenticationPage.scss';
 import { useTranslation } from 'react-i18next';
-import { Props } from './Signup.container';
+import { Props } from './AuthenticationPage.container';
 
-const Signup = ({ signup, login }: Props) => {
+const AuthenticationPage = ({ signup, login }: Props) => {
   const { t } = useTranslation();
   return (
     <div className="signup-container">
@@ -18,4 +18,4 @@ const Signup = ({ signup, login }: Props) => {
   );
 };
 
-export default Signup;
+export default AuthenticationPage;

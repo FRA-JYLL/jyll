@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { connect } from 'react-redux';
 import { CSSTransition } from 'react-transition-group';
-import Signup from 'pages/Signup';
+import AuthenticationPage from 'pages/AuthenticationPage';
 import Home from 'pages/Home';
 import { RootState } from 'redux/root';
 import {
@@ -37,14 +37,14 @@ const App = ({ getUserInfo, username, accessToken }: AppProps) => {
       <CSSTransition
         in={!username && !localStorage.accessToken}
         timeout={500}
-        classNames={'signup'}
+        classNames={'authentication'}
         onEntering={() => setSignupIsVisible(true)}
         onExited={() => setSignupIsVisible(false)}
         mountOnEnter
         unmountOnExit
         appear
       >
-        <Signup />
+        <AuthenticationPage />
       </CSSTransition>
 
       <CSSTransition
