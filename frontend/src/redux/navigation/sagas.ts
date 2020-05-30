@@ -1,20 +1,31 @@
-import { put, takeEvery, delay } from 'redux-saga/effects';
+import { put, takeEvery, delay, select } from 'redux-saga/effects';
 import { SagaIterator } from 'redux-saga';
 import {
   ShowToastRequest,
   SHOW_TOAST_REQUEST,
   SHOW_TOAST_SUCCESS,
   HIDE_TOAST_SUCCESS,
+  QUEUE_TOAST_SUCCESS,
 } from './types';
+import { toastQueueSelector } from './selectors';
 
 function* showToastSaga(action: ShowToastRequest): SagaIterator {
-  const { message, duration } = action.payload;
+  yield put({ type: QUEUE_TOAST_SUCCESS, payload: action.payload });
 
-  yield put({ type: SHOW_TOAST_SUCCESS, payload: { message } });
+  let toastQueue = yield select(toastQueueSelector);
 
-  yield delay(duration);
+  if (toastQueue.length === 1)
+    do {
+      yield put({ type: SHOW_TOAST_SUCCESS });
 
-  yield put({ type: HIDE_TOAST_SUCCESS });
+      yield delay(toastQueue[0].duration);
+
+      yield put({ type: HIDE_TOAST_SUCCESS });
+
+      yield delay(500); // TODO: Import value to match duration of toast's exit transition
+
+      toastQueue = yield select(toastQueueSelector);
+    } while (toastQueue.length > 0);
 }
 
 export function* watchNavigation() {
