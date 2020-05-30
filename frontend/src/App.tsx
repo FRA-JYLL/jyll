@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { connect } from 'react-redux';
 import { CSSTransition } from 'react-transition-group';
 import AuthenticationPage from 'pages/AuthenticationPage';
-import Home from 'pages/Home';
+import GameSelectionPage from 'pages/GameSelectionPage';
 import { RootState } from 'redux/root';
 import {
   usernameSelector,
@@ -50,11 +50,11 @@ const App = ({ getUserInfo, username, accessToken }: AppProps) => {
       <CSSTransition
         in={!signupIsVisible && !!username}
         timeout={500}
-        classNames={'home'}
+        classNames={'game-selection'}
         mountOnEnter
         unmountOnExit
       >
-        <Home />
+        <GameSelectionPage />
       </CSSTransition>
 
       <CSSTransition

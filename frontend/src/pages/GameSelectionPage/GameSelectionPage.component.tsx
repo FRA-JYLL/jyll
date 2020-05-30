@@ -1,9 +1,9 @@
 import React from 'react';
 import { useTranslation } from 'react-i18next';
-import './Home.scss';
-import { Props } from './Home.container';
+import './GameSelectionPage.scss';
+import { Props } from './GameSelectionPage.container';
 
-const Home = ({ username, logout }: Props) => {
+const GameSelectionPage = ({ username, logout }: Props) => {
   const { t } = useTranslation();
 
   return (
@@ -18,4 +18,4 @@ const Home = ({ username, logout }: Props) => {
   );
 };
 
-export default Home;
+export default GameSelectionPage;

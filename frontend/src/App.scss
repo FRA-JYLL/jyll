@@ -25,20 +25,20 @@
   transition: opacity 500ms ease-in;
 }
 
-.home-enter {
+.game-selection-enter {
   position: absolute;
   opacity: 0;
 }
-.home-enter-active {
+.game-selection-enter-active {
   position: absolute;
   opacity: 1;
   transition: opacity 500ms ease-in;
 }
-.home-exit {
+.game-selection-exit {
   position: absolute;
   opacity: 1;
 }
-.home-exit-active {
+.game-selection-exit-active {
   position: absolute;
   opacity: 0;
   transition: opacity 500ms ease-in;

@@ -1,7 +1,7 @@
 import { connect } from 'react-redux';
 import { usernameSelector, logoutActionCreator } from 'redux/authentication';
 import { RootState } from 'redux/root';
-import Home from './Home.component';
+import GameSelectionPage from './GameSelectionPage.component';
 
 const mapStateToProps = (state: RootState) => {
   return {
@@ -15,4 +15,4 @@ const mapDispatchToProps = {
 
 export type Props = ReturnType<typeof mapStateToProps> & typeof mapDispatchToProps;
 
-export default connect(mapStateToProps, mapDispatchToProps)(Home);
+export default connect(mapStateToProps, mapDispatchToProps)(GameSelectionPage);
