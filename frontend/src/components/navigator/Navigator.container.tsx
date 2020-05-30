@@ -5,8 +5,9 @@ import {
   getUserInfoActionCreator,
   accessTokenSelector,
 } from 'redux/authentication';
-import { showMainLoaderSelector, showToastSelector, toastMessageSelector } from 'redux/navigation';
+import { showMainLoaderSelector } from 'redux/navigation';
 import Navigator from './Navigator.component';
+import { showToastSelector, toastMessageSelector } from 'redux/toast';
 
 const mapStateToProps = (state: RootState) => {
   return {

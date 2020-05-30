@@ -21,11 +21,8 @@ import {
 import { setTokens, clearTokens } from 'services/utils';
 import { accessTokenSelector, refreshTokenSelector } from './selectors';
 import { getNewAccessTokenActionCreator, logoutActionCreator } from './actions';
-import {
-  showMainLoaderActionCreator,
-  hideMainLoaderActionCreator,
-  showToastActionCreator,
-} from 'redux/navigation';
+import { showMainLoaderActionCreator, hideMainLoaderActionCreator } from 'redux/navigation';
+import { showToastActionCreator } from 'redux/toast';
 
 function* signupSaga(action: SignupRequest): SagaIterator {
   try {

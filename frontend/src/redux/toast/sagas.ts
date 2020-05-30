@@ -28,6 +28,6 @@ function* showToastSaga(action: ShowToastRequest): SagaIterator {
     } while (toastQueue.length > 0);
 }
 
-export function* watchNavigation() {
+export function* watchToast() {
   yield takeEvery(SHOW_TOAST_REQUEST, showToastSaga);
 }
