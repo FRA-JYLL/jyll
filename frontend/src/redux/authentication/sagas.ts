@@ -21,6 +21,7 @@ import {
 import { setTokens, clearTokens } from 'services/utils';
 import { accessTokenSelector, refreshTokenSelector } from './selectors';
 import { getNewAccessTokenActionCreator, logoutActionCreator } from './actions';
+import { showMainLoaderActionCreator, hideMainLoaderActionCreator } from 'redux/navigation';
 
 function* signupSaga(action: SignupRequest): SagaIterator {
   try {
@@ -61,6 +62,8 @@ function* logoutSaga(): SagaIterator {
 function* getUserInfoSaga(): SagaIterator {
   const accessToken = (yield select(accessTokenSelector)) || localStorage.accessToken;
   try {
+    yield put(showMainLoaderActionCreator());
+
     const response = yield call(getUserInfoRequest, accessToken);
 
     yield put({
@@ -73,6 +76,8 @@ function* getUserInfoSaga(): SagaIterator {
     });
   } catch (error) {
     yield put(getNewAccessTokenActionCreator());
+  } finally {
+    yield put(hideMainLoaderActionCreator());
   }
 }
 

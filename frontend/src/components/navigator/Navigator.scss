@@ -7,6 +7,9 @@
   opacity: 1;
   transition: opacity 500ms ease-out;
 }
+.authentication-appear-done {
+  position: absolute;
+}
 .authentication-enter {
   position: absolute;
   opacity: 0;
@@ -51,7 +54,6 @@
 }
 .game-selection-enter-done {
   position: absolute;
-  opacity: 1;
 }
 .game-selection-exit {
   position: absolute;
@@ -77,7 +79,7 @@
 .loader-enter-active {
   position: absolute;
   opacity: 1;
-  transition: opacity 0ms ease-out;
+  transition: opacity 300ms ease-out;
 }
 .loader-exit {
   position: absolute;
@@ -86,5 +88,5 @@
 .loader-exit-active {
   position: absolute;
   opacity: 0;
-  transition: opacity 0ms ease-in;
+  transition: opacity 100ms ease-in;
 }

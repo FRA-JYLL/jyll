@@ -6,7 +6,7 @@ import './Navigator.scss';
 import FullScreenLoader from 'components/loaders';
 import { Props } from './Navigator.container';
 
-const Navigator = ({ getUserInfo, username, accessToken }: Props) => {
+const Navigator = ({ getUserInfo, username, accessToken, showMainLoader }: Props) => {
   useEffect(() => {
     getUserInfo();
   }, [getUserInfo, accessToken]);
@@ -39,13 +39,13 @@ const Navigator = ({ getUserInfo, username, accessToken }: Props) => {
       </CSSTransition>
 
       <CSSTransition
-        in={!signupIsVisible && !username}
-        timeout={500}
+        in={showMainLoader && !signupIsVisible}
+        timeout={{ enter: 300, exit: 100 }}
         classNames={'loader'}
         mountOnEnter
         unmountOnExit
       >
-        <FullScreenLoader isVisible />
+        <FullScreenLoader />
       </CSSTransition>
     </>
   );
