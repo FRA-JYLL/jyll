@@ -7,12 +7,12 @@ const GameSelectionPage = ({ username, logout }: Props) => {
   const { t } = useTranslation();
 
   return (
-    <div className="home-container">
-      <h1 className="home-title">
+    <div className="game-selection-container">
+      <h1 className="game-selection-title">
         {t('pages.home.welcome', { username: username || 'stranger' })}
       </h1>
-      <p className="home-subtitle">{t('pages.home.subtitle')}</p>
-      <p className="home-text">{t('pages.home.enjoy')}</p>
+      <p className="game-selection-subtitle">{t('pages.home.subtitle')}</p>
+      <p className="game-selection-text">{t('pages.home.enjoy')}</p>
       <button onClick={logout}>{t('pages.home.logout')}</button>
     </div>
   );
