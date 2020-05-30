@@ -3,9 +3,15 @@ import {
   HIDE_MAIN_LOADER_SUCCESS,
   NavigationState,
   NavigationActions,
+  SHOW_TOAST_SUCCESS,
+  HIDE_TOAST_SUCCESS,
 } from './types';
 
-const initialNavigationState: NavigationState = { showMainLoader: false };
+const initialNavigationState: NavigationState = {
+  showMainLoader: false,
+  showToast: false,
+  toastMessage: '',
+};
 
 export const navigationReducer = (
   state: NavigationState = initialNavigationState,
@@ -21,6 +27,17 @@ export const navigationReducer = (
       return {
         ...state,
         showMainLoader: false,
+      };
+    case SHOW_TOAST_SUCCESS:
+      return {
+        ...state,
+        showToast: true,
+        toastMessage: action.payload.message,
+      };
+    case HIDE_TOAST_SUCCESS:
+      return {
+        ...state,
+        showToast: false,
       };
     default:
       return state;
