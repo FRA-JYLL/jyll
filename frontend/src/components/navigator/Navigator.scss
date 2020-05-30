@@ -1,0 +1,56 @@
+.authentication-enter {
+  position: absolute;
+  opacity: 0;
+}
+.authentication-enter-active {
+  position: absolute;
+  opacity: 1;
+  transition: opacity 500ms ease-in;
+}
+.authentication-exit {
+  position: absolute;
+  opacity: 1;
+}
+.authentication-exit-active {
+  position: absolute;
+  opacity: 0;
+  transition: opacity 500ms ease-in;
+}
+
+.game-selection-enter {
+  position: absolute;
+  opacity: 0;
+}
+.game-selection-enter-active {
+  position: absolute;
+  opacity: 1;
+  transition: opacity 500ms ease-in;
+}
+.game-selection-exit {
+  position: absolute;
+  opacity: 1;
+}
+.game-selection-exit-active {
+  position: absolute;
+  opacity: 0;
+  transition: opacity 500ms ease-in;
+}
+
+.loader-enter {
+  position: absolute;
+  opacity: 0;
+}
+.loader-enter-active {
+  position: absolute;
+  opacity: 1;
+  transition: opacity 500ms ease-in;
+}
+.loader-exit {
+  position: absolute;
+  opacity: 1;
+}
+.loader-exit-active {
+  position: absolute;
+  opacity: 0;
+  transition: opacity 500ms ease-in;
+}
