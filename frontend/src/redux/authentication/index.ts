@@ -1,10 +1,16 @@
 export {
   signupActionCreator,
   loginActionCreator,
-  getUserInfoActionCreator,
   logoutActionCreator,
+  getUserInfoActionCreator,
+  getNewAccessTokenActionCreator,
 } from './actions';
-export type { SignupActionCreator, LoginActionCreator, GetUserInfoActionCreator } from './actions';
+export type {
+  SignupActionCreator,
+  LoginActionCreator,
+  GetUserInfoActionCreator,
+  GetNewAccessTokenActionCreator,
+} from './actions';
 export { authenticationReducer } from './reducers';
 export { usernameSelector, accessTokenSelector, refreshTokenSelector } from './selectors';
 export type {
@@ -16,6 +22,7 @@ export type {
   LogoutSuccess,
   GetUserInfoRequest,
   GetUserInfoSuccess,
+  GetNewAccessTokenRequest,
 } from './types';
 export {
   SIGNUP_REQUEST,
@@ -24,4 +31,5 @@ export {
   LOGOUT_SUCCESS,
   GET_USER_INFO_REQUEST,
   GET_USER_INFO_SUCCESS,
+  GET_NEW_ACCESS_TOKEN_REQUEST,
 } from './types';

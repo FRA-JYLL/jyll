@@ -38,5 +38,23 @@ export const getUserInfoRequest = async (accessToken: string) => {
 
   const payload = await response.json();
 
+  if (payload.code) throw payload.code;
+
+  return payload;
+};
+
+export const getNewAccessTokenRequest = async (refreshToken: string) => {
+  const response = await fetch(`${apiBaseUrl}/auth/refresh/`, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify({ refresh: refreshToken }),
+  });
+
+  const payload = await response.json();
+
+  if (payload.code) throw payload.code;
+
   return payload;
 };
