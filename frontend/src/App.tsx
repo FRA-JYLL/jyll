@@ -1,5 +1,6 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { connect } from 'react-redux';
+import { CSSTransition } from 'react-transition-group';
 import Signup from 'pages/Signup';
 import Home from 'pages/Home';
 import { RootState } from 'redux/root';
@@ -28,10 +29,43 @@ const App = ({ getUserInfo, username, accessToken }: AppProps) => {
   useEffect(() => {
     getUserInfo();
   }, [getUserInfo, accessToken]);
+
+  const [signupIsVisible, setSignupIsVisible] = useState(false);
+
   return (
     <div className="container">
-      <FullScreenLoader isVisible={!username && !!localStorage.accessToken} />
-      {username ? <Home /> : <Signup />}
+      <CSSTransition
+        in={!username && !localStorage.accessToken}
+        timeout={500}
+        classNames={'signup'}
+        onEntering={() => setSignupIsVisible(true)}
+        onExited={() => setSignupIsVisible(false)}
+        mountOnEnter
+        unmountOnExit
+        appear
+      >
+        <Signup />
+      </CSSTransition>
+
+      <CSSTransition
+        in={!signupIsVisible && !!username}
+        timeout={500}
+        classNames={'home'}
+        mountOnEnter
+        unmountOnExit
+      >
+        <Home />
+      </CSSTransition>
+
+      <CSSTransition
+        in={!signupIsVisible && !username}
+        timeout={500}
+        classNames={'loader'}
+        mountOnEnter
+        unmountOnExit
+      >
+        <FullScreenLoader isVisible />
+      </CSSTransition>
     </div>
   );
 };

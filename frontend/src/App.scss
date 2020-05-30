@@ -5,3 +5,60 @@
   align-items: center;
   height: 100%;
 }
+
+.signup-enter {
+  position: absolute;
+  opacity: 0;
+}
+.signup-enter-active {
+  position: absolute;
+  opacity: 1;
+  transition: opacity 500ms ease-in;
+}
+.signup-exit {
+  position: absolute;
+  opacity: 1;
+}
+.signup-exit-active {
+  position: absolute;
+  opacity: 0;
+  transition: opacity 500ms ease-in;
+}
+
+.home-enter {
+  position: absolute;
+  opacity: 0;
+}
+.home-enter-active {
+  position: absolute;
+  opacity: 1;
+  transition: opacity 500ms ease-in;
+}
+.home-exit {
+  position: absolute;
+  opacity: 1;
+}
+.home-exit-active {
+  position: absolute;
+  opacity: 0;
+  transition: opacity 500ms ease-in;
+}
+
+.loader-enter {
+  position: absolute;
+  opacity: 0;
+}
+.loader-enter-active {
+  position: absolute;
+  opacity: 1;
+  transition: opacity 500ms ease-in;
+}
+.loader-exit {
+  position: absolute;
+  opacity: 1;
+}
+.loader-exit-active {
+  position: absolute;
+  opacity: 0;
+  transition: opacity 500ms ease-in;
+}
