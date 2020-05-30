@@ -18,4 +18,8 @@ export default {
       logout: 'Log out',
     },
   },
+  toast: {
+    signupError: 'Error: this username is already taken',
+    loginError: 'Error: invalid username or password',
+  },
 };
