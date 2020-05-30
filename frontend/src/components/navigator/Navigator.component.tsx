@@ -4,9 +4,17 @@ import AuthenticationPage from 'pages/AuthenticationPage';
 import GameSelectionPage from 'pages/GameSelectionPage';
 import './Navigator.scss';
 import FullScreenLoader from 'components/loaders';
+import Toast from 'components/toast';
 import { Props } from './Navigator.container';
 
-const Navigator = ({ getUserInfo, username, accessToken, showMainLoader }: Props) => {
+const Navigator = ({
+  getUserInfo,
+  username,
+  accessToken,
+  showMainLoader,
+  showToast,
+  toastMessage,
+}: Props) => {
   useEffect(() => {
     getUserInfo();
   }, [getUserInfo, accessToken]);
@@ -46,6 +54,10 @@ const Navigator = ({ getUserInfo, username, accessToken, showMainLoader }: Props
         unmountOnExit
       >
         <FullScreenLoader />
+      </CSSTransition>
+
+      <CSSTransition in={showToast} timeout={500} classNames={'toast'} mountOnEnter unmountOnExit>
+        <Toast message={toastMessage} />
       </CSSTransition>
     </>
   );

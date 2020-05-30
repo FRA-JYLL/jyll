@@ -90,3 +90,26 @@
   opacity: 0;
   transition: opacity 100ms ease-in;
 }
+
+.toast-enter {
+  position: absolute;
+  transform: translate(0px, 0px);
+}
+.toast-enter-active {
+  position: absolute;
+  transform: translate(0px, -100px);
+  transition: transform 500ms ease-out;
+}
+.toast-enter-done {
+  position: absolute;
+  transform: translate(0px, -100px);
+}
+.toast-exit {
+  position: absolute;
+  transform: translate(0px, -100px);
+}
+.toast-exit-active {
+  position: absolute;
+  transform: translate(0px, 0px);
+  transition: transform 500ms ease-in;
+}

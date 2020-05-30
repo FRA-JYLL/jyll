@@ -1,0 +1,16 @@
+.toast-container {
+  display: flex;
+  position: absolute;
+  background-color: #ce0000;
+  height: 100px;
+  width: 100%;
+  bottom: -100px;
+  z-index: 10;
+}
+
+.toast-message {
+  display: flex;
+  padding: 20px;
+  font-size: 16px;
+  color: #ffffff;
+}
