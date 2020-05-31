@@ -1,16 +1,18 @@
-.signup-container {
+.authentication-container {
   display: flex;
+  background-color: #4781ff80;
   flex-direction: column;
   align-items: center;
+  padding: 30px;
 }
 
-.signup-title {
+.authentication-title {
   font-size: 40px;
   font-weight: 700;
   margin-bottom: 20px;
 }
 
-.signup-subtitle {
+.authentication-subtitle {
   font-size: 24px;
   font-style: italic;
   margin-bottom: 30px;

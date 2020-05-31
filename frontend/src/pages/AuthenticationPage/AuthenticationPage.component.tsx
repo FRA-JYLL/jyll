@@ -1,15 +1,15 @@
 import React from 'react';
 import CredentialsForm from 'components/forms/CredentialsForm';
-import './Signup.scss';
+import './AuthenticationPage.scss';
 import { useTranslation } from 'react-i18next';
-import { Props } from './Signup.container';
+import { Props } from './AuthenticationPage.container';
 
-const Signup = ({ signup, login }: Props) => {
+const AuthenticationPage = ({ signup, login }: Props) => {
   const { t } = useTranslation();
   return (
-    <div className="signup-container">
-      <h1 className="signup-title">{t('pages.signup.title')}</h1>
-      <p className="signup-subtitle">{t('pages.signup.subtitle')}</p>
+    <div className="authentication-container">
+      <h1 className="authentication-title">{t('pages.signup.title')}</h1>
+      <p className="authentication-subtitle">{t('pages.signup.subtitle')}</p>
       <div className="forms-container">
         <CredentialsForm requireTokens={signup} title={t('pages.signup.signup')} />
         <CredentialsForm requireTokens={login} title={t('pages.signup.login')} />
@@ -18,4 +18,4 @@ const Signup = ({ signup, login }: Props) => {
   );
 };
 
-export default Signup;
+export default AuthenticationPage;

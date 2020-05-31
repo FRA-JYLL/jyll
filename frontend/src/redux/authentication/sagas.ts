@@ -21,6 +21,7 @@ import {
 import { setTokens, clearTokens } from 'services/utils';
 import { accessTokenSelector, refreshTokenSelector } from './selectors';
 import { getNewAccessTokenActionCreator, logoutActionCreator } from './actions';
+import { showMainLoaderActionCreator, hideMainLoaderActionCreator } from 'redux/navigation';
 
 function* signupSaga(action: SignupRequest): SagaIterator {
   try {
@@ -58,9 +59,24 @@ function* logoutSaga(): SagaIterator {
   yield put({ type: LOGOUT_SUCCESS });
 }
 
+function* loadTokensSaga(): SagaIterator {
+  const accessToken = localStorage.accessToken;
+  const refreshToken = localStorage.refreshToken;
+
+  yield put({ type: GET_TOKENS_SUCCESS, payload: { accessToken, refreshToken } });
+}
+
 function* getUserInfoSaga(): SagaIterator {
-  const accessToken = (yield select(accessTokenSelector)) || localStorage.accessToken;
   try {
+    yield put(showMainLoaderActionCreator());
+
+    let accessToken = yield select(accessTokenSelector);
+
+    if (!accessToken) {
+      yield call(loadTokensSaga);
+      accessToken = yield select(accessTokenSelector);
+    }
+
     const response = yield call(getUserInfoRequest, accessToken);
 
     yield put({
@@ -73,12 +89,20 @@ function* getUserInfoSaga(): SagaIterator {
     });
   } catch (error) {
     yield put(getNewAccessTokenActionCreator());
+  } finally {
+    yield put(hideMainLoaderActionCreator());
   }
 }
 
 function* getNewAccessTokenSaga(): SagaIterator {
-  const refreshToken = (yield select(refreshTokenSelector)) || localStorage.refreshToken;
   try {
+    let refreshToken = yield select(refreshTokenSelector);
+
+    if (!refreshToken) {
+      yield call(loadTokensSaga);
+      refreshToken = yield select(refreshTokenSelector);
+    }
+
     const response = yield call(getNewAccessTokenRequest, refreshToken);
 
     yield put({
