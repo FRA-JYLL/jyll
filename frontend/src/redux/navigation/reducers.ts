@@ -5,7 +5,9 @@ import {
   NavigationActions,
 } from './types';
 
-const initialNavigationState: NavigationState = { showMainLoader: false };
+const initialNavigationState: NavigationState = {
+  showMainLoader: false,
+};
 
 export const navigationReducer = (
   state: NavigationState = initialNavigationState,

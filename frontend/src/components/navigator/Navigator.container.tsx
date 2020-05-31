@@ -7,12 +7,15 @@ import {
 } from 'redux/authentication';
 import { showMainLoaderSelector } from 'redux/navigation';
 import Navigator from './Navigator.component';
+import { showToastSelector, toastMessageSelector } from 'redux/toast';
 
 const mapStateToProps = (state: RootState) => {
   return {
     username: usernameSelector(state),
     accessToken: accessTokenSelector(state),
     showMainLoader: showMainLoaderSelector(state),
+    showToast: showToastSelector(state),
+    toastMessage: toastMessageSelector(state),
   };
 };
 

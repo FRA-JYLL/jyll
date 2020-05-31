@@ -22,6 +22,7 @@ import { setTokens, clearTokens } from 'services/utils';
 import { accessTokenSelector, refreshTokenSelector } from './selectors';
 import { getNewAccessTokenActionCreator, logoutActionCreator } from './actions';
 import { showMainLoaderActionCreator, hideMainLoaderActionCreator } from 'redux/navigation';
+import { showToastActionCreator } from 'redux/toast';
 
 function* signupSaga(action: SignupRequest): SagaIterator {
   try {
@@ -34,7 +35,7 @@ function* signupSaga(action: SignupRequest): SagaIterator {
       payload: { accessToken: response.access, refreshToken: response.refresh },
     });
   } catch (error) {
-    // TODO: Display translated error in a toaster
+    yield put(showToastActionCreator('signupError'));
   }
 }
 
@@ -49,7 +50,7 @@ function* loginSaga(action: LoginRequest): SagaIterator {
       payload: { accessToken: response.access, refreshToken: response.refresh },
     });
   } catch (error) {
-    // TODO: Display translated error in a toaster
+    yield put(showToastActionCreator('loginError'));
   }
 }
 
