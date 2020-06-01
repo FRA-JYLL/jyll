@@ -1,17 +1,19 @@
 import {
-  ShowMainLoaderSuccess,
-  SHOW_MAIN_LOADER_SUCCESS,
-  HideMainLoaderSuccess,
-  HIDE_MAIN_LOADER_SUCCESS,
+  NavigationPage,
+  SetNextPageSuccess,
+  SET_NEXT_PAGE_SUCCESS,
+  ShowNextPageSuccess,
+  SHOW_NEXT_PAGE_SUCCESS,
 } from './types';
 
-export const showMainLoaderActionCreator = (): ShowMainLoaderSuccess => ({
-  type: SHOW_MAIN_LOADER_SUCCESS,
+export const setNextPageActionCreator = (nextPage: NavigationPage): SetNextPageSuccess => ({
+  type: SET_NEXT_PAGE_SUCCESS,
+  payload: { nextPage },
 });
 
-export const hideMainLoaderActionCreator = (): HideMainLoaderSuccess => ({
-  type: HIDE_MAIN_LOADER_SUCCESS,
+export const showNextPageActionCreator = (): ShowNextPageSuccess => ({
+  type: SHOW_NEXT_PAGE_SUCCESS,
 });
 
-export type ShowMainLoaderActionCreator = typeof showMainLoaderActionCreator;
-export type HideMainLoaderActionCreator = typeof hideMainLoaderActionCreator;
+export type SetNextPageActionCreator = typeof setNextPageActionCreator;
+export type ShowNextPageActionCreator = typeof showNextPageActionCreator;
