@@ -1,17 +1,19 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 import { CSSTransition } from 'react-transition-group';
 import AuthenticationPage from 'pages/AuthenticationPage';
 import GameSelectionPage from 'pages/GameSelectionPage';
 import './Navigator.scss';
 import FullScreenLoader from 'components/loaders';
 import Toast from 'components/toast';
+import { NavigationPage } from 'redux/navigation';
 import { Props } from './Navigator.container';
 
 const Navigator = ({
   getUserInfo,
-  username,
+  showNextPage,
   accessToken,
-  showMainLoader,
+  nextPage,
+  currentPage,
   showToast,
   toastMessage,
 }: Props) => {
@@ -19,16 +21,13 @@ const Navigator = ({
     getUserInfo();
   }, [getUserInfo, accessToken]);
 
-  const [signupIsVisible, setSignupIsVisible] = useState(false);
-
   return (
     <>
       <CSSTransition
-        in={!username && !localStorage.accessToken}
+        in={currentPage === NavigationPage.Authentication && nextPage === undefined}
         timeout={500}
         classNames={'authentication'}
-        onEntering={() => setSignupIsVisible(true)}
-        onExited={() => setSignupIsVisible(false)}
+        onExited={showNextPage}
         mountOnEnter
         unmountOnExit
         appear
@@ -37,9 +36,10 @@ const Navigator = ({
       </CSSTransition>
 
       <CSSTransition
-        in={!signupIsVisible && !!username}
+        in={currentPage === NavigationPage.GameSelection && nextPage === undefined}
         timeout={500}
         classNames={'game-selection'}
+        onExited={showNextPage}
         mountOnEnter
         unmountOnExit
       >
@@ -47,9 +47,10 @@ const Navigator = ({
       </CSSTransition>
 
       <CSSTransition
-        in={showMainLoader && !signupIsVisible}
+        in={currentPage === NavigationPage.Loader && nextPage === undefined}
         timeout={{ enter: 300, exit: 100 }}
         classNames={'loader'}
+        onExited={showNextPage}
         mountOnEnter
         unmountOnExit
       >

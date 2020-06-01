@@ -1,11 +1,11 @@
-export { showMainLoaderActionCreator, hideMainLoaderActionCreator } from './actions';
-export type { ShowMainLoaderActionCreator, HideMainLoaderActionCreator } from './actions';
+export { setNextPageActionCreator, showNextPageActionCreator } from './actions';
+export type { SetNextPageActionCreator, ShowNextPageActionCreator } from './actions';
 export { navigationReducer } from './reducers';
-export { showMainLoaderSelector } from './selectors';
+export { nextPageSelector, currentPageSelector } from './selectors';
 export type {
   NavigationState,
   NavigationActions,
-  ShowMainLoaderSuccess,
-  HideMainLoaderSuccess,
+  SetNextPageSuccess,
+  ShowNextPageSuccess,
 } from './types';
-export { SHOW_MAIN_LOADER_SUCCESS, HIDE_MAIN_LOADER_SUCCESS } from './types';
+export { NavigationPage, SET_NEXT_PAGE_SUCCESS, SHOW_NEXT_PAGE_SUCCESS } from './types';

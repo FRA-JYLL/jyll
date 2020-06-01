@@ -21,7 +21,7 @@ import {
 import { setTokens, clearTokens } from 'services/utils';
 import { accessTokenSelector, refreshTokenSelector } from './selectors';
 import { getNewAccessTokenActionCreator, logoutActionCreator } from './actions';
-import { showMainLoaderActionCreator, hideMainLoaderActionCreator } from 'redux/navigation';
+import { NavigationPage, setNextPageActionCreator, currentPageSelector } from 'redux/navigation';
 import { showToastActionCreator } from 'redux/toast';
 
 function* signupSaga(action: SignupRequest): SagaIterator {
@@ -58,6 +58,7 @@ function* logoutSaga(): SagaIterator {
   clearTokens();
 
   yield put({ type: LOGOUT_SUCCESS });
+  yield put(setNextPageActionCreator(NavigationPage.Authentication));
 }
 
 function* loadTokensSaga(): SagaIterator {
@@ -68,16 +69,22 @@ function* loadTokensSaga(): SagaIterator {
 }
 
 function* getUserInfoSaga(): SagaIterator {
-  try {
-    yield put(showMainLoaderActionCreator());
+  const accessToken = yield select(accessTokenSelector);
+  if (!accessToken) {
+    yield call(loadTokensSaga);
 
-    let accessToken = yield select(accessTokenSelector);
-
-    if (!accessToken) {
-      yield call(loadTokensSaga);
-      accessToken = yield select(accessTokenSelector);
+    // Stop execution since the component will re-render
+    if (yield select(accessTokenSelector)) {
+      return;
     }
+  }
 
+  const currentPage = yield select(currentPageSelector);
+  if (currentPage === NavigationPage.Authentication) {
+    yield put(setNextPageActionCreator(NavigationPage.Loader));
+  }
+
+  try {
     const response = yield call(getUserInfoRequest, accessToken);
 
     yield put({
@@ -88,22 +95,19 @@ function* getUserInfoSaga(): SagaIterator {
         lastLogin: response.last_login,
       },
     });
+
+    if (currentPage === NavigationPage.Authentication || currentPage === NavigationPage.Loader) {
+      yield put(setNextPageActionCreator(NavigationPage.GameSelection));
+    }
   } catch (error) {
     yield put(getNewAccessTokenActionCreator());
-  } finally {
-    yield put(hideMainLoaderActionCreator());
   }
 }
 
 function* getNewAccessTokenSaga(): SagaIterator {
+  let refreshToken = yield select(refreshTokenSelector);
+
   try {
-    let refreshToken = yield select(refreshTokenSelector);
-
-    if (!refreshToken) {
-      yield call(loadTokensSaga);
-      refreshToken = yield select(refreshTokenSelector);
-    }
-
     const response = yield call(getNewAccessTokenRequest, refreshToken);
 
     yield put({

@@ -1,19 +1,15 @@
 import { connect } from 'react-redux';
 import { RootState } from 'redux/root';
-import {
-  usernameSelector,
-  getUserInfoActionCreator,
-  accessTokenSelector,
-} from 'redux/authentication';
-import { showMainLoaderSelector } from 'redux/navigation';
+import { getUserInfoActionCreator, accessTokenSelector } from 'redux/authentication';
+import { showNextPageActionCreator, nextPageSelector, currentPageSelector } from 'redux/navigation';
 import Navigator from './Navigator.component';
 import { showToastSelector, toastMessageSelector } from 'redux/toast';
 
 const mapStateToProps = (state: RootState) => {
   return {
-    username: usernameSelector(state),
     accessToken: accessTokenSelector(state),
-    showMainLoader: showMainLoaderSelector(state),
+    nextPage: nextPageSelector(state),
+    currentPage: currentPageSelector(state),
     showToast: showToastSelector(state),
     toastMessage: toastMessageSelector(state),
   };
@@ -21,6 +17,7 @@ const mapStateToProps = (state: RootState) => {
 
 const mapDispatchToProps = {
   getUserInfo: getUserInfoActionCreator,
+  showNextPage: showNextPageActionCreator,
 };
 
 export type Props = ReturnType<typeof mapStateToProps> & typeof mapDispatchToProps;

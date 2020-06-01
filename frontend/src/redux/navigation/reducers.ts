@@ -1,12 +1,13 @@
 import {
-  SHOW_MAIN_LOADER_SUCCESS,
-  HIDE_MAIN_LOADER_SUCCESS,
+  SET_NEXT_PAGE_SUCCESS,
+  SHOW_NEXT_PAGE_SUCCESS,
   NavigationState,
   NavigationActions,
+  NavigationPage,
 } from './types';
 
 const initialNavigationState: NavigationState = {
-  showMainLoader: false,
+  currentPage: NavigationPage.Loader,
 };
 
 export const navigationReducer = (
@@ -14,16 +15,20 @@ export const navigationReducer = (
   action: NavigationActions
 ) => {
   switch (action.type) {
-    case SHOW_MAIN_LOADER_SUCCESS:
+    case SET_NEXT_PAGE_SUCCESS:
       return {
         ...state,
-        showMainLoader: true,
+        nextPage:
+          action.payload.nextPage !== state.currentPage ? action.payload.nextPage : undefined,
       };
-    case HIDE_MAIN_LOADER_SUCCESS:
-      return {
-        ...state,
-        showMainLoader: false,
-      };
+    case SHOW_NEXT_PAGE_SUCCESS:
+      return state.nextPage !== undefined
+        ? {
+            ...state,
+            nextPage: undefined,
+            currentPage: state.nextPage,
+          }
+        : state;
     default:
       return state;
   }
