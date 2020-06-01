@@ -30,7 +30,6 @@ const Navigator = ({
         onExited={showNextPage}
         mountOnEnter
         unmountOnExit
-        appear
       >
         <AuthenticationPage />
       </CSSTransition>
