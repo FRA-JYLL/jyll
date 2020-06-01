@@ -96,7 +96,10 @@ function* getUserInfoSaga(): SagaIterator {
       },
     });
 
-    if (currentPage === NavigationPage.Authentication || currentPage === NavigationPage.FirstLoader) {
+    if (
+      currentPage === NavigationPage.Authentication ||
+      currentPage === NavigationPage.FirstLoader
+    ) {
       yield put(setNextPageActionCreator(NavigationPage.GameSelection));
     }
   } catch (error) {
