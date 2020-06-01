@@ -1,3 +1,4 @@
 import { RootState } from 'redux/root';
 
-export const showMainLoaderSelector = (store: RootState) => store.navigation.showMainLoader;
+export const nextPageSelector = (store: RootState) => store.navigation.nextPage;
+export const currentPageSelector = (store: RootState) => store.navigation.currentPage;

@@ -1,16 +1,27 @@
-export const SHOW_MAIN_LOADER_SUCCESS = 'SHOW_MAIN_LOADER_SUCCESS';
-export const HIDE_MAIN_LOADER_SUCCESS = 'HIDE_MAIN_LOADER_SUCCESS';
-
-export type NavigationActions = ShowMainLoaderSuccess | HideMainLoaderSuccess;
-
-export interface ShowMainLoaderSuccess {
-  type: typeof SHOW_MAIN_LOADER_SUCCESS;
+export enum NavigationPage {
+  Authentication = 'Authentication',
+  GameSelection = 'GameSelection',
+  FirstLoader = 'FirstLoader',
+  Loader = 'Loader',
 }
 
-export interface HideMainLoaderSuccess {
-  type: typeof HIDE_MAIN_LOADER_SUCCESS;
+export const SET_NEXT_PAGE_SUCCESS = 'SET_NEXT_PAGE_SUCCESS';
+export const SHOW_NEXT_PAGE_SUCCESS = 'SHOW_NEXT_PAGE_SUCCESS';
+
+export type NavigationActions = SetNextPageSuccess | ShowNextPageSuccess;
+
+export interface SetNextPageSuccess {
+  type: typeof SET_NEXT_PAGE_SUCCESS;
+  payload: {
+    nextPage: NavigationPage;
+  };
+}
+
+export interface ShowNextPageSuccess {
+  type: typeof SHOW_NEXT_PAGE_SUCCESS;
 }
 
 export interface NavigationState {
-  showMainLoader: boolean;
+  nextPage?: NavigationPage;
+  currentPage: NavigationPage;
 }

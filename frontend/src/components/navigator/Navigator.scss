@@ -1,15 +1,3 @@
-.authentication-appear {
-  position: absolute;
-  opacity: 0;
-}
-.authentication-appear-active {
-  position: absolute;
-  opacity: 1;
-  transition: opacity 500ms ease-out;
-}
-.authentication-appear-done {
-  position: absolute;
-}
 .authentication-enter {
   position: absolute;
   opacity: 0;
