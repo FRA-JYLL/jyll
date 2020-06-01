@@ -7,7 +7,7 @@ import {
 } from './types';
 
 const initialNavigationState: NavigationState = {
-  currentPage: NavigationPage.Loader,
+  currentPage: NavigationPage.FirstLoader,
 };
 
 export const navigationReducer = (

@@ -46,7 +46,7 @@ const Navigator = ({
       </CSSTransition>
 
       <CSSTransition
-        in={currentPage === NavigationPage.Loader && nextPage === undefined}
+        in={(currentPage === NavigationPage.FirstLoader || currentPage === NavigationPage.Loader) && nextPage === undefined}
         timeout={{ enter: 300, exit: 100 }}
         classNames={'loader'}
         onExited={showNextPage}
