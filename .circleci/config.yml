@@ -61,9 +61,30 @@ jobs:
             sudo service rabbitmq-server start
             . venv/bin/activate
             cd backend && python manage.py test
+  build_and_test_front:
+    docker:
+      - image: circleci/node:10.15.3
+    working_directory: ~/jyll
+    steps:
+      - checkout
+      - restore_cache:
+          key: dependencies-{{ checksum "frontend/package.json" }}
+      - run:
+          name: Installing node packages
+          command: cd frontend && npm i
+      - save_cache:
+          key: dependencies-{{ checksum "frontend/package.json" }}
+          paths:
+            - frontend/node_modules
+      - run:
+          name: Front lint
+          command: cd frontend && npm run lint
 
 workflows:
   version: 2
   build_and_test_back:
     jobs:
       - build_and_test_back
+  build_and_test_front:
+    jobs:
+      - build_and_test_front
