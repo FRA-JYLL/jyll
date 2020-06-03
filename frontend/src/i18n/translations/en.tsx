@@ -15,7 +15,8 @@ export default {
       welcome: 'Welcome, {{username}}! You finally logged in',
       subtitle: 'You good neutron star',
       enjoy: 'Now enjoy staring at a stellar page \\(°-° )/',
-      logout: 'Log out',
+      createGame: 'CREATE GAME',
+      logout: 'LOG OUT',
     },
   },
   toast: {
