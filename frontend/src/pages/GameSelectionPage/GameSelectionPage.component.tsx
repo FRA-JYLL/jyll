@@ -13,7 +13,9 @@ const GameSelectionPage = ({ username, logout }: Props) => {
       </h1>
       <p className="game-selection-subtitle">{t('pages.home.subtitle')}</p>
       <p className="game-selection-text">{t('pages.home.enjoy')}</p>
-      <button onClick={logout}>{t('pages.home.logout')}</button>
+      <button className={'logout-button'} onClick={logout}>
+        {t('pages.home.logout')}
+      </button>
     </div>
   );
 };
