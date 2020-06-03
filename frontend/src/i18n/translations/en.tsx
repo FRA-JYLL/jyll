@@ -2,7 +2,7 @@ export default {
   pages: {
     signup: {
       title: "You aren't logged in!",
-      subtitle: 'You bad turtle',
+      subtitle: 'You bad neutron star',
       login: 'Log in',
       signup: 'Sign up',
       username: 'Username',
@@ -13,8 +13,8 @@ export default {
     },
     home: {
       welcome: 'Welcome, {{username}}! You finally logged in',
-      subtitle: 'You good turtle',
-      enjoy: 'Now enjoy staring at a blank page \\(°-° )/',
+      subtitle: 'You good neutron star',
+      enjoy: 'Now enjoy staring at a stellar page \\(°-° )/',
       logout: 'Log out',
     },
   },
