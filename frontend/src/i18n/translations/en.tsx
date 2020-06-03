@@ -16,6 +16,10 @@ export default {
       subtitle: 'You good neutron star',
       enjoy: 'Now enjoy staring at a stellar page \\(°-° )/',
       createGame: 'CREATE GAME',
+      createGameModal: {
+        gameName: 'Game name',
+        gamePassword: 'Password (optional)',
+      },
       logout: 'LOG OUT',
     },
   },

@@ -8,7 +8,12 @@ interface Props {
   onClosed?: () => void;
 }
 
-const Modal = ({ isOpen, closeModal, onClosed, children }: React.PropsWithChildren<Props>) => (
+export const Modal = ({
+  isOpen,
+  closeModal,
+  onClosed,
+  children,
+}: React.PropsWithChildren<Props>) => (
   <>
     <CSSTransition
       in={isOpen}
@@ -31,5 +36,3 @@ const Modal = ({ isOpen, closeModal, onClosed, children }: React.PropsWithChildr
     </CSSTransition>
   </>
 );
-
-export default Modal;
