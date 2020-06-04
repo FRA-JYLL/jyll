@@ -21,7 +21,7 @@ export const authenticationReducer = (
         lastLogin: action.payload.lastLogin,
       };
     case LOGOUT_SUCCESS:
-      return initialAuthenticationState;
+      return { ...state, accessToken: undefined, refreshToken: undefined };
     case GET_TOKENS_SUCCESS:
       return {
         ...state,
