@@ -83,3 +83,18 @@ export const createGameRequest = async (
 
   return payload;
 };
+
+export const getPendingGamesRequest = async (accessToken: string) => {
+  const response = await fetch(`${apiBaseUrl}/game/pending/`, {
+    method: 'GET',
+    headers: {
+      Authorization: `Bearer ${accessToken}`,
+    },
+  });
+
+  if (!response.ok) throw response.status;
+
+  const payload = await response.json();
+
+  return payload;
+};
