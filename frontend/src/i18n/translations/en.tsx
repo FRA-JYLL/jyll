@@ -19,6 +19,8 @@ export default {
       createGameModal: {
         gameName: 'Game name',
         gamePassword: 'Password (optional)',
+        cancel: 'CANCEL',
+        submit: 'CREATE',
       },
       logout: 'LOG OUT',
     },

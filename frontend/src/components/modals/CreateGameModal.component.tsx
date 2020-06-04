@@ -38,7 +38,14 @@ export const CreateGameModal = ({
             type="text"
             onChange={(e) => setGamePassword(e.target.value)}
           />
-          <input className="createGameModal-input" type="submit" />
+          <div className="createGameModal-button-container">
+            <button className="createGameModal-button" onClick={closeModal}>
+              {t('pages.home.createGameModal.cancel')}
+            </button>
+            <button className="createGameModal-button" type="submit">
+              {t('pages.home.createGameModal.submit')}
+            </button>
+          </div>
         </form>
       </div>
     </Modal>
