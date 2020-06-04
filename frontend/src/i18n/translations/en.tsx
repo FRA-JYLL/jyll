@@ -17,7 +17,7 @@ export default {
       enjoy: 'Now enjoy staring at a stellar page \\(°-° )/',
       createGame: 'CREATE GAME',
       createGameModal: {
-        gameName: 'Game name',
+        gameName: 'Game name (optional)',
         gamePassword: 'Password (optional)',
         cancel: 'CANCEL',
         submit: 'CREATE',
@@ -29,6 +29,5 @@ export default {
     signupError: 'Error: this username is already taken',
     loginError: 'Error: invalid username or password',
     gameCreationFailureError: 'Error: your game could not be created, please try again',
-    gameCreationNoNameError: 'Error: please chose a name for your new game',
   },
 };

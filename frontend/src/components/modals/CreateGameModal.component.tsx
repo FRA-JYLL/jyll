@@ -11,19 +11,29 @@ interface Props extends ContainerProps {
 
 const CreateGameModal = ({ isOpen, closeModal, createGame }: Props) => {
   const { t } = useTranslation();
+
   const [gameName, setGameName] = useState('');
   const [gamePassword, setGamePassword] = useState('');
+
+  const closeModalAndResetFields = () => {
+    setGameName('');
+    setGamePassword('');
+    closeModal();
+  };
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
-    createGame(gameName, gamePassword);
+    createGame(
+      gameName !== '' ? gameName : undefined,
+      gamePassword !== '' ? gamePassword : undefined
+    );
 
-    closeModal();
+    closeModalAndResetFields();
   };
 
   return (
-    <Modal isOpen={isOpen} closeModal={closeModal}>
+    <Modal isOpen={isOpen} closeModal={closeModalAndResetFields}>
       <div className="createGameModal-container">
         <form className="createGameModal-form" onSubmit={handleSubmit}>
           <p className="createGameModal-label">{t('pages.home.createGameModal.gameName')}</p>
@@ -39,7 +49,11 @@ const CreateGameModal = ({ isOpen, closeModal, createGame }: Props) => {
             onChange={(e) => setGamePassword(e.target.value)}
           />
           <div className="createGameModal-button-container">
-            <button className="createGameModal-button" onClick={closeModal}>
+            <button
+              className="createGameModal-button"
+              type={'button'}
+              onClick={closeModalAndResetFields}
+            >
               {t('pages.home.createGameModal.cancel')}
             </button>
             <button className="createGameModal-button" type="submit">

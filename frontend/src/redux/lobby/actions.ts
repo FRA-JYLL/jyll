@@ -1,7 +1,7 @@
 import { CreateGameRequest, CREATE_GAME_REQUEST } from './types';
 
 export const createGameActionCreator = (
-  gameName: string,
+  gameName?: string,
   gamePassword?: string
 ): CreateGameRequest => {
   return {

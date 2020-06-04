@@ -65,7 +65,7 @@ export const getNewAccessTokenRequest = async (refreshToken: string) => {
 
 export const createGameRequest = async (
   accessToken: string,
-  gameName: string,
+  gameName?: string,
   gamePassword?: string
 ) => {
   const response = await fetch(`${apiBaseUrl}/game/`, {
