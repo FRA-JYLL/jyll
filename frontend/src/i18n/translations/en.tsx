@@ -24,6 +24,7 @@ export default {
       },
       logout: 'LOG OUT',
     },
+    gameRoom: { title: 'Hello {{username}}!', back: 'BACK' },
   },
   toast: {
     signupError: 'Error: this username is already taken',

@@ -2,8 +2,9 @@ import { put, takeEvery, select, call } from 'redux-saga/effects';
 import { SagaIterator } from 'redux-saga';
 import { CreateGameRequest, CREATE_GAME_REQUEST } from './types';
 import { showToastActionCreator } from 'redux/toast';
-import { createGameRequest, getPendingGamesRequest } from 'services/requests';
+import { createGameRequest } from 'services/requests';
 import { accessTokenSelector } from 'redux/authentication';
+import { setNextPageActionCreator, NavigationPage } from 'redux/navigation';
 
 function* createGameSaga(action: CreateGameRequest): SagaIterator {
   const { gameName, gamePassword } = action.payload;
@@ -12,7 +13,7 @@ function* createGameSaga(action: CreateGameRequest): SagaIterator {
   try {
     yield call(createGameRequest, accessToken, gameName, gamePassword);
 
-    console.log(yield call(getPendingGamesRequest, accessToken));
+    yield put(setNextPageActionCreator(NavigationPage.GameRoom));
   } catch (error) {
     yield put(showToastActionCreator('gameCreationFailureError'));
   }
