@@ -1,3 +1,3 @@
-import Home from './GameSelectionPage.container';
+import GameSelectionPage from './GameSelectionPage.container';
 
-export default Home;
+export default GameSelectionPage;

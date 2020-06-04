@@ -36,13 +36,17 @@ const CreateGameModal = ({ isOpen, closeModal, createGame }: Props) => {
     <Modal isOpen={isOpen} closeModal={closeModalAndResetFields}>
       <div className="createGameModal-container">
         <form className="createGameModal-form" onSubmit={handleSubmit}>
-          <p className="createGameModal-label">{t('pages.home.createGameModal.gameName')}</p>
+          <p className="createGameModal-label">
+            {t('pages.gameSelection.createGameModal.gameName')}
+          </p>
           <input
             className="createGameModal-input"
             type="text"
             onChange={(e) => setGameName(e.target.value)}
           />
-          <p className="createGameModal-label">{t('pages.home.createGameModal.gamePassword')}</p>
+          <p className="createGameModal-label">
+            {t('pages.gameSelection.createGameModal.gamePassword')}
+          </p>
           <input
             className="createGameModal-input"
             type="text"
@@ -54,10 +58,10 @@ const CreateGameModal = ({ isOpen, closeModal, createGame }: Props) => {
               type={'button'}
               onClick={closeModalAndResetFields}
             >
-              {t('pages.home.createGameModal.cancel')}
+              {t('pages.gameSelection.createGameModal.cancel')}
             </button>
             <button className="createGameModal-button" type="submit">
-              {t('pages.home.createGameModal.submit')}
+              {t('pages.gameSelection.createGameModal.submit')}
             </button>
           </div>
         </form>

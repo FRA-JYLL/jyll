@@ -24,13 +24,13 @@ const CredentialsForm = ({
     <div className="credentialsForm-container">
       <h1 className="credentialsForm-title">{title}</h1>
       <form className="credentialsForm-form" onSubmit={handleSubmit}>
-        <p className="credentialsForm-label">{t('pages.signup.username')}</p>
+        <p className="credentialsForm-label">{t('pages.authentication.username')}</p>
         <input
           className="credentialsForm-input"
           type="text"
           onChange={(e) => setUsername(e.target.value)}
         />
-        <p className="credentialsForm-label">{t('pages.signup.password')}</p>
+        <p className="credentialsForm-label">{t('pages.authentication.password')}</p>
         <input
           className="credentialsForm-input"
           type="password"

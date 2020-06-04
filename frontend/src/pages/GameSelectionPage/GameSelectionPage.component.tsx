@@ -15,15 +15,15 @@ const GameSelectionPage = ({ username, logout }: Props) => {
     <>
       <div className="game-selection-container">
         <h1 className="game-selection-title">
-          {t('pages.home.welcome', { username: username || 'stranger' })}
+          {t('pages.gameSelection.welcome', { username: username || 'stranger' })}
         </h1>
-        <p className="game-selection-subtitle">{t('pages.home.subtitle')}</p>
-        <p className="game-selection-text">{t('pages.home.enjoy')}</p>
+        <p className="game-selection-subtitle">{t('pages.gameSelection.subtitle')}</p>
+        <p className="game-selection-text">{t('pages.gameSelection.enjoy')}</p>
         <button className="button" onClick={openModal}>
-          {t('pages.home.createGame')}
+          {t('pages.gameSelection.createGame')}
         </button>
         <button className="button" onClick={logout}>
-          {t('pages.home.logout')}
+          {t('pages.gameSelection.logout')}
         </button>
       </div>
 
