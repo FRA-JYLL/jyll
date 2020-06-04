@@ -17,22 +17,16 @@ export const Modal = ({
   <>
     <CSSTransition
       in={isOpen}
-      timeout={{ enter: 500, exit: 200 }}
+      timeout={500}
       classNames={'modal'}
       onExited={onClosed}
       mountOnEnter
       unmountOnExit
     >
-      <div className="modal-container">{children}</div>
+      <div className="modal">{children}</div>
     </CSSTransition>
-    <CSSTransition
-      in={isOpen}
-      timeout={{ enter: 500, exit: 200 }}
-      classNames={'modal'}
-      mountOnEnter
-      unmountOnExit
-    >
-      <div className="modal-overlay" onClick={closeModal}></div>
+    <CSSTransition in={isOpen} timeout={500} classNames={'overlay'} mountOnEnter unmountOnExit>
+      <div className="overlay" onClick={closeModal}></div>
     </CSSTransition>
   </>
 );

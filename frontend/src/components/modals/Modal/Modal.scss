@@ -1,4 +1,4 @@
-.modal-container {
+.modal {
   display: flex;
   flex-direction: column;
   position: absolute;
@@ -12,28 +12,49 @@
   border-width: 10px;
   border-radius: 15px;
 }
+.modal-enter {
+  opacity: 0;
+  transform: translateY(500px);
+}
+.modal-enter-active {
+  opacity: 1;
+  transform: translateY(0px);
+  transition: transform 500ms ease-out, opacity 500ms ease-out;
+}
+.modal-exit {
+  opacity: 1;
+  transform: translateY(0px);
+}
+.modal-exit-active {
+  opacity: 0;
+  transform: translateY(500px);
+  transition: transform 500ms ease-in, opacity 500ms ease-in;
+}
+.modal-exit-done {
+  opacity: 0;
+  transform: translateY(500px);
+}
 
-.modal-overlay {
+.overlay {
   position: fixed;
   width: 100%;
   height: 100%;
   background-color: #000000a0;
 }
-
-.modal-enter {
+.overlay-enter {
   opacity: 0;
 }
-.modal-enter-active {
+.overlay-enter-active {
   opacity: 1;
   transition: opacity 500ms ease-out;
 }
-.modal-exit {
+.overlay-exit {
   opacity: 1;
 }
-.modal-exit-active {
+.overlay-exit-active {
   opacity: 0;
   transition: opacity 200ms ease-in;
 }
-.modal-exit-done {
+.overlay-exit-done {
   opacity: 0;
 }
