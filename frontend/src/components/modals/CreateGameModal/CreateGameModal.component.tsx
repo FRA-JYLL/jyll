@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import './CreateGameModal.scss';
-import { Modal } from './index';
+import { Modal } from '../index';
 import { ContainerProps } from './CreateGameModal.container';
 
 interface Props extends ContainerProps {
