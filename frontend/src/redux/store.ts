@@ -4,6 +4,7 @@ import { all } from 'redux-saga/effects';
 import { rootReducer } from './root';
 import { watchAuthentication } from './authentication';
 import { watchToast } from './toast';
+import { watchLobby } from './lobby';
 
 const sagaMiddleware = createSagaMiddleware();
 
@@ -18,7 +19,7 @@ const store = createStoreWithMiddleware(
 );
 
 function* watchAll() {
-  yield all([watchAuthentication(), watchToast()]);
+  yield all([watchAuthentication(), watchToast(), watchLobby()]);
 }
 
 sagaMiddleware.run(watchAll);

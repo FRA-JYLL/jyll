@@ -2,14 +2,14 @@ import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import './CreateGameModal.scss';
 import { Modal } from './index';
+import { ContainerProps } from './CreateGameModal.container';
 
-export const CreateGameModal = ({
-  isOpen,
-  closeModal,
-}: {
+interface Props extends ContainerProps {
   isOpen: boolean;
   closeModal: () => void;
-}) => {
+}
+
+const CreateGameModal = ({ isOpen, closeModal, createGame }: Props) => {
   const { t } = useTranslation();
   const [gameName, setGameName] = useState('');
   const [gamePassword, setGamePassword] = useState('');
@@ -17,7 +17,7 @@ export const CreateGameModal = ({
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
-    // DISPATCH ACTION HERE
+    createGame(gameName, gamePassword);
 
     closeModal();
   };
@@ -51,3 +51,5 @@ export const CreateGameModal = ({
     </Modal>
   );
 };
+
+export default CreateGameModal;
