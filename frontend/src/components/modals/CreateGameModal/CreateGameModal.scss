@@ -6,8 +6,6 @@
 }
 
 .createGameModal-form {
-  display: flex;
-  flex-direction: column;
   width: 100%;
 }
 
@@ -23,6 +21,7 @@
   font-family: monospace;
   color: #ffffff;
   height: 40px;
+  width: 100%;
   padding-left: 10px;
   margin-bottom: 5px;
 }
