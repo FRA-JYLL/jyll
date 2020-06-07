@@ -6,6 +6,7 @@ export const GET_GAMES_WITH_USER_SUCCESS = 'GET_GAMES_WITH_USER_SUCCESS';
 export const GET_GAME_DETAILS_REQUEST = 'GET_GAME_DETAILS_REQUEST';
 export const JOIN_GAME_REQUEST = 'JOIN_GAME_REQUEST';
 export const LEAVE_GAME_REQUEST = 'LEAVE_GAME_REQUEST';
+export const SET_CURRENT_GAME_SUCCESS = 'SET_CURRENT_GAME_SUCCESS';
 
 export interface LobbyGame {
   id: string;
@@ -21,7 +22,7 @@ export interface BackendLobbyGame {
   is_pending: boolean;
 }
 
-export type LobbyActions = GetPendingGamesSuccess | GetGamesWithUserSuccess;
+export type LobbyActions = GetPendingGamesSuccess | GetGamesWithUserSuccess | SetCurrentGameSuccess;
 
 export interface CreateGameRequest {
   type: typeof CREATE_GAME_REQUEST;
@@ -64,7 +65,13 @@ export interface LeaveGameRequest {
   payload: { id: string };
 }
 
+export interface SetCurrentGameSuccess {
+  type: typeof SET_CURRENT_GAME_SUCCESS;
+  payload: { id: string };
+}
+
 export interface LobbyState {
   pendingGames: { [key: string]: LobbyGame };
   gamesWithUser: { [key: string]: LobbyGame };
+  currentGameId?: string;
 }

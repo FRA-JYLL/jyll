@@ -38,5 +38,6 @@ export default {
     signupError: 'Error: this username is already taken',
     loginError: 'Error: invalid username or password',
     gameCreationFailureError: 'Error: your game could not be created, please try again',
+    cannotJoinGameError: 'Error: Cannot join game',
   },
 };

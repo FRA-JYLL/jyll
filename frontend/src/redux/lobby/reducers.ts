@@ -6,6 +6,7 @@ import {
   BackendLobbyGame,
   LobbyGame,
   GET_GAMES_WITH_USER_SUCCESS,
+  SET_CURRENT_GAME_SUCCESS,
 } from './types';
 
 const initialLobbyState: LobbyState = {
@@ -46,6 +47,11 @@ export const lobbyReducer = (
           }),
           {}
         ),
+      };
+    case SET_CURRENT_GAME_SUCCESS:
+      return {
+        ...state,
+        currentGameId: action.payload.id,
       };
     default:
       return state;

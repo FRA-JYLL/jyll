@@ -14,7 +14,7 @@ export type {
   LeaveGameActionCreator,
 } from './actions';
 export { lobbyReducer } from './reducers';
-export { pendingGamesSelector, gamesWithUserSelector } from './selectors';
+export { pendingGamesSelector, gamesWithUserSelector, currentGameSelector } from './selectors';
 export type {
   LobbyGame,
   BackendLobbyGame,
@@ -28,6 +28,7 @@ export type {
   GetGameDetailsRequest,
   JoinGameRequest,
   LeaveGameRequest,
+  SetCurrentGameSuccess,
 } from './types';
 export {
   CREATE_GAME_REQUEST,
@@ -38,5 +39,6 @@ export {
   GET_GAME_DETAILS_REQUEST,
   JOIN_GAME_REQUEST,
   LEAVE_GAME_REQUEST,
+  SET_CURRENT_GAME_SUCCESS,
 } from './types';
 export { watchLobby } from './sagas';

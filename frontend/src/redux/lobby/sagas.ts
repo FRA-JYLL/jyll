@@ -15,6 +15,7 @@ import {
   GetGamesWithUserRequest,
   GET_GAMES_WITH_USER_SUCCESS,
   GET_GAMES_WITH_USER_REQUEST,
+  SET_CURRENT_GAME_SUCCESS,
 } from './types';
 import { showToastActionCreator } from 'redux/toast';
 import {
@@ -29,13 +30,18 @@ import { setNextPageActionCreator, NavigationPage } from 'redux/navigation';
 import { sendAuthenticatedRequest } from 'redux/authentication';
 
 function* createGameSaga(action: CreateGameRequest): SagaIterator {
+  yield put(setNextPageActionCreator(NavigationPage.Loader));
+
   const { gameName, gamePassword } = action.payload;
 
   try {
     yield call(sendAuthenticatedRequest, createGameRequest, gameName, gamePassword);
 
+    // TODO: SET_CURRENT_GAME_SUCCESS once the backend replies with the newly created game
+
     yield put(setNextPageActionCreator(NavigationPage.GameRoom));
   } catch (error) {
+    yield put(setNextPageActionCreator(NavigationPage.GameSelection));
     yield put(showToastActionCreator('gameCreationFailureError'));
   }
 }
@@ -65,16 +71,23 @@ function* getGameDetailsSaga(action: GetGameDetailsRequest): SagaIterator {
 }
 
 function* joinGameSaga(action: JoinGameRequest): SagaIterator {
+  yield put(setNextPageActionCreator(NavigationPage.Loader));
+
   try {
-    const response = yield call(
+    yield call(
       sendAuthenticatedRequest,
       joinGameRequest,
       action.payload.id,
       action.payload.password
     );
 
-    console.log(response);
-  } catch (error) {}
+    yield put({ type: SET_CURRENT_GAME_SUCCESS, payload: { id: action.payload.id } });
+
+    yield put(setNextPageActionCreator(NavigationPage.GameRoom));
+  } catch (error) {
+    yield put(setNextPageActionCreator(NavigationPage.GameSelection));
+    yield put(showToastActionCreator('cannotJoinGameError'));
+  }
 }
 
 function* leaveGameSaga(action: LeaveGameRequest): SagaIterator {
