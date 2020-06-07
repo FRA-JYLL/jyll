@@ -1,7 +1,7 @@
 export { createGameActionCreator, getPendingGamesActionCreator } from './actions';
 export type { CreateGameActionCreator, GetPendingGamesActionCreator } from './actions';
 export { lobbyReducer } from './reducers';
-export { pendingGamesListSelector, pendingGameSelector } from './selectors';
+export { pendingGamesSelector } from './selectors';
 export type {
   PendingGame,
   LobbyState,

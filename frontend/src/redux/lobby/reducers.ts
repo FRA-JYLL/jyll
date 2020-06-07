@@ -1,3 +1,4 @@
+import { formatDate } from 'services/utils';
 import {
   GET_PENDING_GAMES_SUCCESS,
   LobbyState,
@@ -13,7 +14,7 @@ const initialLobbyState: LobbyState = {
 const pendingGameFormatter = ({ id, name, creation_date }: BackendPendingGame) => ({
   id,
   name,
-  creationDate: creation_date,
+  creationDate: formatDate(creation_date),
 });
 
 export const lobbyReducer = (state: LobbyState = initialLobbyState, action: LobbyActions) => {

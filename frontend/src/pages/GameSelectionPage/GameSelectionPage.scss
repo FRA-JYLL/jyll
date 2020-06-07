@@ -39,6 +39,29 @@
   color: #ffffff;
 }
 
+.side-panel-game-info-container {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  align-items: center;
+  justify-content: space-evenly;
+}
+
+.side-panel-game-name {
+  font-size: 24px;
+  font-family: monospace;
+  line-height: 30px;
+  color: #00ffff;
+  margin-bottom: 30px;
+}
+
+.side-panel-game-date {
+  font-size: 20px;
+  font-family: monospace;
+  line-height: 25px;
+  color: #ffffff;
+}
+
 .side-panel-button {
   font-size: 20px;
   font-family: monospace;
@@ -68,6 +91,13 @@
   line-height: 26px;
   color: #ffffff;
   &:hover {
-    color: #ffff00;
+    color: #00ffff;
   }
+}
+
+.pending-game-selected {
+  font-size: 20px;
+  font-family: monospace;
+  line-height: 26px;
+  color: #ffff00;
 }

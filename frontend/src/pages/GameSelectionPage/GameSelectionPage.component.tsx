@@ -12,6 +12,34 @@ const GameSelectionPage = ({ username, pendingGames, logout, getPendingGames }: 
     getPendingGames();
   }, [getPendingGames]);
 
+  const [selectedGameId, setSelectedGameId] = React.useState('');
+
+  const pendingGamesList = Object.values(pendingGames).map((pendingGame: PendingGame) => (
+    <div
+      className={selectedGameId === pendingGame.id ? 'pending-game-selected' : 'pending-game'}
+      onClick={() => setSelectedGameId(pendingGame.id)}
+    >
+      {pendingGame.name}
+    </div>
+  ));
+
+  const joinGame = () => {};
+
+  const renderGameInfo = (game?: PendingGame) =>
+    game && (
+      <>
+        <div className="side-panel-game-info-container">
+          <p className="side-panel-game-name">{game.name}</p>
+          <p className="side-panel-instructions">
+            {t('pages.gameSelection.created', { creationDate: game.creationDate })}
+          </p>
+        </div>
+        <button className="side-panel-button" onClick={joinGame}>
+          {t('pages.gameSelection.join')}
+        </button>
+      </>
+    );
+
   const [isOpen, setIsOpen] = React.useState(false);
   const openModal = () => setIsOpen(true);
   const closeModal = () => setIsOpen(false);
@@ -33,12 +61,10 @@ const GameSelectionPage = ({ username, pendingGames, logout, getPendingGames }: 
             {t('pages.gameSelection.logout')}
           </button>
         </div>
-        <div className="games-list">
-          {pendingGames.map((pendingGame: PendingGame) => (
-            <div className="pending-game">{pendingGame.name}</div>
-          ))}
-        </div>
-        <div className="side-panel"></div>
+
+        <div className="games-list">{pendingGamesList}</div>
+
+        <div className="side-panel">{renderGameInfo(pendingGames[selectedGameId])}</div>
       </div>
 
       <CreateGameModal isOpen={isOpen} closeModal={closeModal} />

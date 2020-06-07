@@ -22,6 +22,8 @@ export default {
         submit: 'CREATE',
       },
       logout: 'LOG OUT',
+      created: 'Created {{creationDate}}',
+      join: 'JOIN',
     },
     gameRoom: { title: 'Hello {{username}}!', back: 'BACK' },
   },
