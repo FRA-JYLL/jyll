@@ -1,4 +1,4 @@
-import { put, takeEvery, call, select } from 'redux-saga/effects';
+import { put, takeEvery, call } from 'redux-saga/effects';
 import { SagaIterator } from 'redux-saga';
 import {
   CreateGameRequest,
@@ -9,7 +9,6 @@ import {
 } from './types';
 import { showToastActionCreator } from 'redux/toast';
 import { createGameRequest, getPendingGamesRequest } from 'services/requests';
-import { accessTokenSelector } from 'redux/authentication';
 import { setNextPageActionCreator, NavigationPage } from 'redux/navigation';
 import { sendAuthenticatedRequest } from 'redux/authentication';
 
@@ -26,9 +25,8 @@ function* createGameSaga(action: CreateGameRequest): SagaIterator {
 }
 
 function* getPendingGamesSaga(action: GetPendingGamesRequest): SagaIterator {
-  const accessToken = yield select(accessTokenSelector);
   try {
-    const response = yield call(getPendingGamesRequest, accessToken);
+    const response = yield call(sendAuthenticatedRequest, getPendingGamesRequest);
 
     yield put({ type: GET_PENDING_GAMES_SUCCESS, payload: { pendingGames: response } });
   } catch (error) {}
