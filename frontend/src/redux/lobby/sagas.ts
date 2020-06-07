@@ -92,10 +92,9 @@ function* joinGameSaga(action: JoinGameRequest): SagaIterator {
 
 function* leaveGameSaga(action: LeaveGameRequest): SagaIterator {
   try {
-    const response = yield call(sendAuthenticatedRequest, leaveGameRequest, action.payload.id);
-
-    console.log(response);
+    yield call(sendAuthenticatedRequest, leaveGameRequest, action.payload.id);
   } catch (error) {}
+  yield put(setNextPageActionCreator(NavigationPage.GameSelection));
 }
 
 export function* watchLobby() {

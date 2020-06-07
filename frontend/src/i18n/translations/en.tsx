@@ -32,7 +32,7 @@ export default {
       myGames: 'My games',
       publicGames: 'Public games',
     },
-    gameRoom: { title: 'Hello {{username}}!', back: 'BACK' },
+    gameRoom: { title: 'Hello {{username}}!', back: 'BACK', leave: 'LEAVE GAME' },
   },
   toast: {
     signupError: 'Error: this username is already taken',

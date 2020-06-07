@@ -3,7 +3,7 @@ import { usernameSelector } from 'redux/authentication';
 import { RootState } from 'redux/root';
 import GameRoomPage from './GameRoomPage.component';
 import { setNextPageActionCreator, NavigationPage } from 'redux/navigation';
-import { currentGameSelector } from 'redux/lobby';
+import { currentGameSelector, leaveGameActionCreator } from 'redux/lobby';
 
 const mapStateToProps = (state: RootState) => {
   return {
@@ -14,6 +14,7 @@ const mapStateToProps = (state: RootState) => {
 
 const mapDispatchToProps = {
   goBack: () => setNextPageActionCreator(NavigationPage.GameSelection),
+  leaveGame: leaveGameActionCreator,
 };
 
 export type Props = ReturnType<typeof mapStateToProps> & typeof mapDispatchToProps;
