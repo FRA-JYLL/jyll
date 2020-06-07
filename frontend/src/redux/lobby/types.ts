@@ -1,6 +1,9 @@
 export const CREATE_GAME_REQUEST = 'CREATE_GAME_REQUEST';
 export const GET_PENDING_GAMES_REQUEST = 'GET_PENDING_GAMES_REQUEST';
 export const GET_PENDING_GAMES_SUCCESS = 'GET_PENDING_GAMES_SUCCESS';
+export const GET_GAME_DETAILS_REQUEST = 'GET_GAME_DETAILS_REQUEST';
+export const JOIN_GAME_REQUEST = 'JOIN_GAME_REQUEST';
+export const LEAVE_GAME_REQUEST = 'LEAVE_GAME_REQUEST';
 
 export interface PendingGame {
   id: string;
@@ -31,6 +34,21 @@ export interface GetPendingGamesRequest {
 export interface GetPendingGamesSuccess {
   type: typeof GET_PENDING_GAMES_SUCCESS;
   payload: { pendingGames: BackendPendingGame[] };
+}
+
+export interface GetGameDetailsRequest {
+  type: typeof GET_GAME_DETAILS_REQUEST;
+  payload: { id: string };
+}
+
+export interface JoinGameRequest {
+  type: typeof JOIN_GAME_REQUEST;
+  payload: { id: string; password?: string };
+}
+
+export interface LeaveGameRequest {
+  type: typeof LEAVE_GAME_REQUEST;
+  payload: { id: string };
 }
 
 export interface LobbyState {
