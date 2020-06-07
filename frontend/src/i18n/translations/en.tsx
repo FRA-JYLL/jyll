@@ -13,8 +13,7 @@ export default {
     },
     gameSelection: {
       welcome: 'Welcome, {{username}}!',
-      subtitle: 'You good neutron star',
-      enjoy: 'Now enjoy staring at a stellar page \\(°-° )/',
+      instructions: "Here you can join another player's game, or even create your own.",
       createGame: 'CREATE GAME',
       createGameModal: {
         gameName: 'Game name (optional)',

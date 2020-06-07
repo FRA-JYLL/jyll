@@ -18,25 +18,27 @@ const GameSelectionPage = ({ username, pendingGames, logout, getPendingGames }: 
 
   return (
     <>
-      <div className="game-selection-container">
-        <div className="game-selection-panel">
-          <h1 className="game-selection-title">
-            {t('pages.gameSelection.welcome', { username: username || 'stranger' })}
-          </h1>
-          <p className="game-selection-subtitle">{t('pages.gameSelection.subtitle')}</p>
-          <p className="game-selection-text">{t('pages.gameSelection.enjoy')}</p>
-          <button className="button" onClick={openModal}>
+      <div className="main-container">
+        <div className="side-panel">
+          <div className="side-panel-text-container">
+            <h1 className="side-panel-welcome">
+              {t('pages.gameSelection.welcome', { username: username || 'stranger' })}
+            </h1>
+            <p className="side-panel-instructions">{t('pages.gameSelection.instructions')}</p>
+          </div>
+          <button className="side-panel-button" onClick={openModal}>
             {t('pages.gameSelection.createGame')}
           </button>
-          <button className="button" onClick={logout}>
+          <button className="side-panel-button" onClick={logout}>
             {t('pages.gameSelection.logout')}
           </button>
         </div>
-        <div className="game-selection-list">
+        <div className="games-list">
           {pendingGames.map((pendingGame: PendingGame) => (
             <div className="pending-game">{pendingGame.name}</div>
           ))}
         </div>
+        <div className="side-panel"></div>
       </div>
 
       <CreateGameModal isOpen={isOpen} closeModal={closeModal} />

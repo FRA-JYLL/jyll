@@ -1,17 +1,9 @@
-.game-selection-container {
+.main-container {
   display: flex;
   flex-direction: row;
   align-items: center;
-}
-
-.game-selection-panel {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
   height: 500px;
   padding: 30px;
-  margin-right: 10px;
   background-color: #000000;
   border-color: #32535f;
   border-style: solid;
@@ -19,29 +11,35 @@
   border-radius: 15px;
 }
 
-.game-selection-title {
-  font-size: 40px;
+.side-panel {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  height: 100%;
+  width: 300px;
+}
+
+.side-panel-text-container {
+  height: 100%;
+}
+
+.side-panel-welcome {
+  font-size: 24px;
   font-weight: 700;
   font-family: monospace;
-  color: #ffffff;
-  margin-bottom: 20px;
-}
-
-.game-selection-subtitle {
-  font-size: 24px;
-  font-family: monospace;
-  color: #ffffff;
-  margin-bottom: 15px;
-}
-
-.game-selection-text {
-  font-size: 20px;
-  font-family: monospace;
+  line-height: 30px;
   color: #ffffff;
   margin-bottom: 30px;
 }
 
-.button {
+.side-panel-instructions {
+  font-size: 20px;
+  font-family: monospace;
+  line-height: 25px;
+  color: #ffffff;
+}
+
+.side-panel-button {
   font-size: 20px;
   font-family: monospace;
   color: #ffffff;
@@ -51,22 +49,25 @@
   margin: 5px;
 }
 
-.game-selection-list {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  height: 500px;
-  overflow: scroll;
-  padding: 30px;
-  background-color: #000000;
-  border-color: #32535f;
-  border-style: solid;
-  border-width: 10px;
-  border-radius: 15px;
+.games-list {
+  height: 100%;
+  width: 400px;
+  overflow-y: scroll;
+  overflow-x: hidden;
+  margin-left: 30px;
+  padding-left: 30px;
+  border-left: dashed 2px #ffffff;
+  margin-right: 30px;
+  padding-right: 30px;
+  border-right: dashed 2px #ffffff;
 }
 
 .pending-game {
   font-size: 20px;
   font-family: monospace;
+  line-height: 26px;
   color: #ffffff;
+  &:hover {
+    color: #ffff00;
+  }
 }
