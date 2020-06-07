@@ -62,3 +62,39 @@ export const getNewAccessTokenRequest = async (refreshToken: string) => {
 
   return payload;
 };
+
+export const createGameRequest = async (
+  accessToken: string,
+  gameName?: string,
+  gamePassword?: string
+) => {
+  const response = await fetch(`${apiBaseUrl}/game/`, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+      Authorization: `Bearer ${accessToken}`,
+    },
+    body: JSON.stringify({ name: gameName, password: gamePassword }),
+  });
+
+  if (!response.ok) throw response.status;
+
+  const payload = await response.json();
+
+  return payload;
+};
+
+export const getPendingGamesRequest = async (accessToken: string) => {
+  const response = await fetch(`${apiBaseUrl}/game/pending/`, {
+    method: 'GET',
+    headers: {
+      Authorization: `Bearer ${accessToken}`,
+    },
+  });
+
+  if (!response.ok) throw response.status;
+
+  const payload = await response.json();
+
+  return payload;
+};

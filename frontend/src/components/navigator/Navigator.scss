@@ -46,18 +46,49 @@
 .game-selection-exit {
   position: absolute;
   opacity: 1;
-  transform: rotate(0deg) translate(0px, 0px) scale(1);
+  transform: translate(0px, 0px);
 }
 .game-selection-exit-active {
   position: absolute;
   opacity: 0;
-  transform: rotate(720deg) translate(0px, 500px) scale(0);
-  transition: transform 500ms linear, opacity 500ms ease-in;
+  transform: translate(500px);
+  transition: transform 500ms ease-in, opacity 500ms ease-in;
 }
 .game-selection-exit-done {
   position: absolute;
   opacity: 0;
-  transform: rotate(720deg) translate(0px, 500px) scale(0);
+  transform: translate(500px);
+}
+
+.game-room-enter {
+  position: absolute;
+  opacity: 0;
+  transform: translateY(500px);
+}
+.game-room-enter-active {
+  position: absolute;
+  opacity: 1;
+  transform: translateY(0px);
+  transition: transform 500ms ease-out, opacity 500ms ease-out;
+}
+.game-room-enter-done {
+  position: absolute;
+}
+.game-room-exit {
+  position: absolute;
+  opacity: 1;
+  transform: translateY(0px);
+}
+.game-room-exit-active {
+  position: absolute;
+  opacity: 0;
+  transform: translateY(500px);
+  transition: transform 500ms ease-in, opacity 500ms ease-in;
+}
+.game-room-exit-done {
+  position: absolute;
+  opacity: 0;
+  transform: translateY(500px);
 }
 
 .loader-enter {

@@ -1,6 +1,6 @@
 export default {
   pages: {
-    signup: {
+    authentication: {
       title: "You aren't logged in!",
       subtitle: 'You bad neutron star',
       login: 'Log in',
@@ -11,15 +11,24 @@ export default {
       usernameAlreadyTaken: 'Error: this username is already taken',
       invalidCredentials: 'Error: username or password is invalid',
     },
-    home: {
+    gameSelection: {
       welcome: 'Welcome, {{username}}! You finally logged in',
       subtitle: 'You good neutron star',
       enjoy: 'Now enjoy staring at a stellar page \\(°-° )/',
-      logout: 'Log out',
+      createGame: 'CREATE GAME',
+      createGameModal: {
+        gameName: 'Game name (optional)',
+        gamePassword: 'Password (optional)',
+        cancel: 'CANCEL',
+        submit: 'CREATE',
+      },
+      logout: 'LOG OUT',
     },
+    gameRoom: { title: 'Hello {{username}}!', back: 'BACK' },
   },
   toast: {
     signupError: 'Error: this username is already taken',
     loginError: 'Error: invalid username or password',
+    gameCreationFailureError: 'Error: your game could not be created, please try again',
   },
 };

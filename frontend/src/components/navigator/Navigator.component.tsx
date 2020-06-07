@@ -7,6 +7,7 @@ import FullScreenLoader from 'components/loaders';
 import Toast from 'components/toast';
 import { NavigationPage } from 'redux/navigation';
 import { Props } from './Navigator.container';
+import GameRoomPage from 'pages/GameRoomPage';
 
 const Navigator = ({
   getUserInfo,
@@ -43,6 +44,17 @@ const Navigator = ({
         unmountOnExit
       >
         <GameSelectionPage />
+      </CSSTransition>
+
+      <CSSTransition
+        in={currentPage === NavigationPage.GameRoom && nextPage === undefined}
+        timeout={500}
+        classNames={'game-room'}
+        onExited={showNextPage}
+        mountOnEnter
+        unmountOnExit
+      >
+        <GameRoomPage />
       </CSSTransition>
 
       <CSSTransition
