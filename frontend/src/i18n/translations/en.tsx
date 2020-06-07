@@ -12,7 +12,7 @@ export default {
       invalidCredentials: 'Error: username or password is invalid',
     },
     gameSelection: {
-      welcome: 'Welcome, {{username}}! You finally logged in',
+      welcome: 'Welcome, {{username}}!',
       subtitle: 'You good neutron star',
       enjoy: 'Now enjoy staring at a stellar page \\(°-° )/',
       createGame: 'CREATE GAME',

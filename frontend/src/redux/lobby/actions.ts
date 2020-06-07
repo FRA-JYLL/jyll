@@ -1,4 +1,9 @@
-import { CreateGameRequest, CREATE_GAME_REQUEST } from './types';
+import {
+  CreateGameRequest,
+  CREATE_GAME_REQUEST,
+  GetPendingGamesRequest,
+  GET_PENDING_GAMES_REQUEST,
+} from './types';
 
 export const createGameActionCreator = (
   gameName?: string,
@@ -13,4 +18,14 @@ export const createGameActionCreator = (
   };
 };
 
+export const getPendingGamesActionCreator = (
+  gameName?: string,
+  gamePassword?: string
+): GetPendingGamesRequest => {
+  return {
+    type: GET_PENDING_GAMES_REQUEST,
+  };
+};
+
 export type CreateGameActionCreator = typeof createGameActionCreator;
+export type GetPendingGamesActionCreator = typeof getPendingGamesActionCreator;
