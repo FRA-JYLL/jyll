@@ -125,6 +125,34 @@ function* getNewAccessTokenSaga(): SagaIterator {
   }
 }
 
+export function* sendRequestAndRetry(
+  request: any,
+  ...argsWithoutAccessToken: unknown[]
+): SagaIterator {
+  let response = undefined;
+
+  let accessToken = yield select(accessTokenSelector);
+  let argsWithAccessToken = [accessToken, ...argsWithoutAccessToken];
+
+  try {
+    response = yield call(request, ...argsWithAccessToken);
+  } catch (error) {
+    if (error === 401) {
+      yield call(getNewAccessTokenSaga);
+
+      accessToken = yield select(accessTokenSelector);
+      argsWithAccessToken = [accessToken, ...argsWithoutAccessToken];
+
+      try {
+        response = yield call(request, ...argsWithAccessToken);
+      } catch (error) {
+        throw error;
+      }
+    } else throw error;
+  }
+  return response;
+}
+
 export function* watchAuthentication() {
   yield takeEvery(SIGNUP_REQUEST, signupSaga);
   yield takeEvery(LOGIN_REQUEST, loginSaga);
