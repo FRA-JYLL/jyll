@@ -5,7 +5,13 @@ import './GameSelectionPage.scss';
 import { Props } from './GameSelectionPage.container';
 import { PendingGame } from 'redux/lobby';
 
-const GameSelectionPage = ({ username, pendingGames, logout, getPendingGames }: Props) => {
+const GameSelectionPage = ({
+  username,
+  pendingGames,
+  logout,
+  getPendingGames,
+  joinGame,
+}: Props) => {
   const { t } = useTranslation();
 
   useEffect(() => {
@@ -23,7 +29,9 @@ const GameSelectionPage = ({ username, pendingGames, logout, getPendingGames }: 
     </div>
   ));
 
-  const joinGame = () => {};
+  const joinSelectedGame = () => {
+    joinGame(selectedGameId);
+  };
 
   const renderGameInfo = (game?: PendingGame) =>
     game && (
@@ -34,7 +42,7 @@ const GameSelectionPage = ({ username, pendingGames, logout, getPendingGames }: 
             {t('pages.gameSelection.created', { creationDate: game.creationDate })}
           </p>
         </div>
-        <button className="side-panel-button" onClick={joinGame}>
+        <button className="side-panel-button" onClick={joinSelectedGame}>
           {t('pages.gameSelection.join')}
         </button>
       </>
