@@ -12,6 +12,9 @@ import {
   LeaveGameRequest,
   JOIN_GAME_REQUEST,
   LEAVE_GAME_REQUEST,
+  GetGamesWithUserRequest,
+  GET_GAMES_WITH_USER_SUCCESS,
+  GET_GAMES_WITH_USER_REQUEST,
 } from './types';
 import { showToastActionCreator } from 'redux/toast';
 import {
@@ -20,6 +23,7 @@ import {
   getGameDetailsRequest,
   joinGameRequest,
   leaveGameRequest,
+  getGamesWithUserRequest,
 } from 'services/requests';
 import { setNextPageActionCreator, NavigationPage } from 'redux/navigation';
 import { sendAuthenticatedRequest } from 'redux/authentication';
@@ -41,6 +45,14 @@ function* getPendingGamesSaga(action: GetPendingGamesRequest): SagaIterator {
     const response = yield call(sendAuthenticatedRequest, getPendingGamesRequest);
 
     yield put({ type: GET_PENDING_GAMES_SUCCESS, payload: { pendingGames: response } });
+  } catch (error) {}
+}
+
+function* getGamesWithUserSaga(action: GetGamesWithUserRequest): SagaIterator {
+  try {
+    const response = yield call(sendAuthenticatedRequest, getGamesWithUserRequest);
+
+    yield put({ type: GET_GAMES_WITH_USER_SUCCESS, payload: { gamesWithUser: response } });
   } catch (error) {}
 }
 
@@ -76,6 +88,7 @@ function* leaveGameSaga(action: LeaveGameRequest): SagaIterator {
 export function* watchLobby() {
   yield takeEvery(CREATE_GAME_REQUEST, createGameSaga);
   yield takeEvery(GET_PENDING_GAMES_REQUEST, getPendingGamesSaga);
+  yield takeEvery(GET_GAMES_WITH_USER_REQUEST, getGamesWithUserSaga);
   yield takeEvery(GET_GAME_DETAILS_REQUEST, getGameDetailsSaga);
   yield takeEvery(JOIN_GAME_REQUEST, joinGameSaga);
   yield takeEvery(LEAVE_GAME_REQUEST, leaveGameSaga);

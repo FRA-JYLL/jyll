@@ -24,6 +24,8 @@ export default {
       logout: 'LOG OUT',
       created: 'Created {{creationDate}}',
       join: 'JOIN',
+      myGames: 'My games',
+      publicGames: 'Public games',
     },
     gameRoom: { title: 'Hello {{username}}!', back: 'BACK' },
   },

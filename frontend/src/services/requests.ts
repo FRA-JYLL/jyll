@@ -99,6 +99,21 @@ export const getPendingGamesRequest = async (accessToken: string) => {
   return payload;
 };
 
+export const getGamesWithUserRequest = async (accessToken: string) => {
+  const response = await fetch(`${apiBaseUrl}/game/with_user/`, {
+    method: 'GET',
+    headers: {
+      Authorization: `Bearer ${accessToken}`,
+    },
+  });
+
+  if (!response.ok) throw response.status;
+
+  const payload = await response.json();
+
+  return payload;
+};
+
 export const getGameDetailsRequest = async (accessToken: string, id: string) => {
   const response = await fetch(`${apiBaseUrl}/game/${id}/`, {
     method: 'GET',

@@ -85,7 +85,22 @@
   border-right: dashed 2px #ffffff;
 }
 
-.pending-game {
+.games-list-section-title {
+  font-size: 30px;
+  font-weight: 700;
+  font-family: monospace;
+  line-height: 30px;
+  color: #ffffff;
+  padding-bottom: 20px;
+}
+
+.games-list-section {
+  & > :last-child {
+    margin-bottom: 20px;
+  }
+}
+
+.game-listed {
   font-size: 20px;
   font-family: monospace;
   line-height: 26px;
@@ -95,7 +110,7 @@
   }
 }
 
-.pending-game-selected {
+.game-selected {
   font-size: 20px;
   font-family: monospace;
   line-height: 26px;

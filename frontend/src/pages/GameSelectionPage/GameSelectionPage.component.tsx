@@ -3,13 +3,15 @@ import { useTranslation } from 'react-i18next';
 import { CreateGameModal } from 'components/modals';
 import './GameSelectionPage.scss';
 import { Props } from './GameSelectionPage.container';
-import { PendingGame } from 'redux/lobby';
+import { LobbyGame } from 'redux/lobby';
 
 const GameSelectionPage = ({
   username,
   pendingGames,
+  gamesWithUser,
   logout,
   getPendingGames,
+  getGamesWithUser,
   joinGame,
 }: Props) => {
   const { t } = useTranslation();
@@ -18,22 +20,27 @@ const GameSelectionPage = ({
     getPendingGames();
   }, [getPendingGames]);
 
+  useEffect(() => {
+    getGamesWithUser();
+  }, [getGamesWithUser]);
+
   const [selectedGameId, setSelectedGameId] = React.useState('');
 
-  const pendingGamesList = Object.values(pendingGames).map((pendingGame: PendingGame) => (
-    <div
-      className={selectedGameId === pendingGame.id ? 'pending-game-selected' : 'pending-game'}
-      onClick={() => setSelectedGameId(pendingGame.id)}
-    >
-      {pendingGame.name}
-    </div>
-  ));
+  const renderGamesList = (games: LobbyGame[]) =>
+    games.map((game: LobbyGame) => (
+      <div
+        className={selectedGameId === game.id ? 'game-selected' : 'game-listed'}
+        onClick={() => setSelectedGameId(game.id)}
+      >
+        {game.name}
+      </div>
+    ));
 
   const joinSelectedGame = () => {
     joinGame(selectedGameId);
   };
 
-  const renderGameInfo = (game?: PendingGame) =>
+  const renderGameInfo = (game?: LobbyGame) =>
     game && (
       <>
         <div className="side-panel-game-info-container">
@@ -70,9 +77,28 @@ const GameSelectionPage = ({
           </button>
         </div>
 
-        <div className="games-list">{pendingGamesList}</div>
+        <div className="games-list">
+          {gamesWithUser && (
+            <>
+              <p className="games-list-section-title">{t('pages.gameSelection.myGames')}</p>
+              <div className="games-list-section">
+                {renderGamesList(Object.values(gamesWithUser))}
+              </div>
+            </>
+          )}
+          {pendingGames && (
+            <>
+              <p className="games-list-section-title">{t('pages.gameSelection.publicGames')}</p>
+              <div className="games-list-section">
+                {renderGamesList(Object.values(pendingGames))}
+              </div>
+            </>
+          )}
+        </div>
 
-        <div className="side-panel">{renderGameInfo(pendingGames[selectedGameId])}</div>
+        <div className="side-panel">
+          {renderGameInfo(gamesWithUser[selectedGameId] || pendingGames[selectedGameId])}
+        </div>
       </div>
 
       <CreateGameModal isOpen={isOpen} closeModal={closeModal} />

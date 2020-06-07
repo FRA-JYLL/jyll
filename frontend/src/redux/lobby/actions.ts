@@ -9,6 +9,8 @@ import {
   JOIN_GAME_REQUEST,
   LeaveGameRequest,
   LEAVE_GAME_REQUEST,
+  GET_GAMES_WITH_USER_REQUEST,
+  GetGamesWithUserRequest,
 } from './types';
 
 export const createGameActionCreator = (
@@ -27,6 +29,12 @@ export const createGameActionCreator = (
 export const getPendingGamesActionCreator = (): GetPendingGamesRequest => {
   return {
     type: GET_PENDING_GAMES_REQUEST,
+  };
+};
+
+export const getGamesWithUserActionCreator = (): GetGamesWithUserRequest => {
+  return {
+    type: GET_GAMES_WITH_USER_REQUEST,
   };
 };
 
@@ -53,6 +61,7 @@ export const leaveGameActionCreator = (id: string): LeaveGameRequest => {
 
 export type CreateGameActionCreator = typeof createGameActionCreator;
 export type GetPendingGamesActionCreator = typeof getPendingGamesActionCreator;
+export type GetGamesWithUserActionCreator = typeof getGamesWithUserActionCreator;
 export type GetGameDetailsActionCreator = typeof getGameDetailsActionCreator;
 export type JoinGameActionCreator = typeof joinGameActionCreator;
 export type LeaveGameActionCreator = typeof leaveGameActionCreator;
