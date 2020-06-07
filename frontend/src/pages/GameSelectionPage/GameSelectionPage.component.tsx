@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
-import { CreateGameModal } from 'components/modals';
+import { CreateGameModal, JoinGameModal } from 'components/modals';
 import './GameSelectionPage.scss';
 import { Props } from './GameSelectionPage.container';
 import { LobbyGame } from 'redux/lobby';
@@ -36,9 +36,13 @@ const GameSelectionPage = ({
       </div>
     ));
 
-  const joinSelectedGame = () => {
-    joinGame(selectedGameId);
+  const joinSelectedGameWithPassword = (password?: string) => {
+    joinGame(selectedGameId, password);
   };
+
+  /*const joinSelectedGameWithoutPassword = () => {
+    joinGame(selectedGameId);
+  };*/
 
   const renderGameInfo = (game?: LobbyGame) =>
     game && (
@@ -49,15 +53,23 @@ const GameSelectionPage = ({
             {t('pages.gameSelection.created', { creationDate: game.creationDate })}
           </p>
         </div>
-        <button className="side-panel-button" onClick={joinSelectedGame}>
+        <button
+          className="side-panel-button"
+          onClick={openJoinModal} // TODO: Replace with next line once hasPassword has been implemented
+          // onClick={game.hasPassword ? openJoinModal : joinSelectedGameWithoutPassword}
+        >
           {t('pages.gameSelection.join')}
         </button>
       </>
     );
 
-  const [isOpen, setIsOpen] = React.useState(false);
-  const openModal = () => setIsOpen(true);
-  const closeModal = () => setIsOpen(false);
+  const [createModalIsOpen, setCreateModalIsOpen] = React.useState(false);
+  const openCreateModal = () => setCreateModalIsOpen(true);
+  const closeCreateModal = () => setCreateModalIsOpen(false);
+
+  const [joinModalIsOpen, setJoinModalIsOpen] = React.useState(false);
+  const openJoinModal = () => setJoinModalIsOpen(true);
+  const closeJoinModal = () => setJoinModalIsOpen(false);
 
   return (
     <>
@@ -69,7 +81,7 @@ const GameSelectionPage = ({
             </h1>
             <p className="side-panel-instructions">{t('pages.gameSelection.instructions')}</p>
           </div>
-          <button className="side-panel-button" onClick={openModal}>
+          <button className="side-panel-button" onClick={openCreateModal}>
             {t('pages.gameSelection.createGame')}
           </button>
           <button className="side-panel-button" onClick={logout}>
@@ -101,7 +113,13 @@ const GameSelectionPage = ({
         </div>
       </div>
 
-      <CreateGameModal isOpen={isOpen} closeModal={closeModal} />
+      <CreateGameModal isOpen={createModalIsOpen} closeModal={closeCreateModal} />
+
+      <JoinGameModal
+        isOpen={joinModalIsOpen}
+        closeModal={closeJoinModal}
+        onSubmit={joinSelectedGameWithPassword}
+      />
     </>
   );
 };

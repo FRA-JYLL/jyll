@@ -21,6 +21,11 @@ export default {
         cancel: 'CANCEL',
         submit: 'CREATE',
       },
+      joinGameModal: {
+        gamePassword: 'A password is required',
+        cancel: 'CANCEL',
+        submit: 'JOIN',
+      },
       logout: 'LOG OUT',
       created: 'Created {{creationDate}}',
       join: 'JOIN',
