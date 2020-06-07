@@ -15,7 +15,9 @@ import {
   GetGamesWithUserRequest,
   GET_GAMES_WITH_USER_SUCCESS,
   GET_GAMES_WITH_USER_REQUEST,
-  SET_CURRENT_GAME_SUCCESS,
+  ENTER_GAME_SUCCESS,
+  EnterGameRequest,
+  ENTER_GAME_REQUEST,
 } from './types';
 import { showToastActionCreator } from 'redux/toast';
 import {
@@ -28,6 +30,7 @@ import {
 } from 'services/requests';
 import { setNextPageActionCreator, NavigationPage } from 'redux/navigation';
 import { sendAuthenticatedRequest } from 'redux/authentication';
+import { enterGameActionCreator } from './actions';
 
 function* createGameSaga(action: CreateGameRequest): SagaIterator {
   yield put(setNextPageActionCreator(NavigationPage.Loader));
@@ -37,7 +40,7 @@ function* createGameSaga(action: CreateGameRequest): SagaIterator {
   try {
     yield call(sendAuthenticatedRequest, createGameRequest, gameName, gamePassword);
 
-    // TODO: SET_CURRENT_GAME_SUCCESS once the backend replies with the newly created game
+    // TODO: store game and put(enterGameActionCreator(id)) once the backend replies with the newly created game
 
     yield put(setNextPageActionCreator(NavigationPage.GameRoom));
   } catch (error) {
@@ -81,13 +84,17 @@ function* joinGameSaga(action: JoinGameRequest): SagaIterator {
       action.payload.password
     );
 
-    yield put({ type: SET_CURRENT_GAME_SUCCESS, payload: { id: action.payload.id } });
-
-    yield put(setNextPageActionCreator(NavigationPage.GameRoom));
+    yield put(enterGameActionCreator(action.payload.id));
   } catch (error) {
     yield put(setNextPageActionCreator(NavigationPage.GameSelection));
     yield put(showToastActionCreator('cannotJoinGameError'));
   }
+}
+
+function* enterGameSaga(action: EnterGameRequest): SagaIterator {
+  yield put({ type: ENTER_GAME_SUCCESS, payload: { id: action.payload.id } });
+
+  yield put(setNextPageActionCreator(NavigationPage.GameRoom));
 }
 
 function* leaveGameSaga(action: LeaveGameRequest): SagaIterator {
@@ -103,5 +110,6 @@ export function* watchLobby() {
   yield takeEvery(GET_GAMES_WITH_USER_REQUEST, getGamesWithUserSaga);
   yield takeEvery(GET_GAME_DETAILS_REQUEST, getGameDetailsSaga);
   yield takeEvery(JOIN_GAME_REQUEST, joinGameSaga);
+  yield takeEvery(ENTER_GAME_REQUEST, enterGameSaga);
   yield takeEvery(LEAVE_GAME_REQUEST, leaveGameSaga);
 }

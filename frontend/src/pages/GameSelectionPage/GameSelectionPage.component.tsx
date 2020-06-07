@@ -13,6 +13,7 @@ const GameSelectionPage = ({
   getPendingGames,
   getGamesWithUser,
   joinGame,
+  enterGame,
 }: Props) => {
   const { t } = useTranslation();
 
@@ -44,7 +45,11 @@ const GameSelectionPage = ({
     joinGame(selectedGameId);
   };*/
 
-  const renderGameInfo = (game?: LobbyGame) =>
+  const enterSelectedGame = () => {
+    enterGame(selectedGameId);
+  };
+
+  const renderGameInfo = (game?: LobbyGame, alreadyJoined?: boolean) =>
     game && (
       <>
         <div className="side-panel-game-info-container">
@@ -55,8 +60,8 @@ const GameSelectionPage = ({
         </div>
         <button
           className="side-panel-button"
-          onClick={openJoinModal} // TODO: Replace with next line once hasPassword has been implemented
-          // onClick={game.hasPassword ? openJoinModal : joinSelectedGameWithoutPassword}
+          onClick={alreadyJoined ? enterSelectedGame : openJoinModal} // TODO: Replace with next line once hasPassword has been implemented
+          // onClick={alreadyJoined ? enterSelectedGame : game.hasPassword ? openJoinModal : joinSelectedGameWithoutPassword}
         >
           {t('pages.gameSelection.join')}
         </button>
@@ -109,7 +114,9 @@ const GameSelectionPage = ({
         </div>
 
         <div className="side-panel">
-          {renderGameInfo(gamesWithUser[selectedGameId] || pendingGames[selectedGameId])}
+          {gamesWithUser[selectedGameId]
+            ? renderGameInfo(gamesWithUser[selectedGameId], true)
+            : renderGameInfo(pendingGames[selectedGameId])}
         </div>
       </div>
 

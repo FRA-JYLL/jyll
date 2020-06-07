@@ -4,6 +4,7 @@ export {
   getGamesWithUserActionCreator,
   getGameDetailsActionCreator,
   joinGameActionCreator,
+  enterGameActionCreator,
   leaveGameActionCreator,
 } from './actions';
 export type {
@@ -11,6 +12,7 @@ export type {
   GetPendingGamesActionCreator,
   GetGameDetailsActionCreator,
   JoinGameActionCreator,
+  EnterGameActionCreator,
   LeaveGameActionCreator,
 } from './actions';
 export { lobbyReducer } from './reducers';
@@ -27,8 +29,9 @@ export type {
   GetGamesWithUserSuccess,
   GetGameDetailsRequest,
   JoinGameRequest,
+  EnterGameRequest,
+  EnterGameSuccess,
   LeaveGameRequest,
-  SetCurrentGameSuccess,
 } from './types';
 export {
   CREATE_GAME_REQUEST,
@@ -38,7 +41,8 @@ export {
   GET_GAMES_WITH_USER_SUCCESS,
   GET_GAME_DETAILS_REQUEST,
   JOIN_GAME_REQUEST,
+  ENTER_GAME_REQUEST,
+  ENTER_GAME_SUCCESS,
   LEAVE_GAME_REQUEST,
-  SET_CURRENT_GAME_SUCCESS,
 } from './types';
 export { watchLobby } from './sagas';
