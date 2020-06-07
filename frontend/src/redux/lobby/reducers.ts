@@ -20,7 +20,10 @@ const lobbyGameFormatter = ({ id, name, creation_date, is_pending }: BackendLobb
   isPending: is_pending,
 });
 
-export const lobbyReducer = (state: LobbyState = initialLobbyState, action: LobbyActions) => {
+export const lobbyReducer = (
+  state: LobbyState = initialLobbyState,
+  action: LobbyActions
+): LobbyState => {
   switch (action.type) {
     case GET_PENDING_GAMES_SUCCESS:
       return {

@@ -11,7 +11,7 @@ const initialAuthenticationState: AuthenticationState = {};
 export const authenticationReducer = (
   state: AuthenticationState = initialAuthenticationState,
   action: AuthenticationActions
-) => {
+): AuthenticationState => {
   switch (action.type) {
     case GET_USER_INFO_SUCCESS:
       return {

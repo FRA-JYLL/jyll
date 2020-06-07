@@ -13,7 +13,7 @@ const initialNavigationState: NavigationState = {
 export const navigationReducer = (
   state: NavigationState = initialNavigationState,
   action: NavigationActions
-) => {
+): NavigationState => {
   switch (action.type) {
     case SET_NEXT_PAGE_SUCCESS:
       return {
