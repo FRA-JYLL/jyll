@@ -33,4 +33,4 @@ export {
   GET_USER_INFO_SUCCESS,
   GET_NEW_ACCESS_TOKEN_REQUEST,
 } from './types';
-export { sendRequestAndRetry, watchAuthentication } from './sagas';
+export { sendAuthenticatedRequest, watchAuthentication } from './sagas';

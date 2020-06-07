@@ -125,7 +125,7 @@ function* getNewAccessTokenSaga(): SagaIterator {
   }
 }
 
-export function* sendRequestAndRetry(
+export function* sendAuthenticatedRequest(
   request: any,
   ...argsWithoutAccessToken: unknown[]
 ): SagaIterator {

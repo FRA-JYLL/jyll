@@ -4,13 +4,13 @@ import { CreateGameRequest, CREATE_GAME_REQUEST } from './types';
 import { showToastActionCreator } from 'redux/toast';
 import { createGameRequest } from 'services/requests';
 import { setNextPageActionCreator, NavigationPage } from 'redux/navigation';
-import { sendRequestAndRetry } from 'redux/authentication';
+import { sendAuthenticatedRequest } from 'redux/authentication';
 
 function* createGameSaga(action: CreateGameRequest): SagaIterator {
   const { gameName, gamePassword } = action.payload;
 
   try {
-    yield call(sendRequestAndRetry, createGameRequest, gameName, gamePassword);
+    yield call(sendAuthenticatedRequest, createGameRequest, gameName, gamePassword);
 
     yield put(setNextPageActionCreator(NavigationPage.GameRoom));
   } catch (error) {
