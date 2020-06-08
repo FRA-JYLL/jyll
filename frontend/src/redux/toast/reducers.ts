@@ -12,7 +12,10 @@ const initialToastState: ToastState = {
   toastQueue: [],
 };
 
-export const toastReducer = (state: ToastState = initialToastState, action: ToastActions) => {
+export const toastReducer = (
+  state: ToastState = initialToastState,
+  action: ToastActions
+): ToastState => {
   switch (action.type) {
     case SHOW_TOAST_SUCCESS:
       return {

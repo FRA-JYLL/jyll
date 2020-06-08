@@ -12,9 +12,8 @@ export default {
       invalidCredentials: 'Error: username or password is invalid',
     },
     gameSelection: {
-      welcome: 'Welcome, {{username}}! You finally logged in',
-      subtitle: 'You good neutron star',
-      enjoy: 'Now enjoy staring at a stellar page \\(°-° )/',
+      welcome: 'Welcome, {{username}}!',
+      instructions: "Here you can join another player's game, or even create your own.",
       createGame: 'CREATE GAME',
       createGameModal: {
         gameName: 'Game name (optional)',
@@ -22,13 +21,23 @@ export default {
         cancel: 'CANCEL',
         submit: 'CREATE',
       },
+      joinGameModal: {
+        gamePassword: 'A password is required',
+        cancel: 'CANCEL',
+        submit: 'JOIN',
+      },
       logout: 'LOG OUT',
+      created: 'Created {{creationDate}}',
+      join: 'JOIN',
+      myGames: 'My games',
+      publicGames: 'Public games',
     },
-    gameRoom: { title: 'Hello {{username}}!', back: 'BACK' },
+    gameRoom: { title: 'Hello {{username}}!', back: 'BACK', leave: 'LEAVE GAME' },
   },
   toast: {
     signupError: 'Error: this username is already taken',
     loginError: 'Error: invalid username or password',
     gameCreationFailureError: 'Error: your game could not be created, please try again',
+    cannotJoinGameError: 'Error: Cannot join game',
   },
 };

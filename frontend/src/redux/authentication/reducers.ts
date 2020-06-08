@@ -11,7 +11,7 @@ const initialAuthenticationState: AuthenticationState = {};
 export const authenticationReducer = (
   state: AuthenticationState = initialAuthenticationState,
   action: AuthenticationActions
-) => {
+): AuthenticationState => {
   switch (action.type) {
     case GET_USER_INFO_SUCCESS:
       return {
@@ -21,7 +21,7 @@ export const authenticationReducer = (
         lastLogin: action.payload.lastLogin,
       };
     case LOGOUT_SUCCESS:
-      return initialAuthenticationState;
+      return { ...state, accessToken: undefined, refreshToken: undefined };
     case GET_TOKENS_SUCCESS:
       return {
         ...state,

@@ -7,3 +7,8 @@ export const clearTokens = (): void => {
   localStorage.removeItem('accessToken');
   localStorage.removeItem('refreshToken');
 };
+
+export const formatDate = (rawDate: string) => {
+  const date = new Date(rawDate);
+  return date.toLocaleDateString(); // TODO: Sync with chosen language once it has been implemented
+};
