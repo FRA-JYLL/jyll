@@ -42,6 +42,10 @@ class GameApiTests(APITestCase):
         self.assertEqual(response.status_code, status.HTTP_201_CREATED)
 
         game = Game.objects.get(name="Dune")
+
+        # check that game was sent back in data response
+        self.assertEqual(response.data["id"], game.id)
+
         # test if the password was set
         self.assertEqual(game.password, "12345678")
         # Test if a corresponding player was created, and if this player is an admin

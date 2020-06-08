@@ -19,19 +19,23 @@ class GameViewSet(
         serializer.is_valid(raise_exception=True)
 
         # Call custom manager
-        Game.objects.create(
+        new_game = Game.objects.create(
             creator=request.user,
             name=serializer.validated_data.get("name"),
             password=serializer.validated_data.get("password"),
         )
 
-        headers = self.get_success_headers(serializer.data)
+        new_game_queryset = Game.objects.get(id=new_game.id)
+        new_game_serializer = self.get_serializer(new_game_queryset)
+
+        headers = self.get_success_headers(new_game_serializer.data)
+
         return Response(
-            serializer.data, status=status.HTTP_201_CREATED, headers=headers
+            new_game_serializer.data, status=status.HTTP_201_CREATED, headers=headers
         )
 
     def _get_serializer(self, queryset):
-        """Get queryset and return the corresponding serializer"""
+        """Get queryset and return the corresponding serializer (cf. mixins.ListModelMixin)"""
         page = self.paginate_queryset(queryset)
         if page is not None:
             serializer = self.get_serializer(page, many=True)
