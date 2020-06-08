@@ -56,8 +56,7 @@ function* getPendingGamesSaga(action: GetPendingGamesRequest): SagaIterator {
 
     yield put({ type: GET_PENDING_GAMES_SUCCESS, payload: { pendingGames: response } });
   } catch (error) {
-    console.warn(error);
-    console.warn('in getPendingGamesSaga');
+    if (!Number.isInteger(error)) throw error;
   }
 }
 
@@ -67,8 +66,7 @@ function* getGamesWithUserSaga(action: GetGamesWithUserRequest): SagaIterator {
 
     yield put({ type: GET_GAMES_WITH_USER_SUCCESS, payload: { gamesWithUser: response } });
   } catch (error) {
-    console.warn(error);
-    console.warn('in getGamesWithUserSaga');
+    if (!Number.isInteger(error)) throw error;
   }
 }
 
@@ -78,8 +76,7 @@ function* getGameDetailsSaga(action: GetGameDetailsRequest): SagaIterator {
 
     yield put({ type: GET_GAME_DETAILS_SUCCESS, payload: { game: response } });
   } catch (error) {
-    console.warn(error);
-    console.warn('in getGameDetailsSaga');
+    if (!Number.isInteger(error)) throw error;
   }
 }
 
@@ -111,10 +108,10 @@ function* leaveGameSaga(action: LeaveGameRequest): SagaIterator {
   try {
     yield call(sendAuthenticatedRequest, leaveGameRequest, action.payload.id);
   } catch (error) {
-    console.warn(error);
-    console.warn('in leaveGameSaga');
+    if (!Number.isInteger(error)) throw error;
+  } finally {
+    yield put(setNextPageActionCreator(NavigationPage.GameSelection));
   }
-  yield put(setNextPageActionCreator(NavigationPage.GameSelection));
 }
 
 export function* watchLobby() {
