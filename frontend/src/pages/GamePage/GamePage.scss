@@ -12,6 +12,7 @@
 }
 
 .game-container {
+  position: absolute;
   display: grid;
   grid-template-columns: 140px auto 500px;
   grid-template-rows: 100px auto 100px;
@@ -72,4 +73,114 @@
 
 .end-button {
   width: 200px;
+}
+
+.transition-top-enter {
+  opacity: 0;
+  transform: translateY(-300px);
+}
+.transition-top-enter-active {
+  opacity: 1;
+  transform: translateY(0px);
+  transition: transform 500ms ease-out, opacity 500ms ease-out;
+}
+.transition-top-exit {
+  opacity: 1;
+  transform: translateY(0px);
+}
+.transition-top-exit-active {
+  opacity: 0;
+  transform: translateY(-300px);
+  transition: transform 500ms ease-in, opacity 500ms ease-in;
+}
+
+.transition-left-enter {
+  opacity: 0;
+  transform: translateX(-500px);
+}
+.transition-left-enter-active {
+  opacity: 1;
+  transform: translateX(0px);
+  transition: transform 500ms ease-out, opacity 500ms ease-out;
+}
+.transition-left-exit {
+  opacity: 1;
+  transform: translateX(0px);
+}
+.transition-left-exit-active {
+  opacity: 0;
+  transform: translateX(-500px);
+  transition: transform 500ms ease-in, opacity 500ms ease-in;
+}
+
+.transition-center-enter {
+  opacity: 0;
+}
+.transition-center-enter-active {
+  opacity: 1;
+  transition: opacity 500ms ease-out;
+}
+.transition-center-exit {
+  opacity: 1;
+}
+.transition-center-exit-active {
+  opacity: 0;
+  transition: opacity 500ms ease-in;
+}
+
+.transition-right-enter {
+  opacity: 0;
+  transform: translateX(500px);
+}
+.transition-right-enter-active {
+  opacity: 1;
+  transform: translateX(0px);
+  transition: transform 500ms ease-out, opacity 500ms ease-out;
+}
+.transition-right-exit {
+  opacity: 1;
+  transform: translateX(0px);
+}
+.transition-right-exit-active {
+  opacity: 0;
+  transform: translateX(500px);
+  transition: transform 500ms ease-in, opacity 500ms ease-in;
+}
+
+.transition-bottom-enter {
+  opacity: 0;
+  transform: translateY(300px);
+}
+.transition-bottom-enter-active {
+  opacity: 1;
+  transform: translateY(0px);
+  transition: transform 500ms ease-out, opacity 500ms ease-out;
+}
+.transition-bottom-exit {
+  opacity: 1;
+  transform: translateY(0px);
+}
+.transition-bottom-exit-active {
+  opacity: 0;
+  transform: translateY(300px);
+  transition: transform 500ms ease-in, opacity 500ms ease-in;
+}
+
+.transition-bottom-right-enter {
+  opacity: 0;
+  transform: translate(500px, 300px);
+}
+.transition-bottom-right-enter-active {
+  opacity: 1;
+  transform: translate(0px, 0px);
+  transition: transform 500ms ease-out, opacity 500ms ease-out;
+}
+.transition-bottom-right-exit {
+  opacity: 1;
+  transform: translate(0px, 0px);
+}
+.transition-bottom-right-exit-active {
+  opacity: 0;
+  transform: translate(500px, 300px);
+  transition: transform 500ms ease-in, opacity 500ms ease-in;
 }
