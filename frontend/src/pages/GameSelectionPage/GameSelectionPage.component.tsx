@@ -7,8 +7,9 @@ import { LobbyGame } from 'redux/lobby';
 
 const GameSelectionPage = ({
   username,
-  pendingGames,
-  gamesWithUser,
+  pendingGamesIds,
+  gamesWithUserIds,
+  lobbyGames,
   logout,
   getPendingGames,
   getGamesWithUser,
@@ -27,16 +28,21 @@ const GameSelectionPage = ({
 
   const [selectedGameId, setSelectedGameId] = React.useState('');
 
-  const renderGamesList = (games: LobbyGame[]) =>
-    games.map((game: LobbyGame) => (
-      <div
-        key={game.id}
-        className={selectedGameId === game.id ? 'game-selected' : 'game-listed'}
-        onClick={() => setSelectedGameId(game.id)}
-      >
-        {game.name}
-      </div>
-    ));
+  const renderGamesList = (ids: string[]) =>
+    ids.map((id: string) => {
+      const game = lobbyGames[id];
+      return (
+        game && (
+          <div
+            key={game.id}
+            className={selectedGameId === game.id ? 'game-selected' : 'game-listed'}
+            onClick={() => setSelectedGameId(game.id)}
+          >
+            {game.name}
+          </div>
+        )
+      );
+    });
 
   const joinSelectedGameWithPassword = (password?: string) => {
     joinGame(selectedGameId, password);
@@ -50,24 +56,28 @@ const GameSelectionPage = ({
     enterGame(selectedGameId);
   };
 
-  const renderGameInfo = (game?: LobbyGame, alreadyJoined?: boolean) =>
-    game && (
-      <>
-        <div className="side-panel-game-info-container">
-          <p className="side-panel-game-name">{game.name}</p>
-          <p className="side-panel-instructions">
-            {t('pages.gameSelection.created', { creationDate: game.creationDate })}
-          </p>
-        </div>
-        <button
-          className="side-panel-button"
-          onClick={alreadyJoined ? enterSelectedGame : openJoinModal} // TODO: Replace with next line once hasPassword has been implemented
-          // onClick={alreadyJoined ? enterSelectedGame : game.hasPassword ? openJoinModal : joinSelectedGameWithoutPassword}
-        >
-          {t('pages.gameSelection.join')}
-        </button>
-      </>
+  const renderGameInfo = (game?: LobbyGame) => {
+    const alreadyJoined = game && gamesWithUserIds.includes(game.id);
+    return (
+      game && (
+        <>
+          <div className="side-panel-game-info-container">
+            <p className="side-panel-game-name">{game.name}</p>
+            <p className="side-panel-instructions">
+              {t('pages.gameSelection.created', { creationDate: game.creationDate })}
+            </p>
+          </div>
+          <button
+            className="side-panel-button"
+            onClick={alreadyJoined ? enterSelectedGame : openJoinModal} // TODO: Replace with next line once hasPassword has been implemented
+            // onClick={alreadyJoined ? enterSelectedGame : game.hasPassword ? openJoinModal : joinSelectedGameWithoutPassword}
+          >
+            {t('pages.gameSelection.join')}
+          </button>
+        </>
+      )
     );
+  };
 
   const [createModalIsOpen, setCreateModalIsOpen] = React.useState(false);
   const openCreateModal = () => setCreateModalIsOpen(true);
@@ -96,29 +106,21 @@ const GameSelectionPage = ({
         </div>
 
         <div className="games-list">
-          {gamesWithUser && (
+          {gamesWithUserIds && (
             <>
               <p className="games-list-section-title">{t('pages.gameSelection.myGames')}</p>
-              <div className="games-list-section">
-                {renderGamesList(Object.values(gamesWithUser))}
-              </div>
+              <div className="games-list-section">{renderGamesList(gamesWithUserIds)}</div>
             </>
           )}
-          {pendingGames && (
+          {pendingGamesIds && (
             <>
               <p className="games-list-section-title">{t('pages.gameSelection.publicGames')}</p>
-              <div className="games-list-section">
-                {renderGamesList(Object.values(pendingGames))}
-              </div>
+              <div className="games-list-section">{renderGamesList(pendingGamesIds)}</div>
             </>
           )}
         </div>
 
-        <div className="side-panel">
-          {gamesWithUser[selectedGameId]
-            ? renderGameInfo(gamesWithUser[selectedGameId], true)
-            : renderGameInfo(pendingGames[selectedGameId])}
-        </div>
+        <div className="side-panel">{renderGameInfo(lobbyGames[selectedGameId])}</div>
       </div>
 
       <CreateGameModal isOpen={createModalIsOpen} closeModal={closeCreateModal} />

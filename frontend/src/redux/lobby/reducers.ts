@@ -7,11 +7,13 @@ import {
   LobbyGame,
   GET_GAMES_WITH_USER_SUCCESS,
   ENTER_GAME_SUCCESS,
+  GET_GAME_DETAILS_SUCCESS,
 } from './types';
 
 const initialLobbyState: LobbyState = {
-  pendingGames: {},
-  gamesWithUser: {},
+  games: {},
+  pendingGamesIds: [],
+  gamesWithUserIds: [],
 };
 
 const lobbyGameFormatter = ({ id, name, creation_date, is_pending }: BackendLobbyGame) => ({
@@ -21,32 +23,48 @@ const lobbyGameFormatter = ({ id, name, creation_date, is_pending }: BackendLobb
   isPending: is_pending,
 });
 
+const reduceGames = (
+  newGames: BackendLobbyGame[],
+  previousGames: { [key: string]: LobbyGame }
+): { [key: string]: LobbyGame } =>
+  newGames.reduce(
+    (pendingGames: { [key: string]: LobbyGame }, newPendingGame: BackendLobbyGame) => ({
+      ...pendingGames,
+      [newPendingGame.id]: lobbyGameFormatter(newPendingGame),
+    }),
+    previousGames
+  );
+
+const extractGamesIds = (games: BackendLobbyGame[]): string[] =>
+  games.map((game: BackendLobbyGame) => game.id);
+
 export const lobbyReducer = (
   state: LobbyState = initialLobbyState,
   action: LobbyActions
 ): LobbyState => {
   switch (action.type) {
     case GET_PENDING_GAMES_SUCCESS:
+      const pendingGames = action.payload.pendingGames;
       return {
         ...state,
-        pendingGames: action.payload.pendingGames.reduce(
-          (pendingGames: { [key: string]: LobbyGame }, newPendingGame: BackendLobbyGame) => ({
-            ...pendingGames,
-            [newPendingGame.id]: lobbyGameFormatter(newPendingGame),
-          }),
-          {}
-        ),
+        games: reduceGames(pendingGames, state.games),
+        pendingGamesIds: extractGamesIds(pendingGames),
       };
     case GET_GAMES_WITH_USER_SUCCESS:
+      const gamesWithUser = action.payload.gamesWithUser;
       return {
         ...state,
-        gamesWithUser: action.payload.gamesWithUser.reduce(
-          (gamesWithUser: { [key: string]: LobbyGame }, newGameWithUser: BackendLobbyGame) => ({
-            ...gamesWithUser,
-            [newGameWithUser.id]: lobbyGameFormatter(newGameWithUser),
-          }),
-          {}
-        ),
+        games: reduceGames(gamesWithUser, state.games),
+        gamesWithUserIds: extractGamesIds(gamesWithUser),
+      };
+    case GET_GAME_DETAILS_SUCCESS:
+      const game = action.payload.game;
+      return {
+        ...state,
+        games: {
+          ...state.games,
+          [game.id]: lobbyGameFormatter(game),
+        },
       };
     case ENTER_GAME_SUCCESS:
       return {

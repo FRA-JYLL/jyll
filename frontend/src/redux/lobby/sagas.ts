@@ -18,6 +18,7 @@ import {
   ENTER_GAME_SUCCESS,
   EnterGameRequest,
   ENTER_GAME_REQUEST,
+  GET_GAME_DETAILS_SUCCESS,
 } from './types';
 import { showToastActionCreator } from 'redux/toast';
 import {
@@ -69,7 +70,7 @@ function* getGameDetailsSaga(action: GetGameDetailsRequest): SagaIterator {
   try {
     const response = yield call(sendAuthenticatedRequest, getGameDetailsRequest, action.payload.id);
 
-    console.log(response);
+    yield put({ type: GET_GAME_DETAILS_SUCCESS, payload: { game: response } });
   } catch (error) {}
 }
 

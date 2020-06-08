@@ -1,13 +1,15 @@
 import { RootState } from 'redux/root';
 
-export const pendingGamesSelector = (store: RootState) => store.lobby.pendingGames;
+export const pendingGamesIdsSelector = (store: RootState) => store.lobby.pendingGamesIds;
 
-export const gamesWithUserSelector = (store: RootState) => store.lobby.gamesWithUser;
+export const gamesWithUserIdsSelector = (store: RootState) => store.lobby.gamesWithUserIds;
+
+export const lobbyGamesSelector = (store: RootState) => store.lobby.games;
 
 export const currentGameSelector = (store: RootState) => {
   const currentGameId = store.lobby.currentGameId;
 
   if (!currentGameId) return;
 
-  return store.lobby.gamesWithUser[currentGameId] || store.lobby.pendingGames[currentGameId];
+  return store.lobby.games[currentGameId];
 };

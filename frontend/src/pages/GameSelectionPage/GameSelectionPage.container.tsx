@@ -1,12 +1,13 @@
 import { connect } from 'react-redux';
 import { usernameSelector, logoutActionCreator } from 'redux/authentication';
 import {
-  pendingGamesSelector,
+  pendingGamesIdsSelector,
   getPendingGamesActionCreator,
   joinGameActionCreator,
-  gamesWithUserSelector,
+  gamesWithUserIdsSelector,
   getGamesWithUserActionCreator,
   enterGameActionCreator,
+  lobbyGamesSelector,
 } from 'redux/lobby';
 import { RootState } from 'redux/root';
 import GameSelectionPage from './GameSelectionPage.component';
@@ -14,8 +15,9 @@ import GameSelectionPage from './GameSelectionPage.component';
 const mapStateToProps = (state: RootState) => {
   return {
     username: usernameSelector(state),
-    pendingGames: pendingGamesSelector(state),
-    gamesWithUser: gamesWithUserSelector(state),
+    pendingGamesIds: pendingGamesIdsSelector(state),
+    gamesWithUserIds: gamesWithUserIdsSelector(state),
+    lobbyGames: lobbyGamesSelector(state),
   };
 };
 

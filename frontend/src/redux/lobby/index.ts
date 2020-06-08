@@ -16,7 +16,12 @@ export type {
   LeaveGameActionCreator,
 } from './actions';
 export { lobbyReducer } from './reducers';
-export { pendingGamesSelector, gamesWithUserSelector, currentGameSelector } from './selectors';
+export {
+  pendingGamesIdsSelector,
+  gamesWithUserIdsSelector,
+  lobbyGamesSelector,
+  currentGameSelector,
+} from './selectors';
 export type {
   LobbyGame,
   BackendLobbyGame,
@@ -28,6 +33,7 @@ export type {
   GetGamesWithUserRequest,
   GetGamesWithUserSuccess,
   GetGameDetailsRequest,
+  GetGameDetailsSuccess,
   JoinGameRequest,
   EnterGameRequest,
   EnterGameSuccess,
@@ -40,6 +46,7 @@ export {
   GET_GAMES_WITH_USER_REQUEST,
   GET_GAMES_WITH_USER_SUCCESS,
   GET_GAME_DETAILS_REQUEST,
+  GET_GAME_DETAILS_SUCCESS,
   JOIN_GAME_REQUEST,
   ENTER_GAME_REQUEST,
   ENTER_GAME_SUCCESS,
