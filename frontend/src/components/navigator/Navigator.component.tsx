@@ -8,6 +8,7 @@ import Toast from 'components/toast';
 import { NavigationPage } from 'redux/navigation';
 import { Props } from './Navigator.container';
 import GameRoomPage from 'pages/GameRoomPage';
+import GamePage from 'pages/GamePage';
 
 const Navigator = ({
   getUserInfo,
@@ -55,6 +56,17 @@ const Navigator = ({
         unmountOnExit
       >
         <GameRoomPage />
+      </CSSTransition>
+
+      <CSSTransition
+        in={currentPage === NavigationPage.Game && nextPage === undefined}
+        timeout={500}
+        classNames={'game-page'}
+        onExited={showNextPage}
+        mountOnEnter
+        unmountOnExit
+      >
+        <GamePage />
       </CSSTransition>
 
       <CSSTransition

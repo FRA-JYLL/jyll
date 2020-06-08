@@ -2,6 +2,7 @@ export enum NavigationPage {
   Authentication = 'Authentication',
   GameSelection = 'GameSelection',
   GameRoom = 'GameRoom',
+  Game = 'Game',
   FirstLoader = 'FirstLoader',
   Loader = 'Loader',
 }

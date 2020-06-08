@@ -15,6 +15,7 @@ const mapStateToProps = (state: RootState) => {
 const mapDispatchToProps = {
   goBack: () => setNextPageActionCreator(NavigationPage.GameSelection),
   leaveGame: leaveGameActionCreator,
+  startGame: () => setNextPageActionCreator(NavigationPage.Game),
 };
 
 export type Props = ReturnType<typeof mapStateToProps> & typeof mapDispatchToProps;
