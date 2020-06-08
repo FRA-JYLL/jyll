@@ -55,7 +55,10 @@ function* getPendingGamesSaga(action: GetPendingGamesRequest): SagaIterator {
     const response = yield call(sendAuthenticatedRequest, getPendingGamesRequest);
 
     yield put({ type: GET_PENDING_GAMES_SUCCESS, payload: { pendingGames: response } });
-  } catch (error) {}
+  } catch (error) {
+    console.warn(error);
+    console.warn('in getPendingGamesSaga');
+  }
 }
 
 function* getGamesWithUserSaga(action: GetGamesWithUserRequest): SagaIterator {
@@ -63,7 +66,10 @@ function* getGamesWithUserSaga(action: GetGamesWithUserRequest): SagaIterator {
     const response = yield call(sendAuthenticatedRequest, getGamesWithUserRequest);
 
     yield put({ type: GET_GAMES_WITH_USER_SUCCESS, payload: { gamesWithUser: response } });
-  } catch (error) {}
+  } catch (error) {
+    console.warn(error);
+    console.warn('in getGamesWithUserSaga');
+  }
 }
 
 function* getGameDetailsSaga(action: GetGameDetailsRequest): SagaIterator {
@@ -71,7 +77,10 @@ function* getGameDetailsSaga(action: GetGameDetailsRequest): SagaIterator {
     const response = yield call(sendAuthenticatedRequest, getGameDetailsRequest, action.payload.id);
 
     yield put({ type: GET_GAME_DETAILS_SUCCESS, payload: { game: response } });
-  } catch (error) {}
+  } catch (error) {
+    console.warn(error);
+    console.warn('in getGameDetailsSaga');
+  }
 }
 
 function* joinGameSaga(action: JoinGameRequest): SagaIterator {
@@ -101,7 +110,10 @@ function* enterGameSaga(action: EnterGameRequest): SagaIterator {
 function* leaveGameSaga(action: LeaveGameRequest): SagaIterator {
   try {
     yield call(sendAuthenticatedRequest, leaveGameRequest, action.payload.id);
-  } catch (error) {}
+  } catch (error) {
+    console.warn(error);
+    console.warn('in leaveGameSaga');
+  }
   yield put(setNextPageActionCreator(NavigationPage.GameSelection));
 }
 

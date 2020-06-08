@@ -157,8 +157,4 @@ export const leaveGameRequest = async (accessToken: string, id: string) => {
   });
 
   if (!response.ok) throw response.status;
-
-  const payload = await response.json();
-
-  return payload;
 };
