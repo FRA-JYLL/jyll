@@ -44,7 +44,11 @@ class GameViewSet(
     def pending(self, request, *args, **kwargs):
         """View listing all pending games"""
         # query all pending games
-        queryset = self.filter_queryset(Game.objects.filter(is_pending=True))
+        queryset = self.filter_queryset(
+            Game.objects.filter(is_pending=True).exclude(
+                players__user__id=request.user.id
+            )
+        )
 
         serializer = self._get_serializer(queryset)
         return Response(serializer.data)

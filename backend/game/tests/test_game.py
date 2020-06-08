@@ -56,9 +56,18 @@ class GameApiTests(APITestCase):
 
     def test_list_pending_games(self):
         self.client.force_authenticate(user=GameApiTests.user)
+
+        # create a new pending
+        new_user = User.objects.create(username="Duncan", password="Idaho")
+        new_pending_game = Game.objects.create(creator=new_user, name="Giedi Prime")
+
         url = reverse("game-pending")
         response = self.client.get(url)
         self.assertEqual(response.status_code, status.HTTP_200_OK)
+
+        # check that Paul sees only Duncan's game in pending games (and not his own game)
+        self.assertEqual(len(response.data), 1)
+        self.assertEqual(response.data[0]["id"], new_pending_game.id)
 
     def test_list_games_with_user(self):
         self.client.force_authenticate(user=GameApiTests.user)
