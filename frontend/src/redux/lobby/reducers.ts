@@ -28,9 +28,9 @@ const reduceGames = (
   previousGames: { [key: string]: LobbyGame }
 ): { [key: string]: LobbyGame } =>
   newGames.reduce(
-    (pendingGames: { [key: string]: LobbyGame }, newPendingGame: BackendLobbyGame) => ({
-      ...pendingGames,
-      [newPendingGame.id]: lobbyGameFormatter(newPendingGame),
+    (games: { [key: string]: LobbyGame }, newGame: BackendLobbyGame) => ({
+      ...games,
+      [newGame.id]: lobbyGameFormatter(newGame),
     }),
     previousGames
   );
