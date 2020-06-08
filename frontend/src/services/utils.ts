@@ -10,5 +10,5 @@ export const clearTokens = (): void => {
 
 export const formatDate = (rawDate: string) => {
   const date = new Date(rawDate);
-  return date.toLocaleDateString('fr-FR');
+  return date.toLocaleDateString(); // TODO: Sync with chosen language once it has been implemented
 };

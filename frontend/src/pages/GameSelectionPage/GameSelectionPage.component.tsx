@@ -30,6 +30,7 @@ const GameSelectionPage = ({
   const renderGamesList = (games: LobbyGame[]) =>
     games.map((game: LobbyGame) => (
       <div
+        key={game.id}
         className={selectedGameId === game.id ? 'game-selected' : 'game-listed'}
         onClick={() => setSelectedGameId(game.id)}
       >
