@@ -8,6 +8,7 @@ import Toast from 'components/toast';
 import { NavigationPage } from 'redux/navigation';
 import { Props } from './Navigator.container';
 import GameRoomPage from 'pages/GameRoomPage';
+import GamePage from 'pages/GamePage';
 
 const Navigator = ({
   getUserInfo,
@@ -56,6 +57,13 @@ const Navigator = ({
       >
         <GameRoomPage />
       </CSSTransition>
+
+      {(currentPage === NavigationPage.Game || nextPage === NavigationPage.Game) && (
+        <GamePage
+          transitionIn={currentPage === NavigationPage.Game && nextPage === undefined}
+          transitionOnExited={showNextPage}
+        />
+      )}
 
       <CSSTransition
         in={
