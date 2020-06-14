@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import './GameRoomPage.scss';
 import { Props } from './GameRoomPage.container';
@@ -19,19 +19,24 @@ const GameRoomPage = ({
 }: Props) => {
   const { t } = useTranslation();
 
+  const refreshPeriod = 2000;
+  const [timer, setTimer] = useState(0);
+  useEffect(() => {
+    const setTimeoutId = setTimeout(() => setTimer(timer + 1), refreshPeriod);
+    return () => clearTimeout(setTimeoutId);
+  }, [timer]);
+
   useEffect(() => {
     currentGameId && getGameDetails(currentGameId);
   }, [getGameDetails, currentGameId]);
 
-  // TODO: Trigger the next two useEffect hooks periodically
-
   useEffect(() => {
     currentGameId && getCurrentGamePlayers();
-  }, [getCurrentGamePlayers, currentGameId]);
+  }, [getCurrentGamePlayers, currentGameId, timer]);
 
   useEffect(() => {
     currentGamePlayersIds.forEach((id: string) => getPlayerDetails(id));
-  }, [getPlayerDetails, currentGamePlayersIds]);
+  }, [getPlayerDetails, currentGamePlayersIds, timer]);
 
   const leaveCurrentGame = () => {
     if (currentGame) leaveGame(currentGame.id);
