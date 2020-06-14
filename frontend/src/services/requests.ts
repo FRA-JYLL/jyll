@@ -148,6 +148,36 @@ export const joinGameRequest = async (accessToken: string, id: string, password?
   return payload;
 };
 
+export const getGamePlayersRequest = async (accessToken: string, id: string) => {
+  const response = await fetch(`${apiBaseUrl}/game/${id}/players/`, {
+    method: 'GET',
+    headers: {
+      Authorization: `Bearer ${accessToken}`,
+    },
+  });
+
+  if (!response.ok) throw response.status;
+
+  const payload = await response.json();
+
+  return payload;
+};
+
+export const getPlayerDetailsRequest = async (accessToken: string, id: string) => {
+  const response = await fetch(`${apiBaseUrl}/player/${id}/`, {
+    method: 'GET',
+    headers: {
+      Authorization: `Bearer ${accessToken}`,
+    },
+  });
+
+  if (!response.ok) throw response.status;
+
+  const payload = await response.json();
+
+  return payload;
+};
+
 export const leaveGameRequest = async (accessToken: string, id: string) => {
   const response = await fetch(`${apiBaseUrl}/game/${id}/leave/`, {
     method: 'DELETE',

@@ -8,6 +8,10 @@ export const GET_GAME_DETAILS_SUCCESS = 'GET_GAME_DETAILS_SUCCESS';
 export const JOIN_GAME_REQUEST = 'JOIN_GAME_REQUEST';
 export const ENTER_GAME_REQUEST = 'ENTER_GAME_REQUEST';
 export const ENTER_GAME_SUCCESS = 'ENTER_GAME_SUCCESS';
+export const GET_PLAYER_DETAILS_REQUEST = 'GET_PLAYER_DETAILS_REQUEST';
+export const GET_PLAYER_DETAILS_SUCCESS = 'GET_PLAYER_DETAILS_SUCCESS';
+export const GET_CURRENT_GAME_PLAYERS_REQUEST = 'GET_CURRENT_GAME_PLAYERS_REQUEST';
+export const GET_CURRENT_GAME_PLAYERS_SUCCESS = 'GET_CURRENT_GAME_PLAYERS_SUCCESS';
 export const LEAVE_GAME_REQUEST = 'LEAVE_GAME_REQUEST';
 
 export interface LobbyGame {
@@ -24,11 +28,35 @@ export interface BackendLobbyGame {
   is_pending: boolean;
 }
 
+export interface LobbyUser {
+  id: string;
+  username: string;
+}
+
+export interface BackendLobbyPlayer {
+  // TODO: Add username once it is included in the response
+  id: string;
+  is_admin: boolean;
+  user: string;
+  game: string;
+  is_ready: boolean;
+}
+
+export interface LobbyPlayer {
+  id: string;
+  isAdmin: boolean;
+  userId: string;
+  gameId: string;
+  isReady: boolean;
+}
+
 export type LobbyActions =
   | GetPendingGamesSuccess
   | GetGamesWithUserSuccess
   | GetGameDetailsSuccess
-  | EnterGameSuccess;
+  | EnterGameSuccess
+  | GetPlayerDetailsSuccess
+  | GetCurrentGamePlayersSuccess;
 
 export interface CreateGameRequest {
   type: typeof CREATE_GAME_REQUEST;
@@ -71,11 +99,6 @@ export interface JoinGameRequest {
   payload: { id: string; password?: string };
 }
 
-export interface LeaveGameRequest {
-  type: typeof LEAVE_GAME_REQUEST;
-  payload: { id: string };
-}
-
 export interface EnterGameRequest {
   type: typeof ENTER_GAME_REQUEST;
   payload: { id: string };
@@ -86,9 +109,35 @@ export interface EnterGameSuccess {
   payload: { id: string };
 }
 
+export interface GetPlayerDetailsRequest {
+  type: typeof GET_PLAYER_DETAILS_REQUEST;
+  payload: { id: string };
+}
+
+export interface GetPlayerDetailsSuccess {
+  type: typeof GET_PLAYER_DETAILS_SUCCESS;
+  payload: { player: BackendLobbyPlayer };
+}
+
+export interface GetCurrentGamePlayersRequest {
+  type: typeof GET_CURRENT_GAME_PLAYERS_REQUEST;
+}
+
+export interface GetCurrentGamePlayersSuccess {
+  type: typeof GET_CURRENT_GAME_PLAYERS_SUCCESS;
+  payload: { players: { id: string }[] };
+}
+
+export interface LeaveGameRequest {
+  type: typeof LEAVE_GAME_REQUEST;
+  payload: { id: string };
+}
+
 export interface LobbyState {
   games: { [key: string]: LobbyGame };
   pendingGamesIds: string[];
   gamesWithUserIds: string[];
   currentGameId?: string;
+  currentGamePlayersIds: string[];
+  players: { [key: string]: LobbyPlayer };
 }

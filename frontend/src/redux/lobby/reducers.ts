@@ -8,12 +8,17 @@ import {
   GET_GAMES_WITH_USER_SUCCESS,
   ENTER_GAME_SUCCESS,
   GET_GAME_DETAILS_SUCCESS,
+  GET_CURRENT_GAME_PLAYERS_SUCCESS,
+  GET_PLAYER_DETAILS_SUCCESS,
+  BackendLobbyPlayer,
 } from './types';
 
 const initialLobbyState: LobbyState = {
   games: {},
   pendingGamesIds: [],
   gamesWithUserIds: [],
+  currentGamePlayersIds: [],
+  players: {},
 };
 
 const lobbyGameFormatter = ({ id, name, creation_date, is_pending }: BackendLobbyGame) => ({
@@ -21,6 +26,14 @@ const lobbyGameFormatter = ({ id, name, creation_date, is_pending }: BackendLobb
   name,
   creationDate: formatDate(creation_date),
   isPending: is_pending,
+});
+
+const lobbyPlayerFormatter = ({ id, is_admin, user, game, is_ready }: BackendLobbyPlayer) => ({
+  id,
+  isAdmin: is_admin,
+  userId: user,
+  gameId: game,
+  isReady: is_ready,
 });
 
 const reduceGames = (
@@ -70,6 +83,20 @@ export const lobbyReducer = (
       return {
         ...state,
         currentGameId: action.payload.id,
+      };
+    case GET_PLAYER_DETAILS_SUCCESS:
+      const player = action.payload.player;
+      return {
+        ...state,
+        players: {
+          ...state.players,
+          [player.id]: lobbyPlayerFormatter(player),
+        },
+      };
+    case GET_CURRENT_GAME_PLAYERS_SUCCESS:
+      return {
+        ...state,
+        currentGamePlayersIds: action.payload.players.map((player: { id: string }) => player.id),
       };
     default:
       return state;
