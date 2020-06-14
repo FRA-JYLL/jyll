@@ -1,6 +1,11 @@
+import { BackendLobbyPlayer, BackendLobbyGame } from 'redux/lobby/types';
+
 const apiBaseUrl = process.env.REACT_APP_API_BASE_URL || '';
 
-export const signupRequest = async (credentials: { username: string; password: string }) => {
+export const signupRequest = async (credentials: {
+  username: string;
+  password: string;
+}): Promise<{ access: string; refresh: string }> => {
   const response = await fetch(`${apiBaseUrl}/users/`, {
     method: 'POST',
     headers: {
@@ -16,7 +21,10 @@ export const signupRequest = async (credentials: { username: string; password: s
   return payload;
 };
 
-export const loginRequest = async (credentials: { username: string; password: string }) => {
+export const loginRequest = async (credentials: {
+  username: string;
+  password: string;
+}): Promise<{ access: string; refresh: string }> => {
   const response = await fetch(`${apiBaseUrl}/auth/login/`, {
     method: 'POST',
     headers: {
@@ -32,7 +40,9 @@ export const loginRequest = async (credentials: { username: string; password: st
   return payload;
 };
 
-export const getUserInfoRequest = async (accessToken: string) => {
+export const getUserInfoRequest = async (
+  accessToken: string
+): Promise<{ username: string; id: string; last_login: string }> => {
   const response = await fetch(`${apiBaseUrl}/users/me/`, {
     method: 'GET',
     headers: {
@@ -47,7 +57,9 @@ export const getUserInfoRequest = async (accessToken: string) => {
   return payload;
 };
 
-export const getNewAccessTokenRequest = async (refreshToken: string) => {
+export const getNewAccessTokenRequest = async (
+  refreshToken: string
+): Promise<{ access: string }> => {
   const response = await fetch(`${apiBaseUrl}/auth/refresh/`, {
     method: 'POST',
     headers: {
@@ -67,24 +79,26 @@ export const createGameRequest = async (
   accessToken: string,
   gameName?: string,
   gamePassword?: string
-) => {
-  const response = await fetch(`${apiBaseUrl}/game/`, {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json',
-      Authorization: `Bearer ${accessToken}`,
-    },
-    body: JSON.stringify({ name: gameName, password: gamePassword }),
-  });
+) =>
+  // TODO: Type server response once it replies with the newly created game
+  {
+    const response = await fetch(`${apiBaseUrl}/game/`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${accessToken}`,
+      },
+      body: JSON.stringify({ name: gameName, password: gamePassword }),
+    });
 
-  if (!response.ok) throw response.status;
+    if (!response.ok) throw response.status;
 
-  const payload = await response.json();
+    const payload = await response.json();
 
-  return payload;
-};
+    return payload;
+  };
 
-export const getPendingGamesRequest = async (accessToken: string) => {
+export const getPendingGamesRequest = async (accessToken: string): Promise<BackendLobbyGame[]> => {
   const response = await fetch(`${apiBaseUrl}/game/pending/`, {
     method: 'GET',
     headers: {
@@ -99,7 +113,7 @@ export const getPendingGamesRequest = async (accessToken: string) => {
   return payload;
 };
 
-export const getGamesWithUserRequest = async (accessToken: string) => {
+export const getGamesWithUserRequest = async (accessToken: string): Promise<BackendLobbyGame[]> => {
   const response = await fetch(`${apiBaseUrl}/game/with_user/`, {
     method: 'GET',
     headers: {
@@ -114,7 +128,10 @@ export const getGamesWithUserRequest = async (accessToken: string) => {
   return payload;
 };
 
-export const getGameDetailsRequest = async (accessToken: string, id: string) => {
+export const getGameDetailsRequest = async (
+  accessToken: string,
+  id: string
+): Promise<BackendLobbyGame> => {
   const response = await fetch(`${apiBaseUrl}/game/${id}/`, {
     method: 'GET',
     headers: {
@@ -142,13 +159,12 @@ export const joinGameRequest = async (accessToken: string, id: string, password?
   });
 
   if (!response.ok) throw response.status;
-
-  const payload = await response.json();
-
-  return payload;
 };
 
-export const getGamePlayersRequest = async (accessToken: string, id: string) => {
+export const getGamePlayersRequest = async (
+  accessToken: string,
+  id: string
+): Promise<{ player: { id: string } }[]> => {
   const response = await fetch(`${apiBaseUrl}/game/${id}/players/`, {
     method: 'GET',
     headers: {
@@ -163,7 +179,10 @@ export const getGamePlayersRequest = async (accessToken: string, id: string) => 
   return payload;
 };
 
-export const getPlayerDetailsRequest = async (accessToken: string, id: string) => {
+export const getPlayerDetailsRequest = async (
+  accessToken: string,
+  id: string
+): Promise<BackendLobbyPlayer> => {
   const response = await fetch(`${apiBaseUrl}/player/${id}/`, {
     method: 'GET',
     headers: {
