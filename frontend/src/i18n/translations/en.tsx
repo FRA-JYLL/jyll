@@ -37,6 +37,8 @@ export default {
       back: 'BACK',
       leave: 'LEAVE GAME',
       start: 'START',
+      ready: 'Ready',
+      notReady: 'Not ready',
     },
   },
   toast: {

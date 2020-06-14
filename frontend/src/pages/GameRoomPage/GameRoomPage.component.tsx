@@ -37,22 +37,41 @@ const GameRoomPage = ({
     if (currentGame) leaveGame(currentGame.id);
   };
 
+  const renderPlayersList = () =>
+    currentGamePlayers.map((player: LobbyPlayer) => (
+      // TODO: Display player name instead of id once the backend returns it
+      <div className="player-line" key={player.id}>
+        <p className={player.isAdmin ? 'player-name-admin' : undefined}>{player.id}</p>
+        {player.isReady ? (
+          <p className="player-ready">{t('pages.gameRoom.ready')}</p>
+        ) : (
+          <p className="player-notReady">{t('pages.gameRoom.notReady')}</p>
+        )}
+      </div>
+    ));
+
   return (
-    <div className="game-room-container">
-      <h1 className="game-room-title">{t('pages.gameRoom.title', { username })}</h1>
-      <p className="game-room-title">{currentGame && currentGame.name}</p>
-      {currentGamePlayers.map((player: LobbyPlayer) => (
-        <p className="game-room-title">{player.id}</p>
-      ))}
-      <button className="button" onClick={startGame}>
-        {t('pages.gameRoom.start')}
-      </button>
-      <button className="button" onClick={goBack}>
-        {t('pages.gameRoom.back')}
-      </button>
-      <button className="button" onClick={leaveCurrentGame}>
-        {t('pages.gameRoom.leave')}
-      </button>
+    <div className="main-container">
+      <div className="side-panel">
+        <div className="side-panel-text-container">
+          <h1 className="game-name">{currentGame && currentGame.name}</h1>
+        </div>
+        <button className="side-panel-button" onClick={goBack}>
+          {t('pages.gameRoom.back')}
+        </button>
+        <button className="side-panel-button" onClick={leaveCurrentGame}>
+          {t('pages.gameRoom.leave')}
+        </button>
+      </div>
+
+      <div className="players-list">{renderPlayersList()}</div>
+
+      <div className="side-panel">
+        <div className="side-panel-text-container" />
+        <button className="side-panel-button" onClick={startGame}>
+          {t('pages.gameRoom.start')}
+        </button>
+      </div>
     </div>
   );
 };
