@@ -111,6 +111,10 @@ class GameApiTests(APITestCase):
         response = self.client.post(url, data)
         self.assertEqual(response.status_code, status.HTTP_201_CREATED)
 
+        # check that newly created player was sent back in data response
+        player = Player.objects.get(user__id=new_user.id, game__id=game.id)
+        self.assertEqual(response.data["id"], player.id)
+
         data = {"password": "B"}
         response = self.client.post(url, data)
         self.assertEqual(response.status_code, status.HTTP_403_FORBIDDEN)

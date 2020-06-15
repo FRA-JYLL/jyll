@@ -1,9 +1,10 @@
-from rest_framework import viewsets, status, mixins
-from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
-from game.models import Game, Player
-from game.serializers import GameSerializer
 from rest_framework.decorators import action
+from rest_framework import viewsets, status, mixins
+from rest_framework.exceptions import PermissionDenied
+from rest_framework.permissions import IsAuthenticated
+from game.models import Game, Player
+from game.serializers import GameSerializer, PlayerSerializer
 
 
 class GameViewSet(
@@ -75,27 +76,30 @@ class GameViewSet(
         serializer = self.get_serializer(data=request.data)
         serializer.is_valid(raise_exception=True)
 
-        headers = self.get_success_headers(serializer.data)
+        headers = self.get_success_headers(serializer.validated_data)
 
         # the game should be pending, the requesting user should not already control a player in the game,
         # and should give a correct password
-        if (
-            not game.is_pending
-            or game.players.filter(user__username=request.user.username)
-            or (
-                game.password is not None
-                and serializer.validated_data.get("password") != game.password
+        if not game.is_pending:
+            raise PermissionDenied(
+                detail="The game you want to join is not pending", code=None
             )
+        elif game.players.filter(user__username=request.user.username):
+            raise PermissionDenied(
+                detail="You already control a player in this game", code=None
+            )
+        elif (
+            game.password is not None
+            and serializer.validated_data.get("password") != game.password
         ):
-            return Response(
-                serializer.data, status=status.HTTP_403_FORBIDDEN, headers=headers
-            )
+            raise PermissionDenied(detail="This game requires a password", code=None)
 
         # create a new player in game controlled by user
-        Player.objects.create(game=game, user=request.user)
+        new_player = Player.objects.create(game=game, user=request.user)
+        new_player_serializer = PlayerSerializer(new_player)
 
         return Response(
-            serializer.data, status=status.HTTP_201_CREATED, headers=headers
+            new_player_serializer.data, status=status.HTTP_201_CREATED, headers=headers
         )
 
     @action(detail=True, methods=["delete"])
@@ -126,5 +130,5 @@ class GameViewSet(
         # get players in games
         queryset = game.players.all()
 
-        serializer = self.get_serializer(queryset, many=True)
+        serializer = PlayerSerializer(queryset, many=True)
         return Response(serializer.data)
