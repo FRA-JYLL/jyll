@@ -21,9 +21,6 @@ import {
   ENTER_GAME_SUCCESS,
   GET_CURRENT_GAME_PLAYERS_SUCCESS,
   GET_CURRENT_GAME_PLAYERS_REQUEST,
-  GetPlayerDetailsRequest,
-  GET_PLAYER_DETAILS_SUCCESS,
-  GET_PLAYER_DETAILS_REQUEST,
 } from './types';
 import { showToastActionCreator } from 'redux/toast';
 import {
@@ -34,7 +31,6 @@ import {
   leaveGameRequest,
   getGamesWithUserRequest,
   getGamePlayersRequest,
-  getPlayerDetailsRequest,
 } from 'services/requests';
 import { setNextPageActionCreator, NavigationPage } from 'redux/navigation';
 import { sendAuthenticatedRequest } from 'redux/authentication';
@@ -112,16 +108,6 @@ function* enterGameSaga(action: EnterGameRequest): SagaIterator {
   yield put(setNextPageActionCreator(NavigationPage.GameRoom));
 }
 
-function* getPlayerDetailsSaga(action: GetPlayerDetailsRequest): SagaIterator {
-  try {
-    const player = yield call(sendAuthenticatedRequest, getPlayerDetailsRequest, action.payload.id);
-
-    yield put({ type: GET_PLAYER_DETAILS_SUCCESS, payload: { player } });
-  } catch (error) {
-    if (!Number.isInteger(error)) throw error;
-  }
-}
-
 function* getCurrentGamePlayersSaga(): SagaIterator {
   const currentGameId = yield select(currentGameIdSelector);
 
@@ -151,7 +137,6 @@ export function* watchLobby() {
   yield takeEvery(GET_GAME_DETAILS_REQUEST, getGameDetailsSaga);
   yield takeEvery(JOIN_GAME_REQUEST, joinGameSaga);
   yield takeEvery(ENTER_GAME_REQUEST, enterGameSaga);
-  yield takeEvery(GET_PLAYER_DETAILS_REQUEST, getPlayerDetailsSaga);
   yield takeEvery(GET_CURRENT_GAME_PLAYERS_REQUEST, getCurrentGamePlayersSaga);
   yield takeEvery(LEAVE_GAME_REQUEST, leaveGameSaga);
 }

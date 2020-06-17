@@ -8,8 +8,6 @@ export const GET_GAME_DETAILS_SUCCESS = 'GET_GAME_DETAILS_SUCCESS';
 export const JOIN_GAME_REQUEST = 'JOIN_GAME_REQUEST';
 export const ENTER_GAME_REQUEST = 'ENTER_GAME_REQUEST';
 export const ENTER_GAME_SUCCESS = 'ENTER_GAME_SUCCESS';
-export const GET_PLAYER_DETAILS_REQUEST = 'GET_PLAYER_DETAILS_REQUEST';
-export const GET_PLAYER_DETAILS_SUCCESS = 'GET_PLAYER_DETAILS_SUCCESS';
 export const GET_CURRENT_GAME_PLAYERS_REQUEST = 'GET_CURRENT_GAME_PLAYERS_REQUEST';
 export const GET_CURRENT_GAME_PLAYERS_SUCCESS = 'GET_CURRENT_GAME_PLAYERS_SUCCESS';
 export const LEAVE_GAME_REQUEST = 'LEAVE_GAME_REQUEST';
@@ -34,8 +32,8 @@ export interface LobbyUser {
 }
 
 export interface BackendLobbyPlayer {
-  // TODO: Add username once it is included in the response
   id: string;
+  username: string;
   is_admin: boolean;
   user: string;
   game: string;
@@ -44,6 +42,7 @@ export interface BackendLobbyPlayer {
 
 export interface LobbyPlayer {
   id: string;
+  username: string;
   isAdmin: boolean;
   userId: string;
   gameId: string;
@@ -55,7 +54,6 @@ export type LobbyActions =
   | GetGamesWithUserSuccess
   | GetGameDetailsSuccess
   | EnterGameSuccess
-  | GetPlayerDetailsSuccess
   | GetCurrentGamePlayersSuccess;
 
 export interface CreateGameRequest {
@@ -109,23 +107,13 @@ export interface EnterGameSuccess {
   payload: { id: string };
 }
 
-export interface GetPlayerDetailsRequest {
-  type: typeof GET_PLAYER_DETAILS_REQUEST;
-  payload: { id: string };
-}
-
-export interface GetPlayerDetailsSuccess {
-  type: typeof GET_PLAYER_DETAILS_SUCCESS;
-  payload: { player: BackendLobbyPlayer };
-}
-
 export interface GetCurrentGamePlayersRequest {
   type: typeof GET_CURRENT_GAME_PLAYERS_REQUEST;
 }
 
 export interface GetCurrentGamePlayersSuccess {
   type: typeof GET_CURRENT_GAME_PLAYERS_SUCCESS;
-  payload: { players: { id: string }[] };
+  payload: { players: BackendLobbyPlayer[] };
 }
 
 export interface LeaveGameRequest {
@@ -138,6 +126,5 @@ export interface LobbyState {
   pendingGamesIds: string[];
   gamesWithUserIds: string[];
   currentGameId?: string;
-  currentGamePlayersIds: string[];
-  players: { [key: string]: LobbyPlayer };
+  currentGamePlayers: { [key: string]: LobbyPlayer };
 }

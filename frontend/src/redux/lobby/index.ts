@@ -5,7 +5,6 @@ export {
   getGameDetailsActionCreator,
   joinGameActionCreator,
   enterGameActionCreator,
-  getPlayerDetailsActionCreator,
   getCurrentGamePlayersActionCreator,
   leaveGameActionCreator,
 } from './actions';
@@ -15,7 +14,6 @@ export type {
   GetGameDetailsActionCreator,
   JoinGameActionCreator,
   EnterGameActionCreator,
-  GetPlayerDetailsActionCreator,
   GetCurrentGamePlayersActionCreator,
   LeaveGameActionCreator,
 } from './actions';
@@ -26,8 +24,6 @@ export {
   lobbyGamesSelector,
   currentGameIdSelector,
   currentGameSelector,
-  currentGamePlayersIdsSelector,
-  playerSelector,
   currentGamePlayersSelector,
 } from './selectors';
 export type {
@@ -45,8 +41,6 @@ export type {
   JoinGameRequest,
   EnterGameRequest,
   EnterGameSuccess,
-  GetPlayerDetailsRequest,
-  GetPlayerDetailsSuccess,
   GetCurrentGamePlayersRequest,
   GetCurrentGamePlayersSuccess,
   LeaveGameRequest,
@@ -62,8 +56,6 @@ export {
   JOIN_GAME_REQUEST,
   ENTER_GAME_REQUEST,
   ENTER_GAME_SUCCESS,
-  GET_PLAYER_DETAILS_REQUEST,
-  GET_PLAYER_DETAILS_SUCCESS,
   GET_CURRENT_GAME_PLAYERS_REQUEST,
   GET_CURRENT_GAME_PLAYERS_SUCCESS,
   LEAVE_GAME_REQUEST,

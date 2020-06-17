@@ -16,13 +16,4 @@ export const currentGameSelector = (store: RootState) => {
   return store.lobby.games[currentGameId];
 };
 
-export const currentGamePlayersIdsSelector = (store: RootState) =>
-  store.lobby.currentGamePlayersIds;
-
-export const playerSelector = (store: RootState, id: string) => store.lobby.players[id];
-
-export const currentGamePlayersSelector = (store: RootState) => {
-  return store.lobby.currentGamePlayersIds
-    .map((id: string) => playerSelector(store, id))
-    .filter((value) => value !== undefined);
-};
+export const currentGamePlayersSelector = (store: RootState) => store.lobby.currentGamePlayers;

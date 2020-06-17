@@ -6,12 +6,10 @@ import { setNextPageActionCreator, NavigationPage } from 'redux/navigation';
 import {
   currentGameSelector,
   leaveGameActionCreator,
-  getPlayerDetailsActionCreator,
   getCurrentGamePlayersActionCreator,
   currentGamePlayersSelector,
   getGameDetailsActionCreator,
   currentGameIdSelector,
-  currentGamePlayersIdsSelector,
 } from 'redux/lobby';
 
 const mapStateToProps = (state: RootState) => {
@@ -19,7 +17,6 @@ const mapStateToProps = (state: RootState) => {
     username: usernameSelector(state),
     currentGameId: currentGameIdSelector(state),
     currentGame: currentGameSelector(state),
-    currentGamePlayersIds: currentGamePlayersIdsSelector(state),
     currentGamePlayers: currentGamePlayersSelector(state),
   };
 };
@@ -30,7 +27,6 @@ const mapDispatchToProps = {
   startGame: () => setNextPageActionCreator(NavigationPage.Game),
   getGameDetails: (id: string) => getGameDetailsActionCreator(id),
   getCurrentGamePlayers: getCurrentGamePlayersActionCreator,
-  getPlayerDetails: getPlayerDetailsActionCreator,
 };
 
 export type Props = ReturnType<typeof mapStateToProps> & typeof mapDispatchToProps;

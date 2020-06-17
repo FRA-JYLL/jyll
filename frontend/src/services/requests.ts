@@ -164,26 +164,8 @@ export const joinGameRequest = async (accessToken: string, id: string, password?
 export const getGamePlayersRequest = async (
   accessToken: string,
   id: string
-): Promise<{ player: { id: string } }[]> => {
+): Promise<BackendLobbyPlayer[]> => {
   const response = await fetch(`${apiBaseUrl}/game/${id}/players/`, {
-    method: 'GET',
-    headers: {
-      Authorization: `Bearer ${accessToken}`,
-    },
-  });
-
-  if (!response.ok) throw response.status;
-
-  const payload = await response.json();
-
-  return payload;
-};
-
-export const getPlayerDetailsRequest = async (
-  accessToken: string,
-  id: string
-): Promise<BackendLobbyPlayer> => {
-  const response = await fetch(`${apiBaseUrl}/player/${id}/`, {
     method: 'GET',
     headers: {
       Authorization: `Bearer ${accessToken}`,

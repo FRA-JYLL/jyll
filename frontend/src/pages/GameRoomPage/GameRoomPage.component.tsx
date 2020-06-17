@@ -8,14 +8,12 @@ const GameRoomPage = ({
   username,
   currentGameId,
   currentGame,
-  currentGamePlayersIds,
   currentGamePlayers,
   goBack,
   leaveGame,
   startGame,
   getGameDetails,
   getCurrentGamePlayers,
-  getPlayerDetails,
 }: Props) => {
   const { t } = useTranslation();
 
@@ -34,19 +32,14 @@ const GameRoomPage = ({
     currentGameId && getCurrentGamePlayers();
   }, [getCurrentGamePlayers, currentGameId, timer]);
 
-  useEffect(() => {
-    currentGamePlayersIds.forEach((id: string) => getPlayerDetails(id));
-  }, [getPlayerDetails, currentGamePlayersIds, timer]);
-
   const leaveCurrentGame = () => {
-    if (currentGame) leaveGame(currentGame.id);
+    currentGameId && leaveGame(currentGameId);
   };
 
   const renderPlayersList = () =>
-    currentGamePlayers.map((player: LobbyPlayer) => (
-      // TODO: Display player name instead of id once the backend returns it
+    Object.values(currentGamePlayers).map((player: LobbyPlayer) => (
       <div className="player-line" key={player.id}>
-        <p className={player.isAdmin ? 'player-name-admin' : undefined}>{player.id}</p>
+        <p className={player.isAdmin ? 'player-name-admin' : undefined}>{player.username}</p>
         {player.isReady ? (
           <p className="player-ready">{t('pages.gameRoom.ready')}</p>
         ) : (
