@@ -17,6 +17,7 @@ export interface LobbyGame {
   name: string;
   creationDate: string;
   isPending: boolean;
+  hasPassword: boolean;
 }
 
 export interface BackendLobbyGame {
@@ -24,6 +25,7 @@ export interface BackendLobbyGame {
   name: string;
   creation_date: string;
   is_pending: boolean;
+  has_password: boolean;
 }
 
 export interface LobbyUser {

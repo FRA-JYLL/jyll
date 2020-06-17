@@ -43,11 +43,12 @@ function* createGameSaga(action: CreateGameRequest): SagaIterator {
   const { gameName, gamePassword } = action.payload;
 
   try {
-    yield call(sendAuthenticatedRequest, createGameRequest, gameName, gamePassword);
+    const newGame = yield call(sendAuthenticatedRequest, createGameRequest, gameName, gamePassword);
 
-    // TODO: store game and put(enterGameActionCreator(id)) once the backend replies with the newly created game
-
-    yield put(setNextPageActionCreator(NavigationPage.GameRoom));
+    if (newGame) {
+      yield put({ type: GET_GAME_DETAILS_SUCCESS, payload: { game: newGame } });
+      yield put(enterGameActionCreator(newGame.id));
+    }
   } catch (error) {
     yield put(setNextPageActionCreator(NavigationPage.GameSelection));
     yield put(showToastActionCreator('gameCreationFailureError'));

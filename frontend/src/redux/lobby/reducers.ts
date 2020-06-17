@@ -20,11 +20,18 @@ const initialLobbyState: LobbyState = {
   currentGamePlayers: {},
 };
 
-const lobbyGameFormatter = ({ id, name, creation_date, is_pending }: BackendLobbyGame) => ({
+const lobbyGameFormatter = ({
+  id,
+  name,
+  creation_date,
+  is_pending,
+  has_password,
+}: BackendLobbyGame): LobbyGame => ({
   id,
   name,
   creationDate: formatDate(creation_date),
   isPending: is_pending,
+  hasPassword: has_password,
 });
 
 const reduceGames = (
