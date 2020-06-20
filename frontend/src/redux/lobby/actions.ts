@@ -15,6 +15,8 @@ import {
   ENTER_GAME_REQUEST,
   GetCurrentGamePlayersRequest,
   GET_CURRENT_GAME_PLAYERS_REQUEST,
+  SetIsReadyRequest,
+  SET_IS_READY_REQUEST,
 } from './types';
 
 export const createGameActionCreator = (
@@ -76,6 +78,13 @@ export const leaveGameActionCreator = (id: string): LeaveGameRequest => {
   };
 };
 
+export const setIsReadyActionCreator = (isReady: boolean): SetIsReadyRequest => {
+  return {
+    type: SET_IS_READY_REQUEST,
+    payload: { isReady },
+  };
+};
+
 export type CreateGameActionCreator = typeof createGameActionCreator;
 export type GetPendingGamesActionCreator = typeof getPendingGamesActionCreator;
 export type GetGamesWithUserActionCreator = typeof getGamesWithUserActionCreator;
@@ -84,3 +93,4 @@ export type JoinGameActionCreator = typeof joinGameActionCreator;
 export type EnterGameActionCreator = typeof enterGameActionCreator;
 export type GetCurrentGamePlayersActionCreator = typeof getCurrentGamePlayersActionCreator;
 export type LeaveGameActionCreator = typeof leaveGameActionCreator;
+export type SetIsReadyActionCreator = typeof setIsReadyActionCreator;

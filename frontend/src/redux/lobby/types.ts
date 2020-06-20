@@ -11,6 +11,7 @@ export const ENTER_GAME_SUCCESS = 'ENTER_GAME_SUCCESS';
 export const GET_CURRENT_GAME_PLAYERS_REQUEST = 'GET_CURRENT_GAME_PLAYERS_REQUEST';
 export const GET_CURRENT_GAME_PLAYERS_SUCCESS = 'GET_CURRENT_GAME_PLAYERS_SUCCESS';
 export const LEAVE_GAME_REQUEST = 'LEAVE_GAME_REQUEST';
+export const SET_IS_READY_REQUEST = 'SET_IS_READY_REQUEST';
 
 export interface LobbyGame {
   id: string;
@@ -121,6 +122,13 @@ export interface GetCurrentGamePlayersSuccess {
 export interface LeaveGameRequest {
   type: typeof LEAVE_GAME_REQUEST;
   payload: { id: string };
+}
+
+export interface SetIsReadyRequest {
+  type: typeof SET_IS_READY_REQUEST;
+  payload: {
+    isReady: boolean;
+  };
 }
 
 export interface LobbyState {

@@ -48,7 +48,7 @@ export interface GetUserInfoRequest {
 export interface GetUserInfoSuccess {
   type: typeof GET_USER_INFO_SUCCESS;
   payload: {
-    userId: number;
+    userId: string;
     username: string;
     lastLogin: string;
   };
@@ -59,7 +59,7 @@ export interface GetNewAccessTokenRequest {
 }
 
 export interface AuthenticationState {
-  userId?: number;
+  userId?: string;
   username?: string;
   lastLogin?: string;
   accessToken?: string;
