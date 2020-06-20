@@ -8,19 +8,30 @@ import {
   GET_GAMES_WITH_USER_SUCCESS,
   ENTER_GAME_SUCCESS,
   GET_GAME_DETAILS_SUCCESS,
+  GET_CURRENT_GAME_PLAYERS_SUCCESS,
+  BackendLobbyPlayer,
+  LobbyPlayer,
 } from './types';
 
 const initialLobbyState: LobbyState = {
   games: {},
   pendingGamesIds: [],
   gamesWithUserIds: [],
+  currentGamePlayers: {},
 };
 
-const lobbyGameFormatter = ({ id, name, creation_date, is_pending }: BackendLobbyGame) => ({
+const lobbyGameFormatter = ({
+  id,
+  name,
+  creation_date,
+  is_pending,
+  has_password,
+}: BackendLobbyGame): LobbyGame => ({
   id,
   name,
   creationDate: formatDate(creation_date),
   isPending: is_pending,
+  hasPassword: has_password,
 });
 
 const reduceGames = (
@@ -33,6 +44,34 @@ const reduceGames = (
       [newGame.id]: lobbyGameFormatter(newGame),
     }),
     previousGames
+  );
+
+const lobbyPlayerFormatter = ({
+  id,
+  username,
+  is_admin,
+  user,
+  game,
+  is_ready,
+}: BackendLobbyPlayer): LobbyPlayer => ({
+  id,
+  username,
+  isAdmin: is_admin,
+  userId: user,
+  gameId: game,
+  isReady: is_ready,
+});
+
+const reducePlayers = (
+  newLobbyPlayers: BackendLobbyPlayer[],
+  previousLobbyPlayers: { [key: string]: LobbyPlayer }
+): { [key: string]: LobbyPlayer } =>
+  newLobbyPlayers.reduce(
+    (lobbyPlayers: { [key: string]: LobbyPlayer }, newLobbyPlayer: BackendLobbyPlayer) => ({
+      ...lobbyPlayers,
+      [newLobbyPlayer.id]: lobbyPlayerFormatter(newLobbyPlayer),
+    }),
+    previousLobbyPlayers
   );
 
 const extractGamesIds = (games: BackendLobbyGame[]): string[] =>
@@ -70,6 +109,12 @@ export const lobbyReducer = (
       return {
         ...state,
         currentGameId: action.payload.id,
+      };
+    case GET_CURRENT_GAME_PLAYERS_SUCCESS:
+      const players = action.payload.players;
+      return {
+        ...state,
+        currentGamePlayers: reducePlayers(players, {}),
       };
     default:
       return state;

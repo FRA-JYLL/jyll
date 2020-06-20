@@ -13,6 +13,8 @@ import {
   GetGamesWithUserRequest,
   EnterGameRequest,
   ENTER_GAME_REQUEST,
+  GetCurrentGamePlayersRequest,
+  GET_CURRENT_GAME_PLAYERS_REQUEST,
 } from './types';
 
 export const createGameActionCreator = (
@@ -61,6 +63,12 @@ export const enterGameActionCreator = (id: string): EnterGameRequest => {
   };
 };
 
+export const getCurrentGamePlayersActionCreator = (): GetCurrentGamePlayersRequest => {
+  return {
+    type: GET_CURRENT_GAME_PLAYERS_REQUEST,
+  };
+};
+
 export const leaveGameActionCreator = (id: string): LeaveGameRequest => {
   return {
     type: LEAVE_GAME_REQUEST,
@@ -74,4 +82,5 @@ export type GetGamesWithUserActionCreator = typeof getGamesWithUserActionCreator
 export type GetGameDetailsActionCreator = typeof getGameDetailsActionCreator;
 export type JoinGameActionCreator = typeof joinGameActionCreator;
 export type EnterGameActionCreator = typeof enterGameActionCreator;
+export type GetCurrentGamePlayersActionCreator = typeof getCurrentGamePlayersActionCreator;
 export type LeaveGameActionCreator = typeof leaveGameActionCreator;

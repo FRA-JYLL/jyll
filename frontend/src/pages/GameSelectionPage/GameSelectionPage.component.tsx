@@ -39,6 +39,11 @@ const GameSelectionPage = ({
             onClick={() => setSelectedGameId(game.id)}
           >
             {game.name}
+            {game.hasPassword && (
+              <span role="img" aria-label="lock">
+                {' 🔒'}
+              </span>
+            )}
           </div>
         )
       );
@@ -48,9 +53,9 @@ const GameSelectionPage = ({
     joinGame(selectedGameId, password);
   };
 
-  /*const joinSelectedGameWithoutPassword = () => {
+  const joinSelectedGameWithoutPassword = () => {
     joinGame(selectedGameId);
-  };*/
+  };
 
   const enterSelectedGame = () => {
     enterGame(selectedGameId);
@@ -69,8 +74,13 @@ const GameSelectionPage = ({
           </div>
           <button
             className="side-panel-button"
-            onClick={alreadyJoined ? enterSelectedGame : openJoinModal} // TODO: Replace with next line once hasPassword has been implemented
-            // onClick={alreadyJoined ? enterSelectedGame : game.hasPassword ? openJoinModal : joinSelectedGameWithoutPassword}
+            onClick={
+              alreadyJoined
+                ? enterSelectedGame
+                : game.hasPassword
+                ? openJoinModal
+                : joinSelectedGameWithoutPassword
+            }
           >
             {t('pages.gameSelection.join')}
           </button>
