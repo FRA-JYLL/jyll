@@ -34,11 +34,15 @@ export default {
     },
     gameRoom: {
       title: 'Hello {{username}}!',
-      back: 'BACK',
-      leave: 'LEAVE GAME',
-      start: 'START',
       ready: 'Ready',
       notReady: 'Not ready',
+      buttons: {
+        back: 'BACK',
+        leave: 'LEAVE GAME',
+        start: 'START',
+        ready: 'READY',
+        notReady: 'NOT READY',
+      },
     },
   },
   toast: {
