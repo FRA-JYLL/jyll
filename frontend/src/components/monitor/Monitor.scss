@@ -2,12 +2,12 @@
 
 .screen {
   background-color: $black;
-  padding: 20px;
-  margin: 10px;
+  padding: spacing(4);
+  margin: spacing(2);
   border-color: $monitor;
   border-style: solid;
-  border-width: 10px;
-  border-radius: 15px;
+  border-width: spacing(2);
+  border-radius: spacing(3);
   font-size: $normal;
   font-family: monospace;
   color: $white;

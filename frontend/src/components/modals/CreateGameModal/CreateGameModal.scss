@@ -6,24 +6,24 @@
 
 .createGameModal-label {
   font-size: $normal;
-  margin-bottom: 5px;
+  margin-bottom: spacing(1);
 }
 
 .createGameModal-input {
   background-color: inherit;
   font-family: inherit;
   color: inherit;
-  height: 40px;
+  height: spacing(8);
   width: 100%;
-  padding-left: 10px;
-  margin-bottom: 5px;
+  padding-left: spacing(2);
+  margin-bottom: spacing(1);
 }
 
 .createGameModal-button-container {
   display: flex;
-  margin-top: 5px;
+  margin-top: spacing(1);
   & > :not(:first-child) {
-    margin-left: 10px;
+    margin-left: spacing(2);
   }
 }
 
@@ -32,6 +32,6 @@
   font-family: inherit;
   color: inherit;
   background-color: inherit;
-  line-height: 40px;
-  width: 120px;
+  line-height: spacing(8);
+  width: spacing(24);
 }

@@ -21,13 +21,13 @@
 .side-panel-welcome {
   font-size: $bigger;
   font-weight: 700;
-  line-height: 30px;
-  margin-bottom: 30px;
+  line-height: spacing(6);
+  margin-bottom: spacing(6);
 }
 
 .side-panel-instructions {
   font-size: $big;
-  line-height: 25px;
+  line-height: spacing(5);
 }
 
 .side-panel-game-info-container {
@@ -40,14 +40,14 @@
 
 .side-panel-game-name {
   font-size: $bigger;
-  line-height: 30px;
+  line-height: spacing(6);
   color: $menu-highlight-1;
-  margin-bottom: 30px;
+  margin-bottom: spacing(6);
 }
 
 .side-panel-game-date {
   font-size: $big;
-  line-height: 25px;
+  line-height: spacing(5);
 }
 
 .side-panel-button {
@@ -55,9 +55,9 @@
   font-family: monospace;
   color: $white;
   background-color: $black;
-  line-height: 40px;
+  line-height: spacing(8);
   width: 200px;
-  margin: 5px;
+  margin: spacing(1);
 }
 
 .games-list {
@@ -65,24 +65,24 @@
   width: 400px;
   overflow-y: scroll;
   overflow-x: hidden;
-  margin-left: 30px;
-  padding-left: 30px;
+  margin-left: spacing(6);
+  padding-left: spacing(6);
   border-left: dashed 2px $white;
-  margin-right: 30px;
-  padding-right: 30px;
+  margin-right: spacing(6);
+  padding-right: spacing(6);
   border-right: dashed 2px $white;
 }
 
 .games-list-section-title {
   font-size: $huge;
   font-weight: 700;
-  line-height: 30px;
-  padding-bottom: 20px;
+  line-height: spacing(6);
+  padding-bottom: spacing(4);
 }
 
 .games-list-section {
   & > :last-child {
-    margin-bottom: 20px;
+    margin-bottom: spacing(4);
   }
 }
 

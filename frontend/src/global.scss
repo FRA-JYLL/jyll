@@ -15,3 +15,9 @@ $normal: 16px;
 $big: 20px;
 $bigger: 24px;
 $huge: 30px;
+
+// Spacing
+$base-spacing: 5px;
+@function spacing($factor) {
+  @return $factor * $base-spacing;
+}
