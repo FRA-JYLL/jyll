@@ -3,6 +3,7 @@ import { useTranslation } from 'react-i18next';
 import './GameRoomPage.scss';
 import { Props } from './GameRoomPage.container';
 import { LobbyPlayer } from 'redux/lobby/types';
+import { Monitor } from 'components/monitor';
 
 const GameRoomPage = ({
   username,
@@ -56,7 +57,7 @@ const GameRoomPage = ({
     ));
 
   return (
-    <div className="main-container">
+    <Monitor className="main-container">
       <div className="side-panel">
         <div className="side-panel-text-container">
           <h1 className="game-name">{currentGame && currentGame.name}</h1>
@@ -82,7 +83,7 @@ const GameRoomPage = ({
           {t('pages.gameRoom.buttons.start')}
         </button>
       </div>
-    </div>
+    </Monitor>
   );
 };
 

@@ -4,6 +4,7 @@ import { CreateGameModal, JoinGameModal } from 'components/modals';
 import './GameSelectionPage.scss';
 import { Props } from './GameSelectionPage.container';
 import { LobbyGame } from 'redux/lobby';
+import { Monitor } from 'components/monitor';
 
 const GameSelectionPage = ({
   username,
@@ -99,7 +100,7 @@ const GameSelectionPage = ({
 
   return (
     <>
-      <div className="main-container">
+      <Monitor className="main-container">
         <div className="side-panel">
           <div className="side-panel-text-container">
             <h1 className="side-panel-welcome">
@@ -131,7 +132,7 @@ const GameSelectionPage = ({
         </div>
 
         <div className="side-panel">{renderGameInfo(lobbyGames[selectedGameId])}</div>
-      </div>
+      </Monitor>
 
       <CreateGameModal isOpen={createModalIsOpen} closeModal={closeCreateModal} />
 

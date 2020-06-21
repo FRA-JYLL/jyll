@@ -3,6 +3,7 @@ import { useTranslation } from 'react-i18next';
 import { CSSTransition } from 'react-transition-group';
 import './GamePage.scss';
 import { Props } from './GamePage.container';
+import { Monitor } from 'components/monitor';
 
 interface ComponentProps extends Props {
   transitionIn: boolean;
@@ -22,7 +23,7 @@ const GamePage = ({ transitionIn, transitionOnExited }: ComponentProps) => {
         mountOnEnter
         unmountOnExit
       >
-        <div className="screen buildings-panel">buildings</div>
+        <Monitor className="buildings-panel">buildings</Monitor>
       </CSSTransition>
 
       <CSSTransition
@@ -33,7 +34,7 @@ const GamePage = ({ transitionIn, transitionOnExited }: ComponentProps) => {
         unmountOnExit
       >
         <div className="top-menu-container">
-          <div className="screen top-menu">menu</div>
+          <Monitor className="top-menu">menu</Monitor>
         </div>
       </CSSTransition>
 
@@ -60,10 +61,10 @@ const GamePage = ({ transitionIn, transitionOnExited }: ComponentProps) => {
         mountOnEnter
         unmountOnExit
       >
-        <div className="screen logs-container">
+        <Monitor className="logs-container">
           <div className="logs-panel">logs</div>
           <div className="undo-buttons">undo / redo</div>
-        </div>
+        </Monitor>
       </CSSTransition>
 
       <CSSTransition
@@ -74,7 +75,7 @@ const GamePage = ({ transitionIn, transitionOnExited }: ComponentProps) => {
         unmountOnExit
       >
         <div className="end-container">
-          <div className="screen end-button">end</div>
+          <Monitor className="end-button">end</Monitor>
         </div>
       </CSSTransition>
 
@@ -85,7 +86,7 @@ const GamePage = ({ transitionIn, transitionOnExited }: ComponentProps) => {
         mountOnEnter
         unmountOnExit
       >
-        <div className="screen stats-panel">stats</div>
+        <Monitor className="stats-panel">stats</Monitor>
       </CSSTransition>
     </div>
   );
