@@ -19,14 +19,14 @@
 }
 
 .side-panel-welcome {
-  font-size: 24px;
+  font-size: $bigger;
   font-weight: 700;
   line-height: 30px;
   margin-bottom: 30px;
 }
 
 .side-panel-instructions {
-  font-size: 20px;
+  font-size: $big;
   line-height: 25px;
 }
 
@@ -39,19 +39,19 @@
 }
 
 .side-panel-game-name {
-  font-size: 24px;
+  font-size: $bigger;
   line-height: 30px;
   color: $menu-highlight-1;
   margin-bottom: 30px;
 }
 
 .side-panel-game-date {
-  font-size: 20px;
+  font-size: $big;
   line-height: 25px;
 }
 
 .side-panel-button {
-  font-size: 20px;
+  font-size: $big;
   font-family: monospace;
   color: $white;
   background-color: $black;
@@ -74,7 +74,7 @@
 }
 
 .games-list-section-title {
-  font-size: 30px;
+  font-size: $huge;
   font-weight: 700;
   line-height: 30px;
   padding-bottom: 20px;
@@ -87,7 +87,7 @@
 }
 
 .game-listed {
-  font-size: 20px;
+  font-size: $big;
   line-height: 26px;
   &:hover {
     color: $menu-highlight-1;
@@ -95,7 +95,7 @@
 }
 
 .game-selected {
-  font-size: 20px;
+  font-size: $big;
   line-height: 26px;
   color: $menu-highlight-2;
 }

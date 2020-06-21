@@ -5,7 +5,7 @@
 }
 
 .createGameModal-label {
-  font-size: 16px;
+  font-size: $normal;
   margin-bottom: 5px;
 }
 
@@ -28,7 +28,7 @@
 }
 
 .createGameModal-button {
-  font-size: 20px;
+  font-size: $big;
   font-family: inherit;
   color: inherit;
   background-color: inherit;

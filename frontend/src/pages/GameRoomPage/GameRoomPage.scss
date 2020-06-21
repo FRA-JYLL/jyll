@@ -19,13 +19,13 @@
 }
 
 .game-name {
-  font-size: 24px;
+  font-size: $bigger;
   font-weight: 700;
   line-height: 30px;
 }
 
 .side-panel-button {
-  font-size: 20px;
+  font-size: $big;
   font-family: monospace;
   color: $white;
   background-color: $black;
@@ -50,7 +50,7 @@
 .player-line {
   display: flex;
   justify-content: space-between;
-  font-size: 20px;
+  font-size: $big;
   line-height: 26px;
 }
 
