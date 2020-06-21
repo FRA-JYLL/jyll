@@ -1,3 +1,5 @@
+@import 'global';
+
 .main-container {
   display: flex;
   align-items: center;
@@ -19,17 +21,13 @@
 .side-panel-welcome {
   font-size: 24px;
   font-weight: 700;
-  font-family: monospace;
   line-height: 30px;
-  color: #ffffff;
   margin-bottom: 30px;
 }
 
 .side-panel-instructions {
   font-size: 20px;
-  font-family: monospace;
   line-height: 25px;
-  color: #ffffff;
 }
 
 .side-panel-game-info-container {
@@ -42,24 +40,21 @@
 
 .side-panel-game-name {
   font-size: 24px;
-  font-family: monospace;
   line-height: 30px;
-  color: #00ffff;
+  color: $menu-highlight-1;
   margin-bottom: 30px;
 }
 
 .side-panel-game-date {
   font-size: 20px;
-  font-family: monospace;
   line-height: 25px;
-  color: #ffffff;
 }
 
 .side-panel-button {
   font-size: 20px;
   font-family: monospace;
-  color: #ffffff;
-  background-color: #000000;
+  color: $white;
+  background-color: $black;
   line-height: 40px;
   width: 200px;
   margin: 5px;
@@ -72,18 +67,16 @@
   overflow-x: hidden;
   margin-left: 30px;
   padding-left: 30px;
-  border-left: dashed 2px #ffffff;
+  border-left: dashed 2px $white;
   margin-right: 30px;
   padding-right: 30px;
-  border-right: dashed 2px #ffffff;
+  border-right: dashed 2px $white;
 }
 
 .games-list-section-title {
   font-size: 30px;
   font-weight: 700;
-  font-family: monospace;
   line-height: 30px;
-  color: #ffffff;
   padding-bottom: 20px;
 }
 
@@ -95,17 +88,14 @@
 
 .game-listed {
   font-size: 20px;
-  font-family: monospace;
   line-height: 26px;
-  color: #ffffff;
   &:hover {
-    color: #00ffff;
+    color: $menu-highlight-1;
   }
 }
 
 .game-selected {
   font-size: 20px;
-  font-family: monospace;
   line-height: 26px;
-  color: #ffff00;
+  color: $menu-highlight-2;
 }

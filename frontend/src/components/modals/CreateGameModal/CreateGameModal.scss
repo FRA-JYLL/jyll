@@ -1,9 +1,4 @@
-.createGameModal-title {
-  font-size: 30px;
-  font-family: monospace;
-  color: #ffffff;
-  margin-bottom: 20px;
-}
+@import 'global';
 
 .createGameModal-form {
   width: 100%;
@@ -11,15 +6,13 @@
 
 .createGameModal-label {
   font-size: 16px;
-  font-family: monospace;
-  color: #ffffff;
   margin-bottom: 5px;
 }
 
 .createGameModal-input {
-  background-color: #000000;
-  font-family: monospace;
-  color: #ffffff;
+  background-color: inherit;
+  font-family: inherit;
+  color: inherit;
   height: 40px;
   width: 100%;
   padding-left: 10px;
@@ -36,9 +29,9 @@
 
 .createGameModal-button {
   font-size: 20px;
-  font-family: monospace;
-  color: #ffffff;
-  background-color: #000000;
+  font-family: inherit;
+  color: inherit;
+  background-color: inherit;
   line-height: 40px;
   width: 120px;
 }

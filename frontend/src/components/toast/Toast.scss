@@ -1,7 +1,9 @@
+@import 'global';
+
 .toast-container {
   display: flex;
   position: absolute;
-  background-color: #ce0000;
+  background-color: $error;
   height: 100px;
   width: 100%;
   bottom: -100px;
@@ -12,5 +14,5 @@
   display: flex;
   padding: 20px;
   font-size: 16px;
-  color: #ffffff;
+  color: $white;
 }

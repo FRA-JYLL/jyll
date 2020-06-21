@@ -1,3 +1,5 @@
+@import 'global';
+
 .main-container {
   display: flex;
   align-items: center;
@@ -19,16 +21,14 @@
 .game-name {
   font-size: 24px;
   font-weight: 700;
-  font-family: monospace;
   line-height: 30px;
-  color: #ffffff;
 }
 
 .side-panel-button {
   font-size: 20px;
   font-family: monospace;
-  color: #ffffff;
-  background-color: #000000;
+  color: $white;
+  background-color: $black;
   line-height: 40px;
   width: 200px;
   margin: 5px;
@@ -41,29 +41,27 @@
   overflow-x: hidden;
   margin-left: 30px;
   padding-left: 30px;
-  border-left: dashed 2px #ffffff;
+  border-left: dashed 2px $white;
   margin-right: 30px;
   padding-right: 30px;
-  border-right: dashed 2px #ffffff;
+  border-right: dashed 2px $white;
 }
 
 .player-line {
   display: flex;
   justify-content: space-between;
   font-size: 20px;
-  font-family: monospace;
   line-height: 26px;
-  color: #ffffff;
 }
 
 .player-name-admin {
-  color: #d14fd1;
+  color: $menu-highlight-3;
 }
 
 .player-ready {
-  color: #46bd60;
+  color: $menu-green;
 }
 
 .player-notReady {
-  color: #bd4646;
+  color: $menu-red;
 }
