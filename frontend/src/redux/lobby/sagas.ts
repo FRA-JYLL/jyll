@@ -21,6 +21,8 @@ import {
   ENTER_GAME_SUCCESS,
   GET_CURRENT_GAME_PLAYERS_SUCCESS,
   GET_CURRENT_GAME_PLAYERS_REQUEST,
+  SetIsReadyRequest,
+  SET_IS_READY_REQUEST,
 } from './types';
 import { showToastActionCreator } from 'redux/toast';
 import {
@@ -31,11 +33,12 @@ import {
   leaveGameRequest,
   getGamesWithUserRequest,
   getGamePlayersRequest,
+  setIsReadyRequest,
 } from 'services/requests';
 import { setNextPageActionCreator, NavigationPage } from 'redux/navigation';
 import { sendAuthenticatedRequest } from 'redux/authentication';
 import { enterGameActionCreator } from './actions';
-import { currentGameIdSelector } from './selectors';
+import { currentGameIdSelector, userPlayerSelector } from './selectors';
 
 function* createGameSaga(action: CreateGameRequest): SagaIterator {
   yield put(setNextPageActionCreator(NavigationPage.Loader));
@@ -131,6 +134,21 @@ function* leaveGameSaga(action: LeaveGameRequest): SagaIterator {
   }
 }
 
+function* setIsReadySaga(action: SetIsReadyRequest): SagaIterator {
+  const userPlayer = yield select(userPlayerSelector);
+  if (userPlayer)
+    try {
+      yield call(
+        sendAuthenticatedRequest,
+        setIsReadyRequest,
+        userPlayer.id,
+        action.payload.isReady
+      );
+    } catch (error) {
+      if (!Number.isInteger(error)) throw error;
+    }
+}
+
 export function* watchLobby() {
   yield takeEvery(CREATE_GAME_REQUEST, createGameSaga);
   yield takeEvery(GET_PENDING_GAMES_REQUEST, getPendingGamesSaga);
@@ -140,4 +158,5 @@ export function* watchLobby() {
   yield takeEvery(ENTER_GAME_REQUEST, enterGameSaga);
   yield takeEvery(GET_CURRENT_GAME_PLAYERS_REQUEST, getCurrentGamePlayersSaga);
   yield takeEvery(LEAVE_GAME_REQUEST, leaveGameSaga);
+  yield takeEvery(SET_IS_READY_REQUEST, setIsReadySaga);
 }

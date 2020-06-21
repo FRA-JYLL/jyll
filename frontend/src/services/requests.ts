@@ -187,3 +187,18 @@ export const leaveGameRequest = async (accessToken: string, id: string) => {
 
   if (!response.ok) throw response.status;
 };
+
+export const setIsReadyRequest = async (accessToken: string, id: string, isReady: boolean) => {
+  const response = await fetch(`${apiBaseUrl}/player/${id}/`, {
+    method: 'PUT',
+    headers: {
+      'Content-Type': 'application/json',
+      Authorization: `Bearer ${accessToken}`,
+    },
+    body: JSON.stringify({
+      is_ready: isReady,
+    }),
+  });
+
+  if (!response.ok) throw response.status;
+};

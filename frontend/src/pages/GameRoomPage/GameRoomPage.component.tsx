@@ -9,11 +9,13 @@ const GameRoomPage = ({
   currentGameId,
   currentGame,
   currentGamePlayers,
+  userPlayer,
   goBack,
   leaveGame,
   startGame,
   getGameDetails,
   getCurrentGamePlayers,
+  setIsReady,
 }: Props) => {
   const { t } = useTranslation();
 
@@ -36,6 +38,11 @@ const GameRoomPage = ({
     currentGameId && leaveGame(currentGameId);
   };
 
+  const toggleIsReady = () => {
+    userPlayer && setIsReady(!userPlayer.isReady);
+    setTimer(timer + 1); // Refresh players list
+  };
+
   const renderPlayersList = () =>
     Object.values(currentGamePlayers).map((player: LobbyPlayer) => (
       <div className="player-line" key={player.id}>
@@ -55,10 +62,10 @@ const GameRoomPage = ({
           <h1 className="game-name">{currentGame && currentGame.name}</h1>
         </div>
         <button className="side-panel-button" onClick={goBack}>
-          {t('pages.gameRoom.back')}
+          {t('pages.gameRoom.buttons.back')}
         </button>
         <button className="side-panel-button" onClick={leaveCurrentGame}>
-          {t('pages.gameRoom.leave')}
+          {t('pages.gameRoom.buttons.leave')}
         </button>
       </div>
 
@@ -66,8 +73,13 @@ const GameRoomPage = ({
 
       <div className="side-panel">
         <div className="side-panel-text-container" />
+        <button className="side-panel-button" onClick={toggleIsReady}>
+          {userPlayer && userPlayer.isReady
+            ? t('pages.gameRoom.buttons.notReady')
+            : t('pages.gameRoom.buttons.ready')}
+        </button>
         <button className="side-panel-button" onClick={startGame}>
-          {t('pages.gameRoom.start')}
+          {t('pages.gameRoom.buttons.start')}
         </button>
       </div>
     </div>
