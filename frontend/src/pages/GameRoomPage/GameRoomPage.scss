@@ -3,7 +3,7 @@
 .main-container {
   display: flex;
   align-items: center;
-  height: 500px;
+  height: spacing(30);
 }
 
 .side-panel {
@@ -11,7 +11,7 @@
   flex-direction: column;
   align-items: center;
   height: 100%;
-  width: 300px;
+  width: spacing(20);
 }
 
 .side-panel-text-container {
@@ -36,7 +36,7 @@
 
 .players-list {
   height: 100%;
-  width: 400px;
+  width: spacing(25);
   overflow-y: scroll;
   overflow-x: hidden;
   margin-left: spacing(2);

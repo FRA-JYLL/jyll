@@ -1,8 +1,10 @@
+@import 'global';
+
 .game-container {
   position: absolute;
   display: grid;
-  grid-template-columns: 140px auto 500px;
-  grid-template-rows: 100px auto 100px;
+  grid-template-columns: spacing(10) auto spacing(30);
+  grid-template-rows: spacing(8) auto spacing(8);
   height: 100%;
   width: 100%;
 }
@@ -20,7 +22,7 @@
 }
 
 .top-menu {
-  width: 600px;
+  width: spacing(36);
 }
 
 .map {
@@ -42,7 +44,7 @@
 }
 
 .undo-buttons {
-  width: 200px;
+  width: spacing(12);
 }
 
 .stats-panel {
@@ -59,7 +61,7 @@
 }
 
 .end-button {
-  width: 200px;
+  width: spacing(12);
 }
 
 .transition-top-enter {
