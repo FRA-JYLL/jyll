@@ -3,6 +3,7 @@ import { useTranslation } from 'react-i18next';
 import './CreateGameModal.scss';
 import { Modal } from 'components/modals';
 import { ContainerProps } from './CreateGameModal.container';
+import { MonitorButton } from 'components/buttons/MonitorButton';
 
 interface Props extends ContainerProps {
   isOpen: boolean;
@@ -47,16 +48,12 @@ const CreateGameModal = ({ isOpen, closeModal, createGame }: Props) => {
           onChange={(e) => setGamePassword(e.target.value)}
         />
         <div className="createGameModal-button-container">
-          <button
-            className="createGameModal-button"
-            type={'button'}
-            onClick={closeModalAndResetFields}
-          >
+          <MonitorButton type="button" onClick={closeModalAndResetFields}>
             {t('pages.gameSelection.createGameModal.cancel')}
-          </button>
-          <button className="createGameModal-button" type="submit">
+          </MonitorButton>
+          <MonitorButton type="submit">
             {t('pages.gameSelection.createGameModal.submit')}
-          </button>
+          </MonitorButton>
         </div>
       </form>
     </Modal>

@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import './JoinGameModal.scss';
 import { Modal } from 'components/modals';
+import { MonitorButton } from 'components/buttons/MonitorButton';
 
 export const JoinGameModal = ({
   isOpen,
@@ -39,16 +40,12 @@ export const JoinGameModal = ({
           onChange={(e) => setGamePassword(e.target.value)}
         />
         <div className="joinGameModal-button-container">
-          <button
-            className="joinGameModal-button"
-            type={'button'}
-            onClick={closeModalAndResetFields}
-          >
+          <MonitorButton type={'button'} onClick={closeModalAndResetFields}>
             {t('pages.gameSelection.joinGameModal.cancel')}
-          </button>
-          <button className="joinGameModal-button" type="submit">
+          </MonitorButton>
+          <MonitorButton type="submit">
             {t('pages.gameSelection.joinGameModal.submit')}
-          </button>
+          </MonitorButton>
         </div>
       </form>
     </Modal>

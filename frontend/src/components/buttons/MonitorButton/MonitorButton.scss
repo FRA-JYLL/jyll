@@ -1,0 +1,10 @@
+@import 'global';
+
+.monitor-button {
+  font-size: $big;
+  font-family: monospace;
+  color: $white;
+  background-color: $black;
+  line-height: spacing(8);
+  width: 100%;
+}

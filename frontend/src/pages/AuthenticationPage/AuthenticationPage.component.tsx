@@ -12,8 +12,16 @@ const AuthenticationPage = ({ signup, login }: Props) => {
       <h1 className="authentication-title">{t('pages.authentication.title')}</h1>
       <p className="authentication-subtitle">{t('pages.authentication.subtitle')}</p>
       <div className="forms-container">
-        <CredentialsForm requireTokens={signup} title={t('pages.authentication.signup')} />
-        <CredentialsForm requireTokens={login} title={t('pages.authentication.login')} />
+        <CredentialsForm
+          requireTokens={signup}
+          title={t('pages.authentication.signup')}
+          buttonLabel={t('pages.authentication.buttons.signup')}
+        />
+        <CredentialsForm
+          requireTokens={login}
+          title={t('pages.authentication.login')}
+          buttonLabel={t('pages.authentication.buttons.login')}
+        />
       </div>
     </Monitor>
   );

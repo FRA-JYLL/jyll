@@ -24,14 +24,14 @@
   line-height: spacing(6);
 }
 
-.side-panel-button {
-  font-size: $big;
-  font-family: monospace;
-  color: $white;
-  background-color: $black;
-  line-height: spacing(8);
-  width: 200px;
-  margin: spacing(1);
+.game-room-button-container {
+  display: flex;
+  flex-direction: column;
+  width: spacing(40);
+  & > * {
+    margin-top: spacing(1);
+    margin-bottom: spacing(1);
+  }
 }
 
 .players-list {
