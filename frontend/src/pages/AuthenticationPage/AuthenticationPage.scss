@@ -9,18 +9,18 @@
 .authentication-title {
   font-size: $huge;
   font-weight: 700;
-  margin-bottom: spacing(4);
+  margin-bottom: spacing(1.5);
 }
 
 .authentication-subtitle {
   font-size: $bigger;
-  margin-bottom: spacing(6);
+  margin-bottom: spacing(2);
 }
 
 .forms-container {
   display: flex;
   flex-direction: row;
   & > :not(:first-child) {
-    margin-left: spacing(8);
+    margin-left: spacing(2.5);
   }
 }

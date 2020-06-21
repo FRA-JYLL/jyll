@@ -10,14 +10,14 @@ $menu-green: #46bd60;
 $menu-red: #bd4646;
 $error: #ce0000;
 
-// Text
-$normal: 16px;
-$big: 20px;
-$bigger: 24px;
-$huge: 30px;
-
 // Spacing
-$base-spacing: 5px;
+$base-spacing: 1rem;
 @function spacing($factor) {
   @return $factor * $base-spacing;
 }
+
+// Text
+$normal: spacing(1);
+$big: spacing(1.25);
+$bigger: spacing(1.5);
+$huge: spacing(2);
