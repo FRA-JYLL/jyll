@@ -67,10 +67,10 @@
   overflow-x: hidden;
   margin-left: spacing(2);
   padding-left: spacing(2);
-  border-left: dashed 2px $white;
+  border-left: dashed spacing(0.125) $white;
   margin-right: spacing(2);
   padding-right: spacing(2);
-  border-right: dashed 2px $white;
+  border-right: dashed spacing(0.125) $white;
 }
 
 .games-list-section-title {
