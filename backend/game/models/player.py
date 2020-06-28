@@ -1,4 +1,7 @@
 from django.db import models
+from .resources import Resources
+from .ratings import PlayerRatings
+from .production import PlayerProduction
 
 
 class PlayerManager(models.Manager):
@@ -16,6 +19,12 @@ class PlayerManager(models.Manager):
 
         # Create new player
         new_player = super().create(game=game, user=user, is_admin=is_admin)
+
+        # create associated resources, production, and ratings
+        Resources.objects.create(player=new_player)
+        PlayerRatings.objects.create(player=new_player)
+        PlayerProduction.objects.create(player=new_player)
+
         return new_player
 
 

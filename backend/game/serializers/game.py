@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from game.models import Game, Player
+from game.models import Game
 
 
 class GameSerializer(serializers.ModelSerializer):
@@ -20,15 +20,3 @@ class GameSerializer(serializers.ModelSerializer):
 
     def get_has_password(self, game):
         return game.password is not None
-
-
-class PlayerSerializer(serializers.ModelSerializer):
-    username = serializers.SerializerMethodField(method_name="get_username")
-
-    class Meta:
-        model = Player
-        fields = ["id", "is_admin", "user", "game", "is_ready", "username"]
-        read_only_fields = ["is_admin", "user", "game"]
-
-    def get_username(self, player):
-        return player.user.username

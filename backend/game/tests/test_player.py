@@ -45,3 +45,19 @@ class PlayerApiTests(APITestCase):
         self.assertEqual(response.status_code, status.HTTP_200_OK)
         self.assertTrue(Player.objects.first().is_ready)
         start_game_task.assert_called_once_with(PlayerApiTests.game.id)
+
+    def test_player_infos(self):
+        self.client.force_authenticate(user=PlayerApiTests.user)
+        player_id = Player.objects.first().id
+        url = reverse("player-full", args=[player_id])
+        response = self.client.get(url)
+        self.assertIn("resources", response.data)
+        self.assertIn("production", response.data)
+        self.assertIn("ratings", response.data)
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
+
+        # check that an user not playing in a game cannot access the player infos
+        external_user = User.objects.create_user(username="Kelsier")
+        self.client.force_authenticate(user=external_user)
+        response = self.client.get(url)
+        self.assertEqual(response.status_code, status.HTTP_403_FORBIDDEN)

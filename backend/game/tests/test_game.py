@@ -146,6 +146,21 @@ class GameApiTests(APITestCase):
         self.assertEqual(response.status_code, status.HTTP_204_NO_CONTENT)
         self.assertEqual(Player.objects.count(), nb_players - 1)
 
+    def test_get_hydrocarbon_supply(self):
+        self.client.force_authenticate(user=GameApiTests.user)
+        url = reverse("game-hydrocarbon-supply", args=[GameApiTests.game.id])
+        response = self.client.get(url)
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
+        # check that we have the expected data in the response
+        self.assertIn("multiplier", response.data)
+        self.assertIn("drawn_amount", response.data)
+
+        # check that a user not playing in a game cannot get the hydrocarbon supply
+        external_user = User.objects.create_user(username="Kelsier")
+        self.client.force_authenticate(user=external_user)
+        response = self.client.get(url)
+        self.assertEqual(response.status_code, status.HTTP_403_FORBIDDEN)
+
 
 # cf. https://stackoverflow.com/questions/46530784/make-django-test-case-database-visible-to-celery
 class CeleryTasksTests(SimpleTestCase):

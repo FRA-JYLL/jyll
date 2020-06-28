@@ -4,7 +4,11 @@ from rest_framework import viewsets, status, mixins
 from rest_framework.exceptions import PermissionDenied
 from rest_framework.permissions import IsAuthenticated
 from game.models import Game, Player
-from game.serializers import GameSerializer, PlayerSerializer
+from game.serializers import (
+    GameSerializer,
+    PlayerSerializer,
+    HydrocarbonSupplySerializer,
+)
 
 
 class GameViewSet(
@@ -81,18 +85,14 @@ class GameViewSet(
         # the game should be pending, the requesting user should not already control a player in the game,
         # and should give a correct password
         if not game.is_pending:
-            raise PermissionDenied(
-                detail="The game you want to join is not pending", code=None
-            )
+            raise PermissionDenied(detail="The game you want to join is not pending")
         elif game.players.filter(user__username=request.user.username):
-            raise PermissionDenied(
-                detail="You already control a player in this game", code=None
-            )
+            raise PermissionDenied(detail="You already control a player in this game")
         elif (
             game.password is not None
             and serializer.validated_data.get("password") != game.password
         ):
-            raise PermissionDenied(detail="This game requires a password", code=None)
+            raise PermissionDenied(detail="This game requires a password")
 
         # create a new player in game controlled by user
         new_player = Player.objects.create(game=game, user=request.user)
@@ -131,4 +131,18 @@ class GameViewSet(
         queryset = game.players.all()
 
         serializer = PlayerSerializer(queryset, many=True)
+        return Response(serializer.data)
+
+    @action(detail=True, methods=["get"])
+    def hydrocarbon_supply(self, request, *args, **kwargs):
+        """View to get the hydrocarbon supply informations"""
+        # query the game
+        game = self.get_object()
+
+        # check that the requesting user controls a player in the requested game
+        if game.players.filter(user=request.user).first() is None:
+            raise PermissionDenied(detail="You are not playing in this game")
+
+        # serialize the hydrocarbon supply and return it
+        serializer = HydrocarbonSupplySerializer(game.hydrocarbon_supply)
         return Response(serializer.data)

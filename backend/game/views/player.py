@@ -1,9 +1,16 @@
 from rest_framework import viewsets, mixins, status
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
+from rest_framework.decorators import action
 from game.models import Player
-from game.serializers import PlayerSerializer
+from game.serializers import (
+    PlayerSerializer,
+    PlayerRatingsSerializer,
+    PlayerProductionSerializer,
+    ResourcesSerializer,
+)
 from game.tasks import start_game
+from rest_framework.exceptions import PermissionDenied
 
 
 class PlayerViewSet(
@@ -37,3 +44,28 @@ class PlayerViewSet(
             player._prefetched_objects_cache = {}
 
         return Response(serializer.data)
+
+    @action(detail=True, methods=["get"])
+    def full(self, request, *args, **kwargs):
+        """View to retrieve the full player, with his production, ratings, and resources"""
+        # query the player
+        player = self.get_object()
+
+        # check that the requesting user controls a player in the requested game
+        if player.game.players.filter(user=request.user).first() is None:
+            raise PermissionDenied(detail="You are not playing in this game")
+
+        serializer = self.get_serializer(player)
+
+        resources = ResourcesSerializer(player.resources).data
+        ratings = PlayerRatingsSerializer(player.ratings).data
+        production = PlayerProductionSerializer(player.production).data
+
+        return Response(
+            dict(
+                **serializer.data,
+                production=production,
+                ratings=ratings,
+                resources=resources,
+            )
+        )

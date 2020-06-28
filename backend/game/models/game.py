@@ -1,5 +1,6 @@
 from django.db import models
-from game.models import Player
+from .player import Player
+from .hydrocarbon_supply import HydrocarbonSupply
 
 
 class GameManager(models.Manager):
@@ -18,6 +19,9 @@ class GameManager(models.Manager):
             name = creator.username + "'s game"
 
         new_game = super().create(name=name, password=password)
+
+        # create an hydrocarbon supply
+        HydrocarbonSupply.objects.create(game=new_game)
 
         # creator becomes a player and admin of new game
         Player.objects.create(game=new_game, user=creator, is_admin=True)
