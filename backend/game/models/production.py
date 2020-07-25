@@ -12,7 +12,6 @@ DEFAULT_PROD = {
 }
 
 
-# TODO: add BuildingProduction model
 class BaseProduction(models.Model):
     money = models.FloatField(default=DEFAULT_PROD["money"])
     hydrocarbon = models.FloatField(default=DEFAULT_PROD["hydrocarbon"])
@@ -34,13 +33,19 @@ class PlayerProduction(BaseProduction):
         "Player", on_delete=models.CASCADE, related_name="production"
     )
 
-    def run_income(self):
-        # money income
-        self.player.resources.money += self.money
-        # hydrocarbon income
-        multiplier = self.player.game.hydrocarbon_supply.multiplier
-        self.player.resources.hydrocarbon += (
-            self.hydrocarbon * multiplier - self.hydrocarbon_consumption
-        )
-        # save changes
-        self.player.resources.save()
+    def add(self, other):
+        self.money += other.money
+        self.hydrocarbon += other.hydrocarbon
+        self.hydrocarbon_consumption += other.hydrocarbon_consumption
+        self.food += other.food
+        self.electricity = other.electricity
+        self.waste += other.waste
+        self.pollution += other.pollution
+        self.science = other.science
+        self.save()
+
+
+class BuildingProduction(BaseProduction):
+    building = models.OneToOneField(
+        "Building", on_delete=models.CASCADE, related_name="production"
+    )

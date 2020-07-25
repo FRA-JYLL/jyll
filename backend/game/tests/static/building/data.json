@@ -1,0 +1,33 @@
+{
+  "0": {
+    "class_idx": 0,
+    "cost": 3,
+    "production": {
+      "money": 2,
+      "hydrocarbon_consumption": 1,
+      "pollution": 1
+    }
+  },
+  "1": {
+    "class_idx": 1,
+    "cost": 6,
+    "production": {
+      "hydrocarbon": 1
+    }
+  },
+  "2": {
+    "class_idx": 2,
+    "cost": 2,
+    "production": {
+      "food": 1
+    }
+  },
+  "3": {
+    "class_idx": 3,
+    "cost": 10,
+    "production": {
+      "science": 1,
+      "money": -0.5
+    }
+  }
+}

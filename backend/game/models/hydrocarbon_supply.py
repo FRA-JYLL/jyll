@@ -1,7 +1,7 @@
 from django.db import models
 
 
-# TODO: use polymorphic to add the option of various multiplier methods
+# TODO: use inheritance manager to add the option of various multiplier methods
 class HydrocarbonSupply(models.Model):
     game = models.OneToOneField(
         "Game", on_delete=models.CASCADE, related_name="hydrocarbon_supply"

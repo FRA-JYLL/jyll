@@ -22,7 +22,7 @@ class ProductionTests(TestCase):
         ProductionTests.production.hydrocarbon = hydrocarbon_prod
         ProductionTests.production.hydrocarbon_consumption = hydrocarbon_consumption
         ProductionTests.production.save()
-        ProductionTests.production.run_income()
+        ProductionTests.production.player.run_income()
         self.assertAlmostEqual(
             ProductionTests.production.player.resources.money,
             money_prod + initial_money,

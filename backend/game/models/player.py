@@ -1,7 +1,9 @@
 from django.db import models
 from .resources import Resources
 from .ratings import PlayerRatings
+from .technology import Technology
 from .production import PlayerProduction
+from .technology_domain import TechnologyDomain
 
 
 class PlayerManager(models.Manager):
@@ -24,6 +26,7 @@ class PlayerManager(models.Manager):
         Resources.objects.create(player=new_player)
         PlayerRatings.objects.create(player=new_player)
         PlayerProduction.objects.create(player=new_player)
+        TechnologyDomain.objects.initialize_technology_tree(player=new_player)
 
         return new_player
 
@@ -38,6 +41,25 @@ class Player(models.Model):
     is_ready = models.BooleanField(default=False)
 
     objects = PlayerManager()  # link to custom manager
+
+    @property
+    def technologies(self):
+        return Technology.objects.filter(domain__player=self)
+
+    def run_income(self):
+        # money income
+        self.resources.money += self.production.money
+        # hydrocarbon income
+        multiplier = self.game.hydrocarbon_supply.multiplier
+        self.resources.hydrocarbon += (
+            self.production.hydrocarbon * multiplier
+            - self.production.hydrocarbon_consumption
+        )
+        # save changes
+        self.resources.save()
+
+        for domain in self.domains.all():
+            domain.run_science_income()
 
     def __str__(self):
         return self.user.username

@@ -1,0 +1,76 @@
+{
+  "0": {
+    "class_idx": 0,
+    "domain_idx": 0,
+    "level_costs": {
+      "1": 0
+    },
+    "child_technologies": [1, 2],
+    "max_level": 1,
+    "level_effects": {
+      "1": {
+        "unlocked_buildings": [0, 1, 2, 3],
+        "updated_buildings": [
+          {
+            "class_idx": 0,
+            "quantity_cap": 5,
+            "copies": 1
+          },
+          {
+            "class_idx": 1,
+            "quantity_cap": 5,
+            "copies": 1
+          },
+          {
+            "class_idx": 2,
+            "quantity_cap": 5,
+            "copies": 1
+          },
+          {
+            "class_idx": 3,
+            "quantity_cap": 5,
+            "copies": 1
+          }
+        ]
+      }
+    }
+  },
+  "1": {
+    "class_idx": 1,
+    "domain_idx": 1,
+    "level_costs": {
+      "1": 2
+    },
+    "max_level": 1,
+    "level_effects": {
+      "1": {
+        "updated_buildings": [
+          {
+            "class_idx": 2,
+            "quantity_cap": 5,
+            "copies": 1
+          }
+        ]
+      }
+    }
+  },
+  "2": {
+    "class_idx": 2,
+    "domain_idx": 2,
+    "level_costs": {
+      "1": 2
+    },
+    "max_level": 1,
+    "level_effects": {
+      "1": {
+        "updated_buildings": [
+          {
+            "class_idx": 2,
+            "quantity_cap": 5,
+            "copies": 1
+          }
+        ]
+      }
+    }
+  }
+}

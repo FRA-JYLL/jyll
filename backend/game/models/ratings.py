@@ -25,3 +25,15 @@ class PlayerRatings(BaseRatings):
                 )
             ]
         )
+
+    def add(self, other):
+        self.economy += other.economy
+        self.society += other.society
+        self.environment += other.environment
+        self.save()
+
+
+class BuildingRatings(BaseRatings):
+    building = models.OneToOneField(
+        "Building", on_delete=models.CASCADE, related_name="ratings"
+    )

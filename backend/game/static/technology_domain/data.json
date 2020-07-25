@@ -1,0 +1,12 @@
+{
+  "0": {
+    "domain_idx": 0,
+    "starting_technology": 0
+  },
+  "1": {
+    "domain_idx": 1
+  },
+  "2": {
+    "domain_idx": 2
+  }
+}

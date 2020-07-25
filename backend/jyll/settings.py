@@ -161,3 +161,6 @@ CELERY_RESULT_BACKEND = "django-db"
 CORS_ORIGIN_WHITELIST = [
     "http://localhost:3000",
 ]
+
+# https://stackoverflow.com/questions/4088253/django-how-to-detect-test-environment-check-determine-if-tests-are-being-ru/7651002#7651002
+TEST_RUNNER = "jyll.runner.JyllTestSuiteRunner"

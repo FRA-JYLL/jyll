@@ -54,6 +54,9 @@ class PlayerApiTests(APITestCase):
         self.assertIn("resources", response.data)
         self.assertIn("production", response.data)
         self.assertIn("ratings", response.data)
+        self.assertIn("domains", response.data)
+        self.assertIn("technologies", response.data)
+        self.assertIn("buildings", response.data)
         self.assertEqual(response.status_code, status.HTTP_200_OK)
 
         # check that an user not playing in a game cannot access the player infos

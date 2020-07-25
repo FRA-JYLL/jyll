@@ -8,6 +8,9 @@ from game.serializers import (
     PlayerRatingsSerializer,
     PlayerProductionSerializer,
     ResourcesSerializer,
+    TechnologySerializer,
+    TechnologyDomainSerializer,
+    BuildingSerializer,
 )
 from game.tasks import start_game
 from rest_framework.exceptions import PermissionDenied
@@ -60,6 +63,9 @@ class PlayerViewSet(
         resources = ResourcesSerializer(player.resources).data
         ratings = PlayerRatingsSerializer(player.ratings).data
         production = PlayerProductionSerializer(player.production).data
+        domains = TechnologyDomainSerializer(player.domains.all(), many=True).data
+        technologies = TechnologySerializer(player.technologies.all(), many=True).data
+        buildings = BuildingSerializer(player.buildings.all(), many=True).data
 
         return Response(
             dict(
@@ -67,5 +73,8 @@ class PlayerViewSet(
                 production=production,
                 ratings=ratings,
                 resources=resources,
+                domains=domains,
+                technologies=technologies,
+                buildings=buildings,
             )
         )
