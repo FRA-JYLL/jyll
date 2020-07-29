@@ -1,0 +1,23 @@
+// Colors
+$black: #000000;
+$transparent-black: #000000a0;
+$white: #ffffff;
+$monitor-border: #32535f;
+$menu-highlight-1: #00ffff;
+$menu-highlight-2: #ffff00;
+$menu-highlight-3: #d14fd1;
+$menu-green: #46bd60;
+$menu-red: #bd4646;
+$error: #ce0000;
+
+// Spacing
+$base-spacing: 1rem;
+@function spacing($factor) {
+  @return $factor * $base-spacing;
+}
+
+// Text
+$normal: spacing(1);
+$big: spacing(1.25);
+$bigger: spacing(1.5);
+$huge: spacing(2);

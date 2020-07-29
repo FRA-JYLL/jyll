@@ -3,6 +3,8 @@ import { useTranslation } from 'react-i18next';
 import './GameRoomPage.scss';
 import { Props } from './GameRoomPage.container';
 import { LobbyPlayer } from 'redux/lobby/types';
+import { Monitor } from 'components/monitor';
+import { MonitorButton } from 'components/buttons/MonitorButton';
 
 const GameRoomPage = ({
   username,
@@ -56,33 +58,33 @@ const GameRoomPage = ({
     ));
 
   return (
-    <div className="main-container">
+    <Monitor className="main-container">
       <div className="side-panel">
         <div className="side-panel-text-container">
           <h1 className="game-name">{currentGame && currentGame.name}</h1>
         </div>
-        <button className="side-panel-button" onClick={goBack}>
-          {t('pages.gameRoom.buttons.back')}
-        </button>
-        <button className="side-panel-button" onClick={leaveCurrentGame}>
-          {t('pages.gameRoom.buttons.leave')}
-        </button>
+        <div className="game-room-button-container">
+          <MonitorButton onClick={goBack}>{t('pages.gameRoom.buttons.back')}</MonitorButton>
+          <MonitorButton onClick={leaveCurrentGame}>
+            {t('pages.gameRoom.buttons.leave')}
+          </MonitorButton>
+        </div>
       </div>
 
       <div className="players-list">{renderPlayersList()}</div>
 
       <div className="side-panel">
         <div className="side-panel-text-container" />
-        <button className="side-panel-button" onClick={toggleIsReady}>
-          {userPlayer && userPlayer.isReady
-            ? t('pages.gameRoom.buttons.notReady')
-            : t('pages.gameRoom.buttons.ready')}
-        </button>
-        <button className="side-panel-button" onClick={startGame}>
-          {t('pages.gameRoom.buttons.start')}
-        </button>
+        <div className="game-room-button-container">
+          <MonitorButton onClick={toggleIsReady}>
+            {userPlayer && userPlayer.isReady
+              ? t('pages.gameRoom.buttons.notReady')
+              : t('pages.gameRoom.buttons.ready')}
+          </MonitorButton>
+          <MonitorButton onClick={startGame}>{t('pages.gameRoom.buttons.start')}</MonitorButton>
+        </div>
       </div>
-    </div>
+    </Monitor>
   );
 };
 

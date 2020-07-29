@@ -1,13 +1,9 @@
+@import 'global';
+
 .main-container {
   display: flex;
   align-items: center;
-  height: 500px;
-  padding: 30px;
-  background-color: #000000;
-  border-color: #32535f;
-  border-style: solid;
-  border-width: 10px;
-  border-radius: 15px;
+  height: spacing(30);
 }
 
 .side-panel {
@@ -15,7 +11,7 @@
   flex-direction: column;
   align-items: center;
   height: 100%;
-  width: 300px;
+  width: spacing(20);
 }
 
 .side-panel-text-container {
@@ -23,53 +19,47 @@
 }
 
 .game-name {
-  font-size: 24px;
+  font-size: $bigger;
   font-weight: 700;
-  font-family: monospace;
-  line-height: 30px;
-  color: #ffffff;
+  line-height: spacing(2);
 }
 
-.side-panel-button {
-  font-size: 20px;
-  font-family: monospace;
-  color: #ffffff;
-  background-color: #000000;
-  line-height: 40px;
-  width: 200px;
-  margin: 5px;
+.game-room-button-container {
+  display: flex;
+  flex-direction: column;
+  width: spacing(12);
+  margin-bottom: spacing(0.25);
+  & > :not(:last-child) {
+    margin-bottom: spacing(0.5);
+  }
 }
 
 .players-list {
   height: 100%;
-  width: 400px;
+  width: spacing(25);
   overflow-y: scroll;
   overflow-x: hidden;
-  margin-left: 30px;
-  padding-left: 30px;
-  border-left: dashed 2px #ffffff;
-  margin-right: 30px;
-  padding-right: 30px;
-  border-right: dashed 2px #ffffff;
+  margin: 0px spacing(2);
+  padding: 0px spacing(2);
+  border-left: dashed spacing(0.125) $white;
+  border-right: dashed spacing(0.125) $white;
 }
 
 .player-line {
   display: flex;
   justify-content: space-between;
-  font-size: 20px;
-  font-family: monospace;
-  line-height: 26px;
-  color: #ffffff;
+  font-size: $big;
+  line-height: spacing(2);
 }
 
 .player-name-admin {
-  color: #d14fd1;
+  color: $menu-highlight-3;
 }
 
 .player-ready {
-  color: #46bd60;
+  color: $menu-green;
 }
 
 .player-notReady {
-  color: #bd4646;
+  color: $menu-red;
 }

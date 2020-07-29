@@ -1,6 +1,7 @@
 import React from 'react';
 import { CSSTransition } from 'react-transition-group';
 import './Modal.scss';
+import { Monitor } from 'components/monitor';
 
 interface Props {
   isOpen: boolean;
@@ -23,7 +24,7 @@ export const Modal = ({
       mountOnEnter
       unmountOnExit
     >
-      <div className="modal">{children}</div>
+      <Monitor className="modal">{children}</Monitor>
     </CSSTransition>
     <CSSTransition in={isOpen} timeout={500} classNames={'overlay'} mountOnEnter unmountOnExit>
       <div className="overlay" onClick={closeModal}></div>

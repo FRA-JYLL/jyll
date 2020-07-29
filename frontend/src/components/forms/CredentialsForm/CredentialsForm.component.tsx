@@ -2,13 +2,16 @@ import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import './CredentialsForm.scss';
 import { SignupRequest, LoginRequest } from 'redux/authentication/types';
+import { MonitorButton } from 'components/buttons/MonitorButton';
 
 const CredentialsForm = ({
   requireTokens,
   title,
+  buttonLabel,
 }: {
   requireTokens: (username: string, password: string) => SignupRequest | LoginRequest;
   title: string;
+  buttonLabel: string;
 }) => {
   const { t } = useTranslation();
   const [username, setUsername] = useState('');
@@ -36,7 +39,7 @@ const CredentialsForm = ({
           type="password"
           onChange={(e) => setPassword(e.target.value)}
         />
-        <input className="credentialsForm-input" type="submit" />
+        <MonitorButton type="submit">{buttonLabel}</MonitorButton>
       </form>
     </div>
   );

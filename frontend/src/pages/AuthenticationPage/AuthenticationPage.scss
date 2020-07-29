@@ -1,34 +1,25 @@
+@import 'global';
+
 .authentication-container {
   display: flex;
   flex-direction: column;
   align-items: center;
-  padding: 30px;
-  background-color: #000000;
-  border-color: #32535f;
-  border-style: solid;
-  border-width: 10px;
-  border-radius: 15px;
 }
 
 .authentication-title {
-  font-size: 40px;
+  font-size: $huge;
   font-weight: 700;
-  font-family: monospace;
-  color: #ffffff;
-  margin-bottom: 20px;
+  margin-bottom: spacing(1.5);
 }
 
 .authentication-subtitle {
-  font-size: 24px;
-  font-family: monospace;
-  color: #ffffff;
-  margin-bottom: 30px;
+  font-size: $bigger;
+  margin-bottom: spacing(2);
 }
 
 .forms-container {
   display: flex;
-  flex-direction: row;
   & > :not(:first-child) {
-    margin-left: 40px;
+    margin-left: spacing(2.5);
   }
 }

@@ -10,6 +10,10 @@ export default {
       submit: 'Submit Query',
       usernameAlreadyTaken: 'Error: this username is already taken',
       invalidCredentials: 'Error: username or password is invalid',
+      buttons: {
+        login: 'LOG IN',
+        signup: 'SIGN UP',
+      },
     },
     gameSelection: {
       welcome: 'Welcome, {{username}}!',

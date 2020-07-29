@@ -4,6 +4,8 @@ import { CreateGameModal, JoinGameModal } from 'components/modals';
 import './GameSelectionPage.scss';
 import { Props } from './GameSelectionPage.container';
 import { LobbyGame } from 'redux/lobby';
+import { Monitor } from 'components/monitor';
+import { MonitorButton } from 'components/buttons/MonitorButton';
 
 const GameSelectionPage = ({
   username,
@@ -72,18 +74,19 @@ const GameSelectionPage = ({
               {t('pages.gameSelection.created', { creationDate: game.creationDate })}
             </p>
           </div>
-          <button
-            className="side-panel-button"
-            onClick={
-              alreadyJoined
-                ? enterSelectedGame
-                : game.hasPassword
-                ? openJoinModal
-                : joinSelectedGameWithoutPassword
-            }
-          >
-            {t('pages.gameSelection.join')}
-          </button>
+          <div className="game-selection-button-container">
+            <MonitorButton
+              onClick={
+                alreadyJoined
+                  ? enterSelectedGame
+                  : game.hasPassword
+                  ? openJoinModal
+                  : joinSelectedGameWithoutPassword
+              }
+            >
+              {t('pages.gameSelection.join')}
+            </MonitorButton>
+          </div>
         </>
       )
     );
@@ -99,7 +102,7 @@ const GameSelectionPage = ({
 
   return (
     <>
-      <div className="main-container">
+      <Monitor className="main-container">
         <div className="side-panel">
           <div className="side-panel-text-container">
             <h1 className="side-panel-welcome">
@@ -107,12 +110,12 @@ const GameSelectionPage = ({
             </h1>
             <p className="side-panel-instructions">{t('pages.gameSelection.instructions')}</p>
           </div>
-          <button className="side-panel-button" onClick={openCreateModal}>
-            {t('pages.gameSelection.createGame')}
-          </button>
-          <button className="side-panel-button" onClick={logout}>
-            {t('pages.gameSelection.logout')}
-          </button>
+          <div className="game-selection-button-container">
+            <MonitorButton onClick={openCreateModal}>
+              {t('pages.gameSelection.createGame')}
+            </MonitorButton>
+            <MonitorButton onClick={logout}>{t('pages.gameSelection.logout')}</MonitorButton>
+          </div>
         </div>
 
         <div className="games-list">
@@ -131,7 +134,7 @@ const GameSelectionPage = ({
         </div>
 
         <div className="side-panel">{renderGameInfo(lobbyGames[selectedGameId])}</div>
-      </div>
+      </Monitor>
 
       <CreateGameModal isOpen={createModalIsOpen} closeModal={closeCreateModal} />
 

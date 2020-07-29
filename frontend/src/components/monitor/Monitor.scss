@@ -1,0 +1,12 @@
+@import 'global';
+
+.screen {
+  background-color: $black;
+  padding: spacing(1.5);
+  margin: spacing(0.5);
+  border: spacing(0.75) solid $monitor-border;
+  border-radius: spacing(1);
+  font-size: $normal;
+  font-family: monospace;
+  color: $white;
+}
