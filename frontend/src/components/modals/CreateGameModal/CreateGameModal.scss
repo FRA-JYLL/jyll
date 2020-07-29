@@ -16,12 +16,11 @@
   height: spacing(2.5);
   width: 100%;
   padding-left: spacing(0.5);
-  margin-bottom: spacing(0.25);
+  margin-bottom: spacing(0.5);
 }
 
 .createGameModal-button-container {
   display: flex;
-  margin-top: spacing(0.25);
   & > :not(:first-child) {
     margin-left: spacing(0.5);
   }

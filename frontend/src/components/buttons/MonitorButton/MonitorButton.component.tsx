@@ -12,7 +12,7 @@ export const MonitorButton = ({
   type?: 'button' | 'submit' | 'reset';
   onClick?: () => void;
 }) => (
-  <button className={'monitor-button ' + className} type={type} onClick={onClick}>
+  <button className={'monitor-button ' + className || ''} type={type} onClick={onClick}>
     {children}
   </button>
 );

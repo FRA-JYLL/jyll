@@ -19,7 +19,6 @@
 
 .forms-container {
   display: flex;
-  flex-direction: row;
   & > :not(:first-child) {
     margin-left: spacing(2.5);
   }

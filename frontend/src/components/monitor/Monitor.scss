@@ -4,9 +4,7 @@
   background-color: $black;
   padding: spacing(1.5);
   margin: spacing(0.5);
-  border-color: $monitor;
-  border-style: solid;
-  border-width: spacing(0.75);
+  border: spacing(0.75) solid $monitor-border;
   border-radius: spacing(1);
   font-size: $normal;
   font-family: monospace;
