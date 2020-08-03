@@ -40,6 +40,7 @@ class Game(models.Model):
     is_pending = models.BooleanField(default=True)  # game state
     password = models.CharField(max_length=100, blank=True, null=True)
     creation_date = models.DateTimeField(auto_now_add=True)
+    generation = models.IntegerField(default=1)
 
     objects = GameManager()  # link to custom manager
 
@@ -54,12 +55,24 @@ class Game(models.Model):
         return True
 
     def _run_setup(self):
-        """Run the game setup"""
+        """Run the game setup (there is none atm)"""
         assert (
             not self.is_pending
         ), "The game is still pending, all players should be ready"
+
+    def income_phase(self):
+        for player in self.players.all():
+            player.run_income()
 
     def start(self):
         self.is_pending = False
         self.save()
         self._run_setup()
+        for player in self.players.all():
+            player.is_ready = False
+            player.save()
+
+    def end_generation(self):
+        """Run 'end of generation phases'. ATM there is only the income phase."""
+        self.income_phase()
+        self.generation += 1

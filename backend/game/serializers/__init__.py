@@ -3,6 +3,7 @@ from .player import PlayerSerializer
 from .building import BuildingSerializer
 from .resources import ResourcesSerializer
 from .technology import TechnologySerializer
+from .playerturn import PlayerTurnSerializer
 from .technology_domain import TechnologyDomainSerializer
 from .hydrocarbon_supply import HydrocarbonSupplySerializer
 from .ratings import PlayerRatingsSerializer, BuildingRatingsSerializer
@@ -21,4 +22,5 @@ __all__ = [
     TechnologySerializer,
     TechnologyDomainSerializer,
     BuildingSerializer,
+    PlayerTurnSerializer,
 ]

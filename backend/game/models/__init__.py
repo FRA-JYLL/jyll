@@ -1,5 +1,5 @@
 from .game import Game
-from .player import Player
+from .player import Player, PlayerTurn, BuildingAction
 from .resources import Resources
 from .ratings import PlayerRatings, BuildingRatings
 from .production import PlayerProduction, BuildingProduction
@@ -12,6 +12,8 @@ from .technology import Technology
 __all__ = [
     Game,
     Player,
+    PlayerTurn,
+    BuildingAction,
     Resources,
     PlayerRatings,
     BuildingRatings,

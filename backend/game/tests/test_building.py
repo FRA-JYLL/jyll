@@ -21,6 +21,10 @@ class BuildingTests(TestCase):
             self.assertEqual(building.copies, 1)
             self.assertEqual(building.quantity_cap, 5)
 
+        # check that the science building (lab) has an instance of ScienceCopy related to it
+        self.assertEqual(player.science_buildings.count(), 1)
+        self.assertIsNone(player.science_buildings.first().domain_focus)
+
     def test_build(self):
         """Check if the build method behave as expected."""
         player = Player.objects.first()

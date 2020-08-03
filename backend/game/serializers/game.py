@@ -14,8 +14,9 @@ class GameSerializer(serializers.ModelSerializer):
             "password",
             "creation_date",
             "has_password",
+            "generation",
         ]
-        read_only_fields = ["is_pending", "creation_date"]
+        read_only_fields = ["is_pending", "creation_date", "generation"]
         extra_kwargs = {"password": {"write_only": True}, "name": {"required": False}}
 
     def get_has_password(self, game):

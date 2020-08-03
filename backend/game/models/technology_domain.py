@@ -96,8 +96,8 @@ class TechnologyDomain(models.Model):
 
     def run_science_income(self):
         """Update science points value, and develop as many techs as possible."""
-        for building in self.science_buildings.all():
-            self.science_points += building.production.science
+        for building_copy in self.science_buildings.all():
+            self.science_points += building_copy.building.production.science
         self.save()
         self._develop_technologies()
 

@@ -1,12 +1,10 @@
-from django.test import TestCase, SimpleTestCase
-from rest_framework.test import APITestCase
-from rest_framework import status
-from game.models import Game, Player
-from users.models import User
 from django.urls import reverse
-from celery.contrib.testing.worker import start_worker
-from jyll.celery import app
-from game.tasks import start_game
+from django.test import TestCase
+from rest_framework import status
+from rest_framework.test import APITestCase
+
+from users.models import User
+from game.models import Game, Player
 
 
 class TestGameManager(TestCase):
@@ -160,32 +158,3 @@ class GameApiTests(APITestCase):
         self.client.force_authenticate(user=external_user)
         response = self.client.get(url)
         self.assertEqual(response.status_code, status.HTTP_403_FORBIDDEN)
-
-
-# cf. https://stackoverflow.com/questions/46530784/make-django-test-case-database-visible-to-celery
-class CeleryTasksTests(SimpleTestCase):
-    allow_database_queries = True
-
-    @classmethod
-    def setUpClass(cls):
-        super().setUpClass()
-
-        # import the ping task, because the start worker function needs it
-        app.loader.import_module("celery.contrib.testing.tasks")
-        # Start up celery worker
-        cls.celery_worker = start_worker(app)
-        cls.celery_worker.__enter__()
-
-    @classmethod
-    def tearDownClass(cls):
-        super().tearDownClass()
-
-        # Close worker
-        cls.celery_worker.__exit__(None, None, None)
-
-    def test_start_game_task(self):
-        user = User.objects.create_user(username="Paul", password="Atreides")
-        game = Game.objects.create(creator=user, name="Arrakis", password=None)
-        # start the game, and wait for the setup to finish
-        start_game.delay(game.id).get()
-        self.assertFalse(Game.objects.get(name="Arrakis").is_pending)

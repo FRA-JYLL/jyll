@@ -13,6 +13,7 @@ class ProductionTests(TestCase):
         cls.production = game.players.first().production
 
     def test_income(self):
+        # TODO: also test science income
         initial_money = ProductionTests.production.player.resources.money
         initial_hydrocarbon = ProductionTests.production.player.resources.hydrocarbon
         [money_prod, hydrocarbon_prod, hydrocarbon_consumption] = (

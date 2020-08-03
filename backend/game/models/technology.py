@@ -152,7 +152,7 @@ class Technology(BaseModel):
         """Update buildings according to current tech level effect."""
         buildings_to_update = self._get_updated_buildings(self.current_level)
         for building_data in buildings_to_update:
-            building = self.domain.player.buildings.get(
+            building = self.domain.player.buildings.select_subclasses().get(
                 class_idx=building_data["class_idx"]
             )
             building.update(building_data)

@@ -11,8 +11,9 @@ from game.serializers import (
     TechnologySerializer,
     TechnologyDomainSerializer,
     BuildingSerializer,
+    PlayerTurnSerializer,
 )
-from game.tasks import start_game
+from game.tasks import start_game, run_player_turn
 from rest_framework.exceptions import PermissionDenied
 
 
@@ -78,3 +79,26 @@ class PlayerViewSet(
                 buildings=buildings,
             )
         )
+
+    @action(detail=True, methods=["post"])
+    def turn(self, request, *args, **kwargs):
+        """Endpoint to post the player turn"""
+        # query the player
+        player = self.get_object()
+
+        # check that the requesting user controls the queried player
+        if player.game.players.filter(user=request.user).first() is None:
+            raise PermissionDenied(detail="You do not control this player")
+
+        serializer = PlayerTurnSerializer(
+            data=request.data, context={"player_id": player.id}
+        )
+        serializer.is_valid(raise_exception=True)
+
+        # doesn't work
+        # headers = self.get_success_headers(serializer.validated_data)
+
+        # Run the player turn asynchronously, and launch end turn if all players have posted their turn
+        run_player_turn.delay(player.id, serializer.validated_data)
+
+        return Response(status=status.HTTP_200_OK)
