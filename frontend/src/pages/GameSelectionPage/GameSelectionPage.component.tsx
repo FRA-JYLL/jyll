@@ -17,6 +17,7 @@ const GameSelectionPage = ({
   getGamesWithUser,
   joinGame,
   enterGame,
+  leaveGame,
 }: Props) => {
   const { t } = useTranslation();
 
@@ -63,6 +64,10 @@ const GameSelectionPage = ({
     enterGame(selectedGameId);
   };
 
+  const leaveSelectedGame = () => {
+    leaveGame(selectedGameId);
+  };
+
   const renderGameInfo = (game?: LobbyGame) => {
     const alreadyJoined = game && gamesWithUserIds.includes(game.id);
     return (
@@ -84,8 +89,13 @@ const GameSelectionPage = ({
                   : joinSelectedGameWithoutPassword
               }
             >
-              {t('pages.gameSelection.join')}
+              {alreadyJoined ? t('pages.gameSelection.open') : t('pages.gameSelection.join')}
             </MonitorButton>
+            {alreadyJoined && (
+              <MonitorButton onClick={leaveSelectedGame}>
+                {t('pages.gameSelection.leave')}
+              </MonitorButton>
+            )}
           </div>
         </>
       )

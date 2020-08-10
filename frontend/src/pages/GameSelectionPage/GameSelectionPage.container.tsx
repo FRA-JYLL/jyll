@@ -8,6 +8,7 @@ import {
   getGamesWithUserActionCreator,
   enterGameActionCreator,
   lobbyGamesSelector,
+  leaveGameActionCreator,
 } from 'redux/lobby';
 import { RootState } from 'redux/root';
 import GameSelectionPage from './GameSelectionPage.component';
@@ -27,6 +28,7 @@ const mapDispatchToProps = {
   getGamesWithUser: getGamesWithUserActionCreator,
   joinGame: joinGameActionCreator,
   enterGame: enterGameActionCreator,
+  leaveGame: leaveGameActionCreator,
 };
 
 export type Props = ReturnType<typeof mapStateToProps> & typeof mapDispatchToProps;
