@@ -4,6 +4,7 @@ import { CSSTransition } from 'react-transition-group';
 import './GamePage.scss';
 import { Props } from './GamePage.container';
 import { Monitor } from 'components/monitor';
+import { MonitorButton } from 'components/buttons/MonitorButton';
 
 interface ComponentProps extends Props {
   transitionIn: boolean;
@@ -12,6 +13,8 @@ interface ComponentProps extends Props {
 
 const GamePage = ({ transitionIn, transitionOnExited }: ComponentProps) => {
   const { t } = useTranslation();
+
+  const endTurn = () => {};
 
   return (
     <div className="game-container">
@@ -75,7 +78,9 @@ const GamePage = ({ transitionIn, transitionOnExited }: ComponentProps) => {
         unmountOnExit
       >
         <div className="end-container">
-          <Monitor className="end-button">end</Monitor>
+          <Monitor className="end-button">
+            <MonitorButton onClick={endTurn}>{t('game.ui.endTurn')}</MonitorButton>
+          </Monitor>
         </div>
       </CSSTransition>
 
