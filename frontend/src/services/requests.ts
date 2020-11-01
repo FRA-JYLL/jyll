@@ -221,7 +221,7 @@ export const endTurnRequest = async (
   if (!response.ok) throw response.status;
 };
 
-export const beginTurnRequest = async (
+export const getFullPlayerRequest = async (
   accessToken: string,
   id: string
 ): Promise<BackendFullPlayer> => {

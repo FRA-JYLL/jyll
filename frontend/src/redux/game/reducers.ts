@@ -7,7 +7,7 @@ import {
   GameState,
   EndTurnData,
   BackendEndTurnData,
-  BEGIN_TURN_SUCCESS,
+  GET_FULL_PLAYER_SUCCESS,
   FullPlayer,
   BackendFullPlayer,
 } from './types';
@@ -80,7 +80,7 @@ export const gameReducer = (
   action: GameActions
 ): GameState => {
   switch (action.type) {
-    case BEGIN_TURN_SUCCESS:
+    case GET_FULL_PLAYER_SUCCESS:
       const fullPlayer = action.payload.fullPlayer;
       return {
         ...state,

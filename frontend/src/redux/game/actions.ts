@@ -1,4 +1,9 @@
-import { BeginTurnRequest, BEGIN_TURN_REQUEST, EndTurnRequest, END_TURN_REQUEST } from './types';
+import {
+  GetFullPlayerRequest,
+  GET_FULL_PLAYER_REQUEST,
+  EndTurnRequest,
+  END_TURN_REQUEST,
+} from './types';
 
 export const endTurnActionCreator = (): EndTurnRequest => {
   return {
@@ -6,11 +11,11 @@ export const endTurnActionCreator = (): EndTurnRequest => {
   };
 };
 
-export const beginTurnActionCreator = (): BeginTurnRequest => {
+export const getFullPlayerActionCreator = (): GetFullPlayerRequest => {
   return {
-    type: BEGIN_TURN_REQUEST,
+    type: GET_FULL_PLAYER_REQUEST,
   };
 };
 
 export type EndTurnActionCreator = typeof endTurnActionCreator;
-export type BeginTurnActionCreator = typeof beginTurnActionCreator;
+export type GetFullPlayerActionCreator = typeof getFullPlayerActionCreator;

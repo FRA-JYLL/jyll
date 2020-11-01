@@ -1,5 +1,5 @@
-export { endTurnActionCreator, beginTurnActionCreator } from './actions';
-export type { EndTurnActionCreator, BeginTurnActionCreator } from './actions';
+export { endTurnActionCreator, getFullPlayerActionCreator } from './actions';
+export type { EndTurnActionCreator, GetFullPlayerActionCreator } from './actions';
 export { gameReducer } from './reducers';
 export { endTurnDataSelector, fullPlayerSelector } from './selectors';
 export type {
@@ -7,8 +7,8 @@ export type {
   GameActions,
   GameState,
   EndTurnRequest,
-  BeginTurnRequest,
-  BeginTurnSuccess,
+  GetFullPlayerRequest,
+  GetFullPlayerSuccess,
 } from './types';
-export { END_TURN_REQUEST, BEGIN_TURN_REQUEST, BEGIN_TURN_SUCCESS } from './types';
+export { END_TURN_REQUEST, GET_FULL_PLAYER_REQUEST, GET_FULL_PLAYER_SUCCESS } from './types';
 export { watchGame } from './sagas';
