@@ -51,6 +51,11 @@ export default {
       },
     },
   },
+  game: {
+    ui: {
+      endTurn: 'END TURN',
+    },
+  },
   toast: {
     signupError: 'Error: this username is already taken',
     loginError: 'Error: invalid username or password',
