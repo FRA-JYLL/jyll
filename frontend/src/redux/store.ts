@@ -5,6 +5,7 @@ import { rootReducer } from './root';
 import { watchAuthentication } from './authentication';
 import { watchToast } from './toast';
 import { watchLobby } from './lobby';
+import { watchGame } from './game';
 
 const sagaMiddleware = createSagaMiddleware();
 
@@ -19,7 +20,7 @@ const store = createStoreWithMiddleware(
 );
 
 function* watchAll() {
-  yield all([watchAuthentication(), watchToast(), watchLobby()]);
+  yield all([watchAuthentication(), watchToast(), watchLobby(), watchGame()]);
 }
 
 sagaMiddleware.run(watchAll);
