@@ -1,5 +1,5 @@
 import { BackendLobbyPlayer, BackendLobbyGame } from 'redux/lobby/types';
-import { BackendEndTurnData } from 'redux/game/types';
+import { BackendEndTurnData, BackendFullPlayer } from 'redux/game/types';
 
 const apiBaseUrl = process.env.REACT_APP_API_BASE_URL || '';
 
@@ -219,4 +219,22 @@ export const endTurnRequest = async (
   });
 
   if (!response.ok) throw response.status;
+};
+
+export const beginTurnRequest = async (
+  accessToken: string,
+  id: string
+): Promise<BackendFullPlayer> => {
+  const response = await fetch(`${apiBaseUrl}/player/${id}/turn/`, {
+    method: 'GET',
+    headers: {
+      Authorization: `Bearer ${accessToken}`,
+    },
+  });
+
+  if (!response.ok) throw response.status;
+
+  const payload = await response.json();
+
+  return payload;
 };
