@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { CreateGameModal, JoinGameModal } from 'components/modals';
 import './GameSelectionPage.scss';
@@ -21,13 +21,20 @@ const GameSelectionPage = ({
 }: Props) => {
   const { t } = useTranslation();
 
+  const refreshPeriod = 2000;
+  const [timer, setTimer] = useState(0);
+  useEffect(() => {
+    const setTimeoutId = setTimeout(() => setTimer(timer + 1), refreshPeriod);
+    return () => clearTimeout(setTimeoutId);
+  }, [timer]);
+
   useEffect(() => {
     getPendingGames();
-  }, [getPendingGames]);
+  }, [getPendingGames, timer]);
 
   useEffect(() => {
     getGamesWithUser();
-  }, [getGamesWithUser]);
+  }, [getGamesWithUser, timer]);
 
   const [selectedGameId, setSelectedGameId] = React.useState('');
 
