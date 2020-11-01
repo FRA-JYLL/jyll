@@ -11,10 +11,8 @@ interface ComponentProps extends Props {
   transitionOnExited: () => void;
 }
 
-const GamePage = ({ transitionIn, transitionOnExited }: ComponentProps) => {
+const GamePage = ({ transitionIn, transitionOnExited, endTurn }: ComponentProps) => {
   const { t } = useTranslation();
-
-  const endTurn = () => {};
 
   return (
     <div className="game-container">
