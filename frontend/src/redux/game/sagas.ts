@@ -1,12 +1,12 @@
-import { takeEvery, call, select } from 'redux-saga/effects';
+import { takeEvery, call, select, put } from 'redux-saga/effects';
 import { SagaIterator } from 'redux-saga';
-import { EndTurnRequest, END_TURN_REQUEST } from './types';
-import { endTurnRequest } from 'services/requests';
+import { END_TURN_REQUEST, BEGIN_TURN_REQUEST, BEGIN_TURN_SUCCESS } from './types';
+import { beginTurnRequest, endTurnRequest } from 'services/requests';
 import { sendAuthenticatedRequest } from 'redux/authentication';
 import { endTurnDataSelector, fullPlayerSelector } from './selectors';
 import { backendEndTurnDataFormatter } from './reducers';
 
-function* endTurnRequestSaga(action: EndTurnRequest): SagaIterator {
+function* endTurnRequestSaga(): SagaIterator {
   const fullPlayer = yield select(fullPlayerSelector);
   const endTurnData = yield select(endTurnDataSelector);
   if (fullPlayer)
@@ -22,6 +22,19 @@ function* endTurnRequestSaga(action: EndTurnRequest): SagaIterator {
     }
 }
 
+function* beginTurnRequestSaga(): SagaIterator {
+  const fullPlayer = yield select(fullPlayerSelector);
+  if (fullPlayer)
+    try {
+      const newFullPlayer = yield call(sendAuthenticatedRequest, beginTurnRequest, fullPlayer.id);
+
+      yield put({ type: BEGIN_TURN_SUCCESS, payload: { fullPlayer: newFullPlayer } });
+    } catch (error) {
+      if (!Number.isInteger(error)) throw error;
+    }
+}
+
 export function* watchGame() {
   yield takeEvery(END_TURN_REQUEST, endTurnRequestSaga);
+  yield takeEvery(BEGIN_TURN_REQUEST, beginTurnRequestSaga);
 }
