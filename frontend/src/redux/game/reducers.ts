@@ -7,6 +7,9 @@ import {
   GameState,
   EndTurnData,
   BackendEndTurnData,
+  BEGIN_TURN_SUCCESS,
+  FullPlayer,
+  BackendFullPlayer,
 } from './types';
 
 const initialLobbyState: GameState = {
@@ -14,17 +17,25 @@ const initialLobbyState: GameState = {
     buildingActions: [],
     scienceFocuses: [],
   },
+  fullPlayer: undefined,
 };
 
-const backendBuildingActionFormatter = (buildingAction: BuildingAction): BackendBuildingAction => ({
-  class_id: buildingAction.classId,
-  action: buildingAction.action,
-  copies: buildingAction.copies,
+const backendBuildingActionFormatter = ({
+  classId,
+  action,
+  copies,
+}: BuildingAction): BackendBuildingAction => ({
+  class_id: classId,
+  action,
+  copies,
 });
 
-const backendScienceFocusFormatter = (scienceFocus: ScienceFocus): BackendScienceFocus => ({
-  building_copy_index: scienceFocus.buildingCopyIndex,
-  domain_index: scienceFocus.domainIndex,
+const backendScienceFocusFormatter = ({
+  buildingCopyIndex,
+  domainIndex,
+}: ScienceFocus): BackendScienceFocus => ({
+  building_copy_index: buildingCopyIndex,
+  domain_index: domainIndex,
 });
 
 export const backendEndTurnDataFormatter = (endTurnData: EndTurnData): BackendEndTurnData => ({
@@ -36,9 +47,46 @@ export const backendEndTurnDataFormatter = (endTurnData: EndTurnData): BackendEn
   ),
 });
 
+const fullPlayerFormatter = ({
+  id,
+  username,
+  is_admin,
+  user,
+  game,
+  is_ready,
+  production,
+  ratings,
+  resources,
+  domains,
+  technologies,
+  buildings,
+}: BackendFullPlayer): FullPlayer => ({
+  id,
+  username,
+  isAdmin: is_admin,
+  userId: user,
+  gameId: game,
+  isReady: is_ready,
+  production,
+  ratings,
+  resources,
+  domains,
+  technologies,
+  buildings,
+});
+
 export const gameReducer = (
   state: GameState = initialLobbyState,
   action: GameActions
 ): GameState => {
-  return state;
+  switch (action.type) {
+    case BEGIN_TURN_SUCCESS:
+      const fullPlayer = action.payload.fullPlayer;
+      return {
+        ...state,
+        fullPlayer: fullPlayerFormatter(fullPlayer),
+      };
+    default:
+      return state;
+  }
 };

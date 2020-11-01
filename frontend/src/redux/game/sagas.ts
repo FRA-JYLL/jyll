@@ -3,19 +3,18 @@ import { SagaIterator } from 'redux-saga';
 import { EndTurnRequest, END_TURN_REQUEST } from './types';
 import { endTurnRequest } from 'services/requests';
 import { sendAuthenticatedRequest } from 'redux/authentication';
-import { userPlayerSelector } from 'redux/lobby';
-import { endTurnDataSelector } from './selectors';
+import { endTurnDataSelector, fullPlayerSelector } from './selectors';
 import { backendEndTurnDataFormatter } from './reducers';
 
 function* endTurnRequestSaga(action: EndTurnRequest): SagaIterator {
-  const userPlayer = yield select(userPlayerSelector);
+  const fullPlayer = yield select(fullPlayerSelector);
   const endTurnData = yield select(endTurnDataSelector);
-  if (userPlayer)
+  if (fullPlayer)
     try {
       yield call(
         sendAuthenticatedRequest,
         endTurnRequest,
-        userPlayer.id,
+        fullPlayer.id,
         backendEndTurnDataFormatter(endTurnData)
       );
     } catch (error) {

@@ -1,6 +1,8 @@
 import { BackendLobbyPlayer, LobbyPlayer } from 'redux/lobby/types';
 
 export const END_TURN_REQUEST = 'END_TURN_REQUEST';
+export const BEGIN_TURN_REQUEST = 'BEGIN_TURN_REQUEST';
+export const BEGIN_TURN_SUCCESS = 'BEGIN_TURN_SUCCESS';
 
 export type BuildingAction = {
   classId: string;
@@ -58,8 +60,18 @@ export interface EndTurnRequest {
   type: typeof END_TURN_REQUEST;
 }
 
-export type GameActions = any;
+export interface BeginTurnRequest {
+  type: typeof BEGIN_TURN_REQUEST;
+}
+
+export interface BeginTurnSuccess {
+  type: typeof BEGIN_TURN_SUCCESS;
+  payload: { fullPlayer: BackendFullPlayer };
+}
+
+export type GameActions = BeginTurnSuccess;
 
 export interface GameState {
   endTurnData: EndTurnData;
+  fullPlayer?: FullPlayer;
 }
