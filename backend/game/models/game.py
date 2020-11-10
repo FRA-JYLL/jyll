@@ -76,3 +76,7 @@ class Game(models.Model):
         """Run 'end of generation phases'. ATM there is only the income phase."""
         self.income_phase()
         self.generation += 1
+        self.save()
+        for player in self.players.all():
+            player.is_ready = False
+            player.save()
