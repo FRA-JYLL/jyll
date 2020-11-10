@@ -18,10 +18,10 @@ class TechnologyTests(TestCase):
         player = Player.objects.first()
         accessible_techs = player.technologies.select_subclasses()
 
-        starter_tech = accessible_techs.get(class_idx=0)
+        starter_tech = accessible_techs.get(class_index=0)
         self.assertEqual(starter_tech.current_level, 1)
 
-        other_techs = accessible_techs.exclude(class_idx=0)
+        other_techs = accessible_techs.exclude(class_index=0)
         # check that other_techs is not empty (there are currently 2)
         self.assertEqual(other_techs.count(), 2)
 
@@ -29,17 +29,19 @@ class TechnologyTests(TestCase):
             self.assertEqual(tech.current_level, 0)
 
         tech_domains = player.domains.all()
-        starter_domain = tech_domains.get(domain_idx=0)
-        self.assertIsNone(starter_domain.next_technology_class_idx)
+        starter_domain = tech_domains.get(domain_index=0)
+        self.assertIsNone(starter_domain.next_technology_class_index)
 
-        other_domains = tech_domains.exclude(domain_idx=0)
+        other_domains = tech_domains.exclude(domain_index=0)
         # check that other_domains is not empty (there are currently 2)
         self.assertEqual(other_domains.count(), 2)
         for domain in other_domains:
-            self.assertIsNotNone(domain.next_technology_class_idx)
+            self.assertIsNotNone(domain.next_technology_class_index)
 
     def test_develop(self):
         """Check if the develop methods behave as we want to."""
-        tech = Player.objects.first().technologies.select_subclasses().get(class_idx=1)
+        tech = (
+            Player.objects.first().technologies.select_subclasses().get(class_index=1)
+        )
         tech.develop()
         self.assertEqual(tech.current_level, 1)

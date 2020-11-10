@@ -20,15 +20,15 @@ class TechnologyDomainManager(models.Manager):
 
     def initialize_technology_tree(self, player):
         """Create all TechnologyDomain instances linked to player, and all starting technologies"""
-        for domain_idx in self.data:
-            super().create(player=player, domain_idx=int(domain_idx))
+        for domain_index in self.data:
+            super().create(player=player, domain_index=int(domain_index))
 
-        for domain_idx in self.data:
+        for domain_index in self.data:
             # create the starting technology if there is one
-            starter_technology = self.data[domain_idx].get("starting_technology")
+            starter_technology = self.data[domain_index].get("starting_technology")
             if starter_technology is not None:
                 new_technology = Technology.objects.create_technology(
-                    player=player, class_idx=starter_technology
+                    player=player, class_index=starter_technology
                 )
                 new_technology.develop()
 
@@ -41,8 +41,8 @@ class TechnologyDomain(models.Model):
     player = models.ForeignKey(
         "Player", on_delete=models.CASCADE, related_name="domains"
     )
-    domain_idx = models.IntegerField()
-    next_technology_class_idx = models.IntegerField(
+    domain_index = models.IntegerField()
+    next_technology_class_index = models.IntegerField(
         blank=True, null=True
     )  # ForeignKey with Technology ??
     science_points = models.FloatField(default=0)
@@ -53,7 +53,7 @@ class TechnologyDomain(models.Model):
         # each domain should be unique for each player
         constraints = [
             models.UniqueConstraint(
-                fields=["player", "domain_idx"], name="domain_unique"
+                fields=["player", "domain_index"], name="domain_unique"
             )
         ]
 
@@ -67,20 +67,20 @@ class TechnologyDomain(models.Model):
         ]
         if len(accessible_techs) > 0:
             next_tech = accessible_techs[randint(len(accessible_techs))]
-            self.next_technology_class_idx = next_tech.class_idx
+            self.next_technology_class_index = next_tech.class_index
         else:
             # all accessible techs in this domain have already been developed
-            self.next_technology_class_idx = None
+            self.next_technology_class_index = None
         self.save()
 
     def _develop_technologies(self):
         """Unlock as many techs as science points amount allows."""
         # Nothing to do if there are no techs to develop
-        if self.next_technology_class_idx is None:
+        if self.next_technology_class_index is None:
             return
 
         next_technology = self.technologies.get(
-            class_idx=self.next_technology_class_idx
+            class_index=self.next_technology_class_index
         )
         # Check if the we have enough science point to develop the next tech
         if self.science_points < next_technology.next_level_cost:
@@ -102,4 +102,4 @@ class TechnologyDomain(models.Model):
         self._develop_technologies()
 
     def __str__(self):
-        return self.player.user.username + str(self.domain_idx)
+        return self.player.user.username + str(self.domain_index)

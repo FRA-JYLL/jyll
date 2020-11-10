@@ -28,7 +28,7 @@ class BuildingTests(TestCase):
     def test_build(self):
         """Check if the build method behave as expected."""
         player = Player.objects.first()
-        building = player.buildings.select_subclasses().get(class_idx=0)
+        building = player.buildings.select_subclasses().get(class_index=0)
         copies = building.copies
         building.build()
         self.assertEqual(building.copies, copies + 1)

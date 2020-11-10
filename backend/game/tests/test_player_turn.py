@@ -20,11 +20,11 @@ class PlayerTurnTests(APITestCase):
         science_building_id = player.science_buildings.first().id
         cls.data = {
             "building_actions": [
-                {"class_idx": 0, "type": "build"},
-                {"class_idx": 1, "type": "build"},
+                {"class_index": 0, "type": "BUILD"},
+                {"class_index": 1, "type": "BUILD"},
             ],
             "science_focuses": [
-                {"building_copy_id": science_building_id, "domain_idx": 1}
+                {"building_copy_id": science_building_id, "domain_index": 1}
             ],
         }
 

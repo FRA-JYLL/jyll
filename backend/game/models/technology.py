@@ -25,23 +25,23 @@ class TechnologyManager(InheritanceManager):
     def data(self):
         return self._data
 
-    def create_technology(self, player, class_idx):
+    def create_technology(self, player, class_index):
         """Create a technology instance for player.
 
         Args:
             player: Player instance, to which link the new building instance.
-            class_idx: int, id of the technology class to instantiate.
+            class_index: int, id of the technology class to instantiate.
 
         Return:
             new_technology: the newly created Technology instance.
         """
-        class_name = self.mapping[str(class_idx)]
-        data = self.data[str(class_idx)]
-        related_domain = player.domains.get(domain_idx=data["domain_idx"])
+        class_name = self.mapping[str(class_index)]
+        data = self.data[str(class_index)]
+        related_domain = player.domains.get(domain_index=data["domain_index"])
 
         # create the technology instance with the corresponding subclass
         new_technology = getattr(sys.modules[__name__], class_name).objects.create(
-            class_idx=class_idx, domain=related_domain,
+            class_index=class_index, domain=related_domain,
         )
 
         # create related cost instances
@@ -77,7 +77,7 @@ class Technology(BaseModel):
     domain = models.ForeignKey(
         "TechnologyDomain", on_delete=models.CASCADE, related_name="technologies"
     )
-    class_idx = models.IntegerField(editable=False)  # editable=False ?
+    class_index = models.IntegerField(editable=False)  # editable=False ?
     current_level = models.IntegerField(default=0)
 
     objects = TechnologyManager()
@@ -87,7 +87,7 @@ class Technology(BaseModel):
     #     # each technology class should be unique for each player
     #     constraints = [
     #         models.UniqueConstraint(
-    #             fields=["domain__player", "class_idx"], name="technology_unique"
+    #             fields=["domain__player", "class_index"], name="technology_unique"
     #         )
     #     ]
 
@@ -99,7 +99,7 @@ class Technology(BaseModel):
     @property
     def data(self):
         """Return the static data of the technology."""
-        return Technology.objects.data[str(self.class_idx)]
+        return Technology.objects.data[str(self.class_index)]
 
     @property
     def max_level(self):
@@ -136,24 +136,26 @@ class Technology(BaseModel):
 
     def _unlock_children(self):
         """Create the child_technologies instances if they don't exist yet."""
-        for idx in self.child_technologies_indices:
-            if Technology.objects.filter(class_idx=idx).count() == 0:
+        for index in self.child_technologies_indices:
+            if Technology.objects.filter(class_index=index).count() == 0:
                 Technology.objects.create_technology(
-                    player=self.domain.player, class_idx=idx
+                    player=self.domain.player, class_index=index
                 )
 
     def _unlock_buildings(self):
         """Create new Building instances according to current tech level effect."""
         new_buildings = self._get_new_buildings(level=self.current_level)
-        for building_idx in new_buildings:
-            Building.objects.unlock_building(player=self.player, class_idx=building_idx)
+        for building_index in new_buildings:
+            Building.objects.unlock_building(
+                player=self.player, class_index=building_index
+            )
 
     def _update_buildings(self):
         """Update buildings according to current tech level effect."""
         buildings_to_update = self._get_updated_buildings(self.current_level)
         for building_data in buildings_to_update:
             building = self.domain.player.buildings.select_subclasses().get(
-                class_idx=building_data["class_idx"]
+                class_index=building_data["class_index"]
             )
             building.update(building_data)
 

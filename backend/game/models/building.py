@@ -25,23 +25,23 @@ class BuildingManager(InheritanceManager):
     def mapping(self):
         return self._mapping
 
-    def unlock_building(self, player, class_idx):
+    def unlock_building(self, player, class_index):
         """Create a building instance for player.
 
         Args:
             player: Player instance, to which link the new building instance.
-            class_idx: int, id of the building class to instantiate.
+            class_index: int, id of the building class to instantiate.
 
         Return:
             new_building: the newly created Building instance.
         """
-        building_data = self.data[str(class_idx)]
-        class_name = self.mapping[str(class_idx)]
+        building_data = self.data[str(class_index)]
+        class_name = self.mapping[str(class_index)]
 
         # create the building instance with the corresponding subclass (we do not use copies)
         new_building = getattr(sys.modules[__name__], class_name).objects.create(
             player=player,
-            class_idx=class_idx,
+            class_index=class_index,
             cost=building_data["cost"],
             **building_data.get("other_fields", {}),
         )
@@ -69,7 +69,7 @@ class Building(BaseModel):
     player = models.ForeignKey(
         "Player", on_delete=models.CASCADE, related_name="buildings"
     )
-    class_idx = models.IntegerField()
+    class_index = models.IntegerField()
     cost = models.FloatField()
     quantity_cap = models.IntegerField(default=0)
     copies = models.IntegerField(default=0)
@@ -80,7 +80,7 @@ class Building(BaseModel):
         # each building class should be unique for each player
         constraints = [
             models.UniqueConstraint(
-                fields=["player", "class_idx"], name="building_unique"
+                fields=["player", "class_index"], name="building_unique"
             )
         ]
 
@@ -123,7 +123,7 @@ class Building(BaseModel):
         self.save()
 
     def __str__(self):
-        return Building.objects.mapping[str(self.class_idx)]
+        return Building.objects.mapping[str(self.class_index)]
 
 
 class BuildingCopy(models.Model):
@@ -152,7 +152,7 @@ class ScienceBuildingCopy(BuildingCopy):
         """Focus on a new domain"""
         self.domain_focus = domain
         self.save()
-        if domain.next_technology_class_idx is None:
+        if domain.next_technology_class_index is None:
             domain.select_next_technology()
 
 

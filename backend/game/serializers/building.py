@@ -10,7 +10,7 @@ class BuildingSerializer(serializers.ModelSerializer):
     class Meta:
         model = Building
         fields = [
-            "class_idx",
+            "class_index",
             "quantity_cap",
             "cost",
             "copies",
@@ -20,7 +20,7 @@ class BuildingSerializer(serializers.ModelSerializer):
         ]
         depth = 1
         read_only_fields = [
-            "class_idx",
+            "class_index",
             "quantity_cap",
             "cost",
             "copies",
@@ -39,7 +39,7 @@ class BuildingSerializer(serializers.ModelSerializer):
         res = {}
         for index, copy in enumerate(sub_building.individual_copies.all()):
             if copy.domain_focus is not None:
-                res[index] = copy.domain_focus.domain_idx
+                res[index] = copy.domain_focus.domain_index
             else:
                 res[index] = None
 

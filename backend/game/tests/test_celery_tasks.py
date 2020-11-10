@@ -42,11 +42,11 @@ class CeleryTasksTests(SimpleTestCase):
         science_building_id = player.science_buildings.first().id
         cls.data = {
             "building_actions": [
-                {"class_idx": 0, "type": "build"},
-                {"class_idx": 1, "type": "build"},
+                {"class_index": 0, "type": "BUILD"},
+                {"class_index": 1, "type": "BUILD"},
             ],
             "science_focuses": [
-                {"building_copy_id": science_building_id, "domain_idx": 1}
+                {"building_copy_id": science_building_id, "domain_index": 1}
             ],
         }
 
@@ -60,8 +60,8 @@ class CeleryTasksTests(SimpleTestCase):
         self.assertIsNone(player.science_buildings.first().domain_focus)
 
         initial_copies = (
-            player.buildings.get(class_idx=0).copies,
-            player.buildings.get(class_idx=1).copies,
+            player.buildings.get(class_index=0).copies,
+            player.buildings.get(class_index=1).copies,
         )
 
         serializer = PlayerTurnSerializer(
@@ -74,11 +74,11 @@ class CeleryTasksTests(SimpleTestCase):
         # check that buildings 0 and 1 were built
         self.assertEqual(
             (
-                player.buildings.get(class_idx=0).copies,
-                player.buildings.get(class_idx=1).copies,
+                player.buildings.get(class_index=0).copies,
+                player.buildings.get(class_index=1).copies,
             ),
             (initial_copies[0] + 1, initial_copies[1] + 1),
         )
 
         # check that focus is now on 1
-        self.assertEqual(player.science_buildings.first().domain_focus.domain_idx, 1)
+        self.assertEqual(player.science_buildings.first().domain_focus.domain_index, 1)

@@ -7,12 +7,12 @@ class BuildingActionSerializer(serializers.Serializer):
     """Building action serializer.
 
     Attr:
-        class_idx: index of the building sub-class
+        class_index: index of the building sub-class
         action: type of action (build or close the building)
         copies: number of this action is done
     """
 
-    class_idx = serializers.IntegerField()
+    class_index = serializers.IntegerField()
     type = serializers.ChoiceField(
         choices=[BuildingAction.build_action, BuildingAction.close_action],
         default=BuildingAction.build_action,
@@ -29,11 +29,11 @@ class ScienceFocusSerializer(serializers.Serializer):
 
     Attr:
         building_copy_id: id of the ScienceBuildingCopy
-        domain_idx: idx of the domain to focus on
+        domain_index: index of the domain to focus on
     """
 
     building_copy_id = serializers.IntegerField()
-    domain_idx = serializers.IntegerField()
+    domain_index = serializers.IntegerField()
 
 
 class PlayerTurnSerializer(serializers.Serializer):
@@ -53,11 +53,11 @@ class PlayerTurnSerializer(serializers.Serializer):
 
         # check building actions
         for action in data.get("building_actions", []):
-            class_idx = action["class_idx"]
+            class_index = action["class_index"]
             # check that this building already exists for this player
-            if player.buildings.filter(class_idx=class_idx).count() == 0:
+            if player.buildings.filter(class_index=class_index).count() == 0:
                 raise serializers.ValidationError(
-                    f"The building {class_idx} does not exist."
+                    f"The building {class_index} does not exist."
                 )
 
         # check science focuses
@@ -68,11 +68,11 @@ class PlayerTurnSerializer(serializers.Serializer):
                 raise serializers.ValidationError(
                     f"The building copy {building_copy_id} does not exist."
                 )
-            domain_idx = focus["domain_idx"]
+            domain_index = focus["domain_index"]
             # check that the domain exists
-            if player.domains.filter(domain_idx=domain_idx).count() == 0:
+            if player.domains.filter(domain_index=domain_index).count() == 0:
                 raise serializers.ValidationError(
-                    f"The domain {domain_idx} does not exist."
+                    f"The domain {domain_index} does not exist."
                 )
 
         return data

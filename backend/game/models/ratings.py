@@ -19,8 +19,8 @@ class PlayerRatings(BaseRatings):
     def score(self):
         return sum(
             [
-                ((idx + 1) * value)
-                for (idx, value) in enumerate(
+                ((index + 1) * value)
+                for (index, value) in enumerate(
                     sorted([self.economy, self.society, self.environment], reverse=True)
                 )
             ]

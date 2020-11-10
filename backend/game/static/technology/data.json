@@ -1,7 +1,7 @@
 {
   "0": {
-    "class_idx": 0,
-    "domain_idx": 0,
+    "class_index": 0,
+    "domain_index": 0,
     "level_costs": {
       "1": 0
     },
@@ -12,22 +12,22 @@
         "unlocked_buildings": [0, 1, 2, 3],
         "updated_buildings": [
           {
-            "class_idx": 0,
+            "class_index": 0,
             "quantity_cap": 5,
             "copies": 1
           },
           {
-            "class_idx": 1,
+            "class_index": 1,
             "quantity_cap": 5,
             "copies": 1
           },
           {
-            "class_idx": 2,
+            "class_index": 2,
             "quantity_cap": 5,
             "copies": 1
           },
           {
-            "class_idx": 3,
+            "class_index": 3,
             "quantity_cap": 5,
             "copies": 1
           }
@@ -36,8 +36,8 @@
     }
   },
   "1": {
-    "class_idx": 1,
-    "domain_idx": 1,
+    "class_index": 1,
+    "domain_index": 1,
     "level_costs": {
       "1": 2
     },
@@ -46,7 +46,7 @@
       "1": {
         "updated_buildings": [
           {
-            "class_idx": 2,
+            "class_index": 2,
             "quantity_cap": 5,
             "copies": 1
           }
@@ -55,8 +55,8 @@
     }
   },
   "2": {
-    "class_idx": 2,
-    "domain_idx": 2,
+    "class_index": 2,
+    "domain_index": 2,
     "level_costs": {
       "1": 2
     },
@@ -65,7 +65,7 @@
       "1": {
         "updated_buildings": [
           {
-            "class_idx": 2,
+            "class_index": 2,
             "quantity_cap": 5,
             "copies": 1
           }

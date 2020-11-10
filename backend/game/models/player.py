@@ -73,7 +73,7 @@ class Player(models.Model):
         """Run player turn."""
         # building actions
         for action in turn.building_actions:
-            building = self.buildings.get(class_idx=action.class_idx)
+            building = self.buildings.get(class_index=action.class_index)
             if action.type == BuildingAction.build_action:
                 for _ in range(action.copies):
                     building.build()
@@ -81,7 +81,7 @@ class Player(models.Model):
                 raise NotImplementedError()
         # science focuses
         for focus in turn.science_focuses:
-            new_domain_focus = self.domains.get(domain_idx=focus.domain_idx)
+            new_domain_focus = self.domains.get(domain_index=focus.domain_index)
             building = self.science_buildings.get(id=focus.building_copy_id)
             building.set_focus(new_domain_focus)
 
@@ -94,19 +94,19 @@ class Player(models.Model):
 
 
 class BuildingAction:
-    build_action = "build"
-    close_action = "close"
+    build_action = "BUILD"
+    close_action = "CLOSE"
 
-    def __init__(self, class_idx, type, copies):
-        self.class_idx = class_idx
+    def __init__(self, class_index, type, copies):
+        self.class_index = class_index
         self.type = type
         self.copies = copies
 
 
 class ScienceFocus:
-    def __init__(self, building_copy_id, domain_idx):
+    def __init__(self, building_copy_id, domain_index):
         self.building_copy_id = building_copy_id
-        self.domain_idx = domain_idx
+        self.domain_index = domain_index
 
 
 class PlayerTurn:
