@@ -1,10 +1,12 @@
 import { connect } from 'react-redux';
-import { endTurnActionCreator, getFullPlayerActionCreator } from 'redux/game';
+import { endTurnActionCreator, fullPlayerSelector, getFullPlayerActionCreator } from 'redux/game';
 import { RootState } from 'redux/root';
 import GamePage from './GamePage.component';
 
 const mapStateToProps = (state: RootState) => {
-  return {};
+  return {
+    fullPlayer: fullPlayerSelector(state),
+  };
 };
 
 const mapDispatchToProps = {

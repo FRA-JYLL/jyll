@@ -54,6 +54,7 @@ export default {
   game: {
     ui: {
       endTurn: 'END TURN',
+      waiting: 'WAIT...',
     },
   },
   toast: {

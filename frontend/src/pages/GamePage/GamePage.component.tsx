@@ -11,7 +11,13 @@ interface ComponentProps extends Props {
   transitionOnExited: () => void;
 }
 
-const GamePage = ({ transitionIn, transitionOnExited, endTurn, getFullPlayer }: ComponentProps) => {
+const GamePage = ({
+  transitionIn,
+  transitionOnExited,
+  endTurn,
+  getFullPlayer,
+  fullPlayer,
+}: ComponentProps) => {
   const { t } = useTranslation();
 
   const refreshPeriod = 2000;
@@ -88,7 +94,9 @@ const GamePage = ({ transitionIn, transitionOnExited, endTurn, getFullPlayer }: 
       >
         <div className="end-container">
           <Monitor className="end-button">
-            <MonitorButton onClick={endTurn}>{t('game.ui.endTurn')}</MonitorButton>
+            <MonitorButton onClick={endTurn} disabled={fullPlayer?.isReady}>
+              {fullPlayer?.isReady ? t('game.ui.waiting') : t('game.ui.endTurn')}
+            </MonitorButton>
           </Monitor>
         </div>
       </CSSTransition>
