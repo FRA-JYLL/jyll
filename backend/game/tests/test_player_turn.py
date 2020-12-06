@@ -45,7 +45,7 @@ class PlayerTurnTests(APITestCase):
         self.client.force_authenticate(user=PlayerTurnTests.user)
         player = PlayerTurnTests.game.players.first()
 
-        url = reverse("player-turn", args=[PlayerTurnTests.user.players.first().id])
+        url = reverse("game-my-turn", args=[PlayerTurnTests.game.id])
 
         serializer = PlayerTurnSerializer(
             data=PlayerTurnTests.data, context={"player_id": player.id}

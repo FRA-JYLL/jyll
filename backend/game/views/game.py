@@ -8,7 +8,9 @@ from game.serializers import (
     GameSerializer,
     PlayerSerializer,
     HydrocarbonSupplySerializer,
+    PlayerTurnSerializer,
 )
+from game.tasks import run_player_turn
 
 
 class GameViewSet(
@@ -146,3 +148,27 @@ class GameViewSet(
         # serialize the hydrocarbon supply and return it
         serializer = HydrocarbonSupplySerializer(game.hydrocarbon_supply)
         return Response(serializer.data)
+
+    @action(detail=True, methods=["post"])
+    def my_turn(self, request, *args, **kwargs):
+        """Endpoint to post the user's player turn in requested game"""
+        # retrieve the game
+        game = self.get_object()
+        # Check that user controls a player in the game
+        if game.players.filter(user=request.user).first() is None:
+            return Response(status=status.HTTP_400_BAD_REQUEST)
+        # retrieve the player
+        player = game.players.get(user=request.user)
+
+        serializer = PlayerTurnSerializer(
+            data=request.data, context={"player_id": player.id}
+        )
+        serializer.is_valid(raise_exception=True)
+
+        # doesn't work
+        # headers = self.get_success_headers(serializer.validated_data)
+
+        # Run the player turn asynchronously, and launch end turn if all players have posted their turn
+        run_player_turn.delay(player.id, serializer.validated_data)
+
+        return Response(status=status.HTTP_200_OK)
