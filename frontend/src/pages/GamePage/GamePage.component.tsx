@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { CSSTransition } from 'react-transition-group';
 import './GamePage.scss';
@@ -11,8 +11,19 @@ interface ComponentProps extends Props {
   transitionOnExited: () => void;
 }
 
-const GamePage = ({ transitionIn, transitionOnExited, endTurn }: ComponentProps) => {
+const GamePage = ({ transitionIn, transitionOnExited, endTurn, getFullPlayer }: ComponentProps) => {
   const { t } = useTranslation();
+
+  const refreshPeriod = 2000;
+  const [timer, setTimer] = useState(0);
+  useEffect(() => {
+    const setTimeoutId = setTimeout(() => setTimer(timer + 1), refreshPeriod);
+    return () => clearTimeout(setTimeoutId);
+  }, [timer]);
+
+  useEffect(() => {
+    getFullPlayer();
+  }, [getFullPlayer, timer]);
 
   return (
     <div className="game-container">

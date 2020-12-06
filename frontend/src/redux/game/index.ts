@@ -1,7 +1,7 @@
 export { endTurnActionCreator, getFullPlayerActionCreator } from './actions';
 export type { EndTurnActionCreator, GetFullPlayerActionCreator } from './actions';
 export { gameReducer } from './reducers';
-export { endTurnDataSelector, fullPlayerSelector } from './selectors';
+export { endTurnDataSelector, fullPlayerSelector, playerIdSelector } from './selectors';
 export type {
   EndTurnData,
   GameActions,

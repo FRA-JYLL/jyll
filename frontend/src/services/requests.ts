@@ -225,7 +225,7 @@ export const getFullPlayerRequest = async (
   accessToken: string,
   id: string
 ): Promise<BackendFullPlayer> => {
-  const response = await fetch(`${apiBaseUrl}/player/${id}/turn/`, {
+  const response = await fetch(`${apiBaseUrl}/player/${id}/full/`, {
     method: 'GET',
     headers: {
       Authorization: `Bearer ${accessToken}`,

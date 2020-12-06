@@ -3,7 +3,7 @@ import { SagaIterator } from 'redux-saga';
 import { END_TURN_REQUEST, GET_FULL_PLAYER_REQUEST, GET_FULL_PLAYER_SUCCESS } from './types';
 import { getFullPlayerRequest, endTurnRequest } from 'services/requests';
 import { sendAuthenticatedRequest } from 'redux/authentication';
-import { endTurnDataSelector, fullPlayerSelector } from './selectors';
+import { endTurnDataSelector, fullPlayerSelector, playerIdSelector } from './selectors';
 import { backendEndTurnDataFormatter } from './reducers';
 
 function* endTurnRequestSaga(): SagaIterator {
@@ -23,14 +23,10 @@ function* endTurnRequestSaga(): SagaIterator {
 }
 
 function* getFullPlayerRequestSaga(): SagaIterator {
-  const fullPlayer = yield select(fullPlayerSelector);
-  if (fullPlayer)
+  const playerId = yield select(playerIdSelector);
+  if (playerId)
     try {
-      const newFullPlayer = yield call(
-        sendAuthenticatedRequest,
-        getFullPlayerRequest,
-        fullPlayer.id
-      );
+      const newFullPlayer = yield call(sendAuthenticatedRequest, getFullPlayerRequest, playerId);
 
       yield put({ type: GET_FULL_PLAYER_SUCCESS, payload: { fullPlayer: newFullPlayer } });
     } catch (error) {
