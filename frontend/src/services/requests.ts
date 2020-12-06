@@ -209,7 +209,7 @@ export const endTurnRequest = async (
   id: string,
   endTurnData: BackendEndTurnData
 ) => {
-  const response = await fetch(`${apiBaseUrl}/player/${id}/turn/`, {
+  const response = await fetch(`${apiBaseUrl}/game/${id}/my_turn/`, {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
