@@ -37,10 +37,10 @@ class BuildingSerializer(serializers.ModelSerializer):
             return None
         # else
         res = {}
-        for index, copy in enumerate(sub_building.individual_copies.all()):
+        for copy in sub_building.individual_copies.all():
             if copy.domain_focus is not None:
-                res[index] = copy.domain_focus.domain_index
+                res[copy.id] = copy.domain_focus.domain_index
             else:
-                res[index] = None
+                res[copy.id] = None
 
         return res
