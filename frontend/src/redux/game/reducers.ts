@@ -10,6 +10,14 @@ import {
   GET_FULL_PLAYER_SUCCESS,
   FullPlayer,
   BackendFullPlayer,
+  BackendPlayerProduction,
+  BackendPlayerDomain,
+  PlayerDomain,
+  PlayerProduction,
+  BackendPlayerTechnology,
+  PlayerTechnology,
+  PlayerBuilding,
+  BackendPlayerBuilding,
 } from './types';
 
 const initialLobbyState: GameState = {
@@ -21,20 +29,20 @@ const initialLobbyState: GameState = {
 };
 
 const backendBuildingActionFormatter = ({
-  classId,
-  action,
+  classIndex,
+  type,
   copies,
 }: BuildingAction): BackendBuildingAction => ({
-  class_id: classId,
-  action,
+  class_index: classIndex,
+  type,
   copies,
 });
 
 const backendScienceFocusFormatter = ({
-  buildingCopyIndex,
+  buildingCopyId,
   domainIndex,
 }: ScienceFocus): BackendScienceFocus => ({
-  building_copy_index: buildingCopyIndex,
+  building_copy_id: buildingCopyId,
   domain_index: domainIndex,
 });
 
@@ -45,6 +53,83 @@ export const backendEndTurnDataFormatter = (endTurnData: EndTurnData): BackendEn
   science_focuses: endTurnData.scienceFocuses.map((scienceFocus: ScienceFocus) =>
     backendScienceFocusFormatter(scienceFocus)
   ),
+});
+
+const playerProductionFormatter = ({
+  money,
+  hydrocarbon,
+  hydrocarbon_consumption,
+  food,
+  electricity,
+  waste,
+  pollution,
+  science,
+}: BackendPlayerProduction): PlayerProduction => ({
+  money,
+  hydrocarbon,
+  hydrocarbonConsumption: hydrocarbon_consumption,
+  food,
+  electricity,
+  waste,
+  pollution,
+  science,
+});
+
+const playerDomainFormatter = ({
+  domain_index,
+  next_technology_class_index,
+  science_points,
+}: BackendPlayerDomain): PlayerDomain => ({
+  domainIndex: domain_index,
+  nextTechnologyClassIndex: next_technology_class_index,
+  sciencePoints: science_points,
+});
+
+const playerTechnologyFormatter = ({
+  class_index,
+  current_level,
+  domain,
+  level_costs,
+}: BackendPlayerTechnology): PlayerTechnology => ({
+  classIndex: class_index,
+  currentLevel: current_level,
+  domain: {
+    id: domain.id,
+    domainIndex: domain.domain_index,
+    nextTechnologyClassIndex: domain.next_technology_class_index,
+    sciencePoints: domain.science_points,
+    player: domain.player,
+  },
+  levelCosts: level_costs,
+});
+
+const playerBuildingFormatter = ({
+  class_index,
+  quantity_cap,
+  cost,
+  copies,
+  production,
+  ratings,
+  domains_focused_on,
+}: BackendPlayerBuilding): PlayerBuilding => ({
+  classIndex: class_index,
+  quantityCap: quantity_cap,
+  cost,
+  copies,
+  production: {
+    id: production.id,
+    money: production.money,
+    hydrocarbon: production.hydrocarbon,
+    hydrocarbonConsumption: production.hydrocarbon_consumption,
+    food: production.food,
+    electricity: production.electricity,
+    waste: production.waste,
+    pollution: production.pollution,
+    science: production.science,
+    building: production.building,
+  },
+  ratings,
+  domainsFocusedOn: domains_focused_on,
 });
 
 const fullPlayerFormatter = ({
@@ -67,12 +152,12 @@ const fullPlayerFormatter = ({
   userId: user,
   gameId: game,
   isReady: is_ready,
-  production,
+  production: playerProductionFormatter(production),
   ratings,
   resources,
-  domains,
-  technologies,
-  buildings,
+  domains: domains.map((domain) => playerDomainFormatter(domain)),
+  technologies: technologies.map((technology) => playerTechnologyFormatter(technology)),
+  buildings: buildings.map((building) => playerBuildingFormatter(building)),
 });
 
 export const gameReducer = (
