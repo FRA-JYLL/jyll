@@ -8,3 +8,13 @@
   line-height: spacing(2.5);
   width: 100%;
 }
+
+.monitor-button-disabled {
+  font-size: $big;
+  font-family: monospace;
+  color: $disabled-grey;
+  border-color: $disabled-grey;
+  background-color: $black;
+  line-height: spacing(2.5);
+  width: 100%;
+}

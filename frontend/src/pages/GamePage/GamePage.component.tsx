@@ -20,6 +20,7 @@ const GamePage = ({
   getFullPlayer,
   fullPlayer,
   endTurnData,
+  buildingsBalance,
   updateBuildingsBalance,
 }: ComponentProps) => {
   const { t } = useTranslation();
@@ -56,17 +57,27 @@ const GamePage = ({
     return (
       <div className="building-item-container">
         <p data-tip={formattedBuildingJSON}>
-          <MonitorButton className="building-picture" disabled data-tip={formattedBuildingJSON}>
+          <MonitorButton className="building-picture" data-tip={formattedBuildingJSON}>
             {building.classIndex}
           </MonitorButton>
         </p>
 
         <div className="building-modifiers-container">
-          <MonitorButton className="building-modifier-button" onClick={addOne}>
+          <MonitorButton
+            className="building-modifier-button"
+            onClick={addOne}
+            disabled={
+              building.copies + (buildingsBalance[building.classIndex] || 0) >= building.quantityCap
+            }
+          >
             +
           </MonitorButton>
 
-          <MonitorButton className="building-modifier-button" onClick={removeOne}>
+          <MonitorButton
+            className="building-modifier-button"
+            onClick={removeOne}
+            disabled={building.copies + (buildingsBalance[building.classIndex] || 0) <= 0}
+          >
             -
           </MonitorButton>
         </div>

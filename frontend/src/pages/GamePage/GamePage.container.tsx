@@ -1,5 +1,6 @@
 import { connect } from 'react-redux';
 import {
+  buildingsBalanceSelector,
   endTurnActionCreator,
   endTurnDataSelector,
   fullPlayerSelector,
@@ -13,6 +14,7 @@ const mapStateToProps = (state: RootState) => {
   return {
     fullPlayer: fullPlayerSelector(state),
     endTurnData: endTurnDataSelector(state),
+    buildingsBalance: buildingsBalanceSelector(state),
   };
 };
 

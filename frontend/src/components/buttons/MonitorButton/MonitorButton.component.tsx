@@ -15,7 +15,7 @@ export const MonitorButton = ({
   disabled?: boolean;
 }) => (
   <button
-    className={'monitor-button ' + className || ''}
+    className={(disabled ? 'monitor-button-disabled ' : 'monitor-button ') + className || ''}
     type={type}
     onClick={onClick}
     disabled={disabled}
