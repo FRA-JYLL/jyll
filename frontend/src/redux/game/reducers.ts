@@ -21,6 +21,7 @@ import {
   UPDATE_BUILDINGS_BALANCE,
   UPDATE_END_TURN_DATA,
   RESET_BUILDING_ACTIONS,
+  RESET_GAME_DATA,
 } from './types';
 
 const initialGameState: GameState = {
@@ -196,6 +197,8 @@ export const gameReducer = (
         ...state,
         endTurnData,
       };
+    case RESET_GAME_DATA:
+      return initialGameState;
     default:
       return state;
   }

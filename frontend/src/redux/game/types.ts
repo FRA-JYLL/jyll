@@ -6,6 +6,7 @@ export const GET_FULL_PLAYER_SUCCESS = 'GET_FULL_PLAYER_SUCCESS';
 export const UPDATE_BUILDINGS_BALANCE = 'UPDATE_BUILDINGS_BALANCE';
 export const RESET_BUILDING_ACTIONS = 'RESET_BUILDING_ACTIONS';
 export const UPDATE_END_TURN_DATA = 'UPDATE_END_TURN_DATA';
+export const RESET_GAME_DATA = 'RESET_GAME_DATA';
 
 export enum buildingActionTypes {
   'BUILD' = 'BUILD',
@@ -227,11 +228,16 @@ export interface UpdateEndTurnData {
   payload: { endTurnData: EndTurnData };
 }
 
+export interface ResetGameData {
+  type: typeof RESET_GAME_DATA;
+}
+
 export type GameActions =
   | GetFullPlayerSuccess
   | UpdateBuildingsBalance
   | ResetBuildingActions
-  | UpdateEndTurnData;
+  | UpdateEndTurnData
+  | ResetGameData;
 
 export interface BuildingsBalance {
   [key: string]: number;

@@ -4,6 +4,7 @@ export {
   updateBuildingsBalanceActionCreator,
   resetBuildingActionsActionCreator,
   updateEndTurnDataActionCreator,
+  resetGameDataActionCreator,
 } from './actions';
 export type {
   EndTurnActionCreator,
@@ -11,6 +12,7 @@ export type {
   UpdateBuildingsBalanceActionCreator,
   ResetBuildingActionsActionCreator,
   UpdateEndTurnDataActionCreator,
+  ResetGameDataActionCreator,
 } from './actions';
 export { gameReducer } from './reducers';
 export {
@@ -29,6 +31,7 @@ export type {
   UpdateBuildingsBalance,
   ResetBuildingActions,
   UpdateEndTurnData,
+  ResetGameData,
 } from './types';
 export {
   END_TURN_REQUEST,
@@ -37,5 +40,6 @@ export {
   UPDATE_BUILDINGS_BALANCE,
   RESET_BUILDING_ACTIONS,
   UPDATE_END_TURN_DATA,
+  RESET_GAME_DATA,
 } from './types';
 export { watchGame } from './sagas';

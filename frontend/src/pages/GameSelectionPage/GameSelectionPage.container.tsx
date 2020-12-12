@@ -1,5 +1,6 @@
 import { connect } from 'react-redux';
 import { usernameSelector, logoutActionCreator } from 'redux/authentication';
+import { resetGameDataActionCreator } from 'redux/game';
 import {
   pendingGamesIdsSelector,
   getPendingGamesActionCreator,
@@ -29,6 +30,7 @@ const mapDispatchToProps = {
   joinGame: joinGameActionCreator,
   enterGame: enterGameActionCreator,
   leaveGame: leaveGameActionCreator,
+  resetGameData: resetGameDataActionCreator,
 };
 
 export type Props = ReturnType<typeof mapStateToProps> & typeof mapDispatchToProps;
