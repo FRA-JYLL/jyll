@@ -60,7 +60,7 @@ function* createGameSaga(action: CreateGameRequest): SagaIterator {
   }
 }
 
-function* getPendingGamesSaga(action: GetPendingGamesRequest): SagaIterator {
+function* getPendingGamesSaga(): SagaIterator {
   try {
     const response = yield call(sendAuthenticatedRequest, getPendingGamesRequest);
 
@@ -70,7 +70,7 @@ function* getPendingGamesSaga(action: GetPendingGamesRequest): SagaIterator {
   }
 }
 
-function* getGamesWithUserSaga(action: GetGamesWithUserRequest): SagaIterator {
+function* getGamesWithUserSaga(): SagaIterator {
   try {
     const response = yield call(sendAuthenticatedRequest, getGamesWithUserRequest);
 
@@ -141,6 +141,7 @@ function* getCurrentGamePlayersSaga(): SagaIterator {
 function* leaveGameSaga(action: LeaveGameRequest): SagaIterator {
   try {
     yield call(sendAuthenticatedRequest, leaveGameRequest, action.payload.id);
+    yield call(getGamesWithUserSaga);
   } catch (error) {
     if (!Number.isInteger(error)) throw error;
   } finally {
