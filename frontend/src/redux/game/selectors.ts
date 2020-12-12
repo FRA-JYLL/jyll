@@ -1,8 +1,11 @@
 import { LobbyPlayer } from 'redux/lobby/types';
 import { RootState } from 'redux/root';
-import { EndTurnData, FullPlayer } from './types';
+import { BuildingsBalance, EndTurnData, FullPlayer } from './types';
 
 export const endTurnDataSelector = (store: RootState): EndTurnData => store.game.endTurnData;
+
+export const buildingsBalanceSelector = (store: RootState): BuildingsBalance =>
+  store.game.buildingsBalance;
 
 export const fullPlayerSelector = (store: RootState): FullPlayer | undefined =>
   store.game.fullPlayer;

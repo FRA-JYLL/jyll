@@ -18,6 +18,7 @@ import {
   PlayerTechnology,
   PlayerBuilding,
   BackendPlayerBuilding,
+  UPDATE_BUILDINGS_BALANCE,
 } from './types';
 
 const initialLobbyState: GameState = {
@@ -25,6 +26,7 @@ const initialLobbyState: GameState = {
     buildingActions: [],
     scienceFocuses: [],
   },
+  buildingsBalance: {},
   fullPlayer: undefined,
 };
 
@@ -170,6 +172,15 @@ export const gameReducer = (
       return {
         ...state,
         fullPlayer: fullPlayerFormatter(fullPlayer),
+      };
+    case UPDATE_BUILDINGS_BALANCE:
+      const { classIndex, modifier } = action.payload;
+      return {
+        ...state,
+        buildingsBalance: {
+          ...state.buildingsBalance,
+          [classIndex]: state.buildingsBalance[classIndex] + modifier,
+        },
       };
     default:
       return state;

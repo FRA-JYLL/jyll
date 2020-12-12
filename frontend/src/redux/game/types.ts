@@ -3,6 +3,7 @@ import { BackendLobbyPlayer, LobbyPlayer } from 'redux/lobby/types';
 export const END_TURN_REQUEST = 'END_TURN_REQUEST';
 export const GET_FULL_PLAYER_REQUEST = 'GET_FULL_PLAYER_REQUEST';
 export const GET_FULL_PLAYER_SUCCESS = 'GET_FULL_PLAYER_SUCCESS';
+export const UPDATE_BUILDINGS_BALANCE = 'UPDATE_BUILDINGS_BALANCE';
 
 export enum buildingActionTypes {
   'BUILD' = 'BUILD',
@@ -210,9 +211,19 @@ export interface GetFullPlayerSuccess {
   payload: { fullPlayer: BackendFullPlayer };
 }
 
-export type GameActions = GetFullPlayerSuccess;
+export interface UpdateBuildingsBalance {
+  type: typeof UPDATE_BUILDINGS_BALANCE;
+  payload: { classIndex: string; modifier: number };
+}
+
+export type GameActions = GetFullPlayerSuccess | UpdateBuildingsBalance;
+
+export interface BuildingsBalance {
+  [key: string]: number;
+}
 
 export interface GameState {
   endTurnData: EndTurnData;
+  buildingsBalance: BuildingsBalance;
   fullPlayer?: FullPlayer;
 }
