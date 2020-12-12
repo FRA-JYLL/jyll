@@ -22,6 +22,7 @@ const GamePage = ({
   endTurnData,
   buildingsBalance,
   updateBuildingsBalance,
+  exitGame,
 }: ComponentProps) => {
   const { t } = useTranslation();
 
@@ -136,8 +137,10 @@ const GamePage = ({
         >
           <div className="top-menu-container">
             <Monitor className="top-menu">
-              {<p>menu</p>}
-              {<p data-tip="About the menu">(i)</p>}
+              <MonitorButton className="exit-game-button" onClick={exitGame}>
+                {t('game.ui.exitGame')}
+              </MonitorButton>
+              <p data-tip="About the menu">(i)</p>
             </Monitor>
           </div>
         </CSSTransition>

@@ -48,8 +48,13 @@
 
 .top-menu {
   display: flex;
+  align-items: center;
   column-gap: spacing(1);
   width: spacing(36);
+}
+
+.exit-game-button {
+  width: spacing(8);
 }
 
 .map {

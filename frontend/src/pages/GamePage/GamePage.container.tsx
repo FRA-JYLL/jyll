@@ -7,6 +7,7 @@ import {
   getFullPlayerActionCreator,
   updateBuildingsBalanceActionCreator,
 } from 'redux/game';
+import { NavigationPage, setNextPageActionCreator } from 'redux/navigation';
 import { RootState } from 'redux/root';
 import GamePage from './GamePage.component';
 
@@ -22,6 +23,7 @@ const mapDispatchToProps = {
   endTurn: endTurnActionCreator,
   getFullPlayer: getFullPlayerActionCreator,
   updateBuildingsBalance: updateBuildingsBalanceActionCreator,
+  exitGame: () => setNextPageActionCreator(NavigationPage.GameSelection),
 };
 
 export type Props = ReturnType<typeof mapStateToProps> & typeof mapDispatchToProps;

@@ -55,6 +55,7 @@ export default {
     ui: {
       endTurn: 'END TURN',
       waiting: 'WAIT...',
+      exitGame: 'EXIT GAME',
     },
   },
   toast: {
