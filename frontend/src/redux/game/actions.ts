@@ -5,6 +5,9 @@ import {
   END_TURN_REQUEST,
   UpdateBuildingsBalance,
   UPDATE_BUILDINGS_BALANCE,
+  EndTurnData,
+  UpdateEndTurnData,
+  UPDATE_END_TURN_DATA,
 } from './types';
 
 export const endTurnActionCreator = (): EndTurnRequest => {
@@ -29,6 +32,14 @@ export const updateBuildingsBalanceActionCreator = (
   };
 };
 
+export const updateEndTurnDataActionCreator = (endTurnData: EndTurnData): UpdateEndTurnData => {
+  return {
+    type: UPDATE_END_TURN_DATA,
+    payload: { endTurnData },
+  };
+};
+
 export type EndTurnActionCreator = typeof endTurnActionCreator;
 export type GetFullPlayerActionCreator = typeof getFullPlayerActionCreator;
 export type UpdateBuildingsBalanceActionCreator = typeof updateBuildingsBalanceActionCreator;
+export type UpdateEndTurnDataActionCreator = typeof updateEndTurnDataActionCreator;
