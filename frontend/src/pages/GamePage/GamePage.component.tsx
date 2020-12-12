@@ -6,7 +6,7 @@ import './GamePage.scss';
 import { Props } from './GamePage.container';
 import { Monitor } from 'components/monitor';
 import { MonitorButton } from 'components/buttons/MonitorButton';
-import { PlayerBuilding, PlayerRatings, PlayerResources } from 'redux/game/types';
+import { BuildingAction, PlayerBuilding, PlayerRatings, PlayerResources } from 'redux/game/types';
 
 interface ComponentProps extends Props {
   transitionIn: boolean;
@@ -19,6 +19,8 @@ const GamePage = ({
   endTurn,
   getFullPlayer,
   fullPlayer,
+  endTurnData,
+  updateBuildingsBalance,
 }: ComponentProps) => {
   const { t } = useTranslation();
 
@@ -49,12 +51,35 @@ const GamePage = ({
       .join(': ')
       .split('"')
       .join('');
+    const addOne = () => updateBuildingsBalance(building.classIndex, 1);
+    const removeOne = () => updateBuildingsBalance(building.classIndex, -1);
     return (
-      <p data-tip={formattedBuildingJSON}>
-        <button className="building-button">{building.classIndex}</button>
-      </p>
+      <div className="building-item-container">
+        <p data-tip={formattedBuildingJSON}>
+          <MonitorButton className="building-picture" disabled data-tip={formattedBuildingJSON}>
+            {building.classIndex}
+          </MonitorButton>
+        </p>
+
+        <div className="building-modifiers-container">
+          <MonitorButton className="building-modifier-button" onClick={addOne}>
+            +
+          </MonitorButton>
+
+          <MonitorButton className="building-modifier-button" onClick={removeOne}>
+            -
+          </MonitorButton>
+        </div>
+      </div>
     );
   });
+
+  const logEntries = endTurnData.buildingActions.map((buildingAction: BuildingAction) => (
+    <div className="logs-item">
+      <p>{'Building n°' + buildingAction.classIndex}</p>
+      <p>{buildingAction.type + ' ' + buildingAction.copies}</p>
+    </div>
+  ));
 
   const playerRatings = (ratings: PlayerRatings | undefined) =>
     ratings && (
@@ -130,8 +155,8 @@ const GamePage = ({
           unmountOnExit
         >
           <Monitor className="logs-container">
-            <div className="logs-panel">logs</div>
-            <div className="undo-buttons">undo / redo</div>
+            <p>Your actions:</p>
+            {logEntries}
           </Monitor>
         </CSSTransition>
 
