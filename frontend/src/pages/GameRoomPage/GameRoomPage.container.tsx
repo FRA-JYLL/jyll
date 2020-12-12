@@ -13,6 +13,7 @@ import {
   userPlayerSelector,
   setIsReadyActionCreator,
 } from 'redux/lobby';
+import { getFullPlayerActionCreator } from 'redux/game';
 
 const mapStateToProps = (state: RootState) => {
   return {
@@ -31,6 +32,7 @@ const mapDispatchToProps = {
   getGameDetails: (id: string) => getGameDetailsActionCreator(id),
   getCurrentGamePlayers: getCurrentGamePlayersActionCreator,
   setIsReady: setIsReadyActionCreator,
+  getFullPlayer: getFullPlayerActionCreator,
 };
 
 export type Props = ReturnType<typeof mapStateToProps> & typeof mapDispatchToProps;
