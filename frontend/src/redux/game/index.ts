@@ -42,4 +42,4 @@ export {
   UPDATE_END_TURN_DATA,
   RESET_GAME_DATA,
 } from './types';
-export { watchGame } from './sagas';
+export { getFullPlayerRequestSaga, watchGame } from './sagas';

@@ -1,5 +1,4 @@
 import { connect } from 'react-redux';
-import { usernameSelector } from 'redux/authentication';
 import { RootState } from 'redux/root';
 import GameRoomPage from './GameRoomPage.component';
 import { setNextPageActionCreator, NavigationPage } from 'redux/navigation';
@@ -12,8 +11,8 @@ import {
   currentGameIdSelector,
   userPlayerSelector,
   setIsReadyActionCreator,
+  openGameActionCreator,
 } from 'redux/lobby';
-import { getFullPlayerActionCreator } from 'redux/game';
 
 const mapStateToProps = (state: RootState) => {
   return {
@@ -27,11 +26,10 @@ const mapStateToProps = (state: RootState) => {
 const mapDispatchToProps = {
   goBack: () => setNextPageActionCreator(NavigationPage.GameSelection),
   leaveGame: leaveGameActionCreator,
-  startGame: () => setNextPageActionCreator(NavigationPage.Game),
+  startGame: openGameActionCreator,
   getGameDetails: (id: string) => getGameDetailsActionCreator(id),
   getCurrentGamePlayers: getCurrentGamePlayersActionCreator,
   setIsReady: setIsReadyActionCreator,
-  getFullPlayer: getFullPlayerActionCreator,
 };
 
 export type Props = ReturnType<typeof mapStateToProps> & typeof mapDispatchToProps;

@@ -8,6 +8,7 @@ export const GET_GAME_DETAILS_SUCCESS = 'GET_GAME_DETAILS_SUCCESS';
 export const JOIN_GAME_REQUEST = 'JOIN_GAME_REQUEST';
 export const ENTER_GAME_REQUEST = 'ENTER_GAME_REQUEST';
 export const ENTER_GAME_SUCCESS = 'ENTER_GAME_SUCCESS';
+export const OPEN_GAME = 'OPEN_GAME';
 export const GET_CURRENT_GAME_PLAYERS_REQUEST = 'GET_CURRENT_GAME_PLAYERS_REQUEST';
 export const GET_CURRENT_GAME_PLAYERS_SUCCESS = 'GET_CURRENT_GAME_PLAYERS_SUCCESS';
 export const LEAVE_GAME_REQUEST = 'LEAVE_GAME_REQUEST';
@@ -110,6 +111,10 @@ export interface EnterGameRequest {
 export interface EnterGameSuccess {
   type: typeof ENTER_GAME_SUCCESS;
   payload: { id: string };
+}
+
+export interface OpenGame {
+  type: typeof OPEN_GAME;
 }
 
 export interface GetCurrentGamePlayersRequest {

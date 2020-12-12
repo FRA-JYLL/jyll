@@ -54,7 +54,7 @@ function* updateEndTurnDataWithBuildingsBalance(): SagaIterator {
   yield put(updateEndTurnDataActionCreator({ ...endTurnData, buildingActions }));
 }
 
-function* getFullPlayerRequestSaga(): SagaIterator {
+export function* getFullPlayerRequestSaga(): SagaIterator {
   const playerId = yield select(playerIdSelector);
   if (playerId)
     try {

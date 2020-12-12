@@ -19,6 +19,8 @@ import {
   SET_IS_READY_REQUEST,
   ResetCurrentGameLobbyData,
   RESET_CURRENT_GAME_LOBBY_DATA,
+  OpenGame,
+  OPEN_GAME,
 } from './types';
 
 export const createGameActionCreator = (
@@ -67,6 +69,12 @@ export const enterGameActionCreator = (id: string, isPending: boolean): EnterGam
   };
 };
 
+export const openGameActionCreator = (): OpenGame => {
+  return {
+    type: OPEN_GAME,
+  };
+};
+
 export const getCurrentGamePlayersActionCreator = (): GetCurrentGamePlayersRequest => {
   return {
     type: GET_CURRENT_GAME_PLAYERS_REQUEST,
@@ -99,6 +107,7 @@ export type GetGamesWithUserActionCreator = typeof getGamesWithUserActionCreator
 export type GetGameDetailsActionCreator = typeof getGameDetailsActionCreator;
 export type JoinGameActionCreator = typeof joinGameActionCreator;
 export type EnterGameActionCreator = typeof enterGameActionCreator;
+export type OpenGameActionCreator = typeof openGameActionCreator;
 export type GetCurrentGamePlayersActionCreator = typeof getCurrentGamePlayersActionCreator;
 export type LeaveGameActionCreator = typeof leaveGameActionCreator;
 export type SetIsReadyActionCreator = typeof setIsReadyActionCreator;

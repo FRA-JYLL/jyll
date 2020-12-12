@@ -17,7 +17,6 @@ const GameRoomPage = ({
   getGameDetails,
   getCurrentGamePlayers,
   setIsReady,
-  getFullPlayer,
 }: Props) => {
   const { t } = useTranslation();
 
@@ -39,9 +38,8 @@ const GameRoomPage = ({
   useEffect(() => {
     if (currentGame && !currentGame.isPending) {
       startGame();
-      getFullPlayer();
     }
-  }, [currentGame, startGame, getFullPlayer]);
+  }, [currentGame, startGame]);
 
   const leaveCurrentGame = () => {
     currentGameId && leaveGame(currentGameId);

@@ -23,6 +23,7 @@ import {
   GET_CURRENT_GAME_PLAYERS_REQUEST,
   SetIsReadyRequest,
   SET_IS_READY_REQUEST,
+  OPEN_GAME,
 } from './types';
 import { showToastActionCreator } from 'redux/toast';
 import {
@@ -37,9 +38,9 @@ import {
 } from 'services/requests';
 import { setNextPageActionCreator, NavigationPage } from 'redux/navigation';
 import { sendAuthenticatedRequest } from 'redux/authentication';
-import { enterGameActionCreator, getCurrentGamePlayersActionCreator } from './actions';
+import { enterGameActionCreator } from './actions';
 import { currentGameIdSelector, userPlayerSelector } from './selectors';
-import { getFullPlayerActionCreator } from 'redux/game';
+import { getFullPlayerRequestSaga } from 'redux/game';
 
 function* createGameSaga(action: CreateGameRequest): SagaIterator {
   yield put(setNextPageActionCreator(NavigationPage.Loader));
@@ -109,14 +110,20 @@ function* joinGameSaga(action: JoinGameRequest): SagaIterator {
 
 function* enterGameSaga(action: EnterGameRequest): SagaIterator {
   yield put({ type: ENTER_GAME_SUCCESS, payload: { id: action.payload.id } });
+  yield put(setNextPageActionCreator(NavigationPage.Loader));
+  yield call(getCurrentGamePlayersSaga);
 
   if (action.payload.isPending) {
     yield put(setNextPageActionCreator(NavigationPage.GameRoom));
   } else {
-    yield put(getCurrentGamePlayersActionCreator());
-    yield put(getFullPlayerActionCreator());
-    yield put(setNextPageActionCreator(NavigationPage.Game));
+    yield call(openGameSaga);
   }
+}
+
+function* openGameSaga(): SagaIterator {
+  yield put(setNextPageActionCreator(NavigationPage.Loader));
+  yield call(getFullPlayerRequestSaga);
+  yield put(setNextPageActionCreator(NavigationPage.Game));
 }
 
 function* getCurrentGamePlayersSaga(): SagaIterator {
@@ -163,6 +170,7 @@ export function* watchLobby() {
   yield takeEvery(GET_GAME_DETAILS_REQUEST, getGameDetailsSaga);
   yield takeEvery(JOIN_GAME_REQUEST, joinGameSaga);
   yield takeEvery(ENTER_GAME_REQUEST, enterGameSaga);
+  yield takeEvery(OPEN_GAME, openGameSaga);
   yield takeEvery(GET_CURRENT_GAME_PLAYERS_REQUEST, getCurrentGamePlayersSaga);
   yield takeEvery(LEAVE_GAME_REQUEST, leaveGameSaga);
   yield takeEvery(SET_IS_READY_REQUEST, setIsReadySaga);
