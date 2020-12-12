@@ -23,7 +23,7 @@ import {
   RESET_BUILDING_ACTIONS,
 } from './types';
 
-const initialLobbyState: GameState = {
+const initialGameState: GameState = {
   endTurnData: {
     buildingActions: [],
     scienceFocuses: [],
@@ -165,7 +165,7 @@ const fullPlayerFormatter = ({
 });
 
 export const gameReducer = (
-  state: GameState = initialLobbyState,
+  state: GameState = initialGameState,
   action: GameActions
 ): GameState => {
   switch (action.type) {
