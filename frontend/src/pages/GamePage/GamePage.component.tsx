@@ -1,10 +1,12 @@
 import React, { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { CSSTransition } from 'react-transition-group';
+import ReactTooltip from 'react-tooltip';
 import './GamePage.scss';
 import { Props } from './GamePage.container';
 import { Monitor } from 'components/monitor';
 import { MonitorButton } from 'components/buttons/MonitorButton';
+import { PlayerBuilding, PlayerRatings, PlayerResources } from 'redux/game/types';
 
 interface ComponentProps extends Props {
   transitionIn: boolean;
@@ -31,86 +33,141 @@ const GamePage = ({
     getFullPlayer();
   }, [getFullPlayer, timer]);
 
+  useEffect(() => {
+    ReactTooltip.rebuild();
+  });
+
+  const buildingButtons = fullPlayer?.buildings.map((building: PlayerBuilding) => {
+    const formattedBuildingJSON = JSON.stringify(building)
+      .split(',')
+      .join(',<br>')
+      .split('{')
+      .join('{<br>')
+      .split('}')
+      .join('<br>}')
+      .split(':')
+      .join(': ')
+      .split('"')
+      .join('');
+    return (
+      <p data-tip={formattedBuildingJSON}>
+        <button className="building-button">{building.classIndex}</button>
+      </p>
+    );
+  });
+
+  const playerRatings = (ratings: PlayerRatings | undefined) =>
+    ratings && (
+      <>
+        <p>{'Economy: ' + ratings.economy}</p>
+        <p>{'Society: ' + ratings.society}</p>
+        <p>{'Environment: ' + ratings.environment}</p>
+      </>
+    );
+
+  const playerResources = (resources: PlayerResources | undefined) =>
+    resources && (
+      <>
+        <p>{'Hydrocarbon: ' + resources.hydrocarbon}</p>
+        <p>{'Money: ' + resources.money}</p>
+      </>
+    );
+
   return (
-    <div className="game-container">
-      <CSSTransition
-        in={transitionIn}
-        timeout={500}
-        classNames={'transition-left'}
-        onExited={transitionOnExited}
-        mountOnEnter
-        unmountOnExit
-      >
-        <Monitor className="buildings-panel">buildings</Monitor>
+    <>
+      <CSSTransition in={transitionIn} timeout={0} mountOnEnter unmountOnExit>
+        <ReactTooltip multiline place="right" />
       </CSSTransition>
 
-      <CSSTransition
-        in={transitionIn}
-        timeout={500}
-        classNames={'transition-top'}
-        mountOnEnter
-        unmountOnExit
-      >
-        <div className="top-menu-container">
-          <Monitor className="top-menu">menu</Monitor>
-        </div>
-      </CSSTransition>
+      <div className="game-container">
+        <CSSTransition
+          in={transitionIn}
+          timeout={500}
+          classNames={'transition-left'}
+          onExited={transitionOnExited}
+          mountOnEnter
+          unmountOnExit
+        >
+          <Monitor className="buildings-panel">{buildingButtons}</Monitor>
+        </CSSTransition>
 
-      <CSSTransition
-        in={transitionIn}
-        timeout={500}
-        classNames={'transition-center'}
-        mountOnEnter
-        unmountOnExit
-      >
-        <div className="map">
-          <img
-            src={require('assets/game-elements/floating-island.png')}
-            alt={'Floating island background'}
-            height={'90%'}
-          />
-        </div>
-      </CSSTransition>
+        <CSSTransition
+          in={transitionIn}
+          timeout={500}
+          classNames={'transition-top'}
+          mountOnEnter
+          unmountOnExit
+        >
+          <div className="top-menu-container">
+            <Monitor className="top-menu">
+              {<p>menu</p>}
+              {<p data-tip="About the menu">(i)</p>}
+            </Monitor>
+          </div>
+        </CSSTransition>
 
-      <CSSTransition
-        in={transitionIn}
-        timeout={500}
-        classNames={'transition-bottom'}
-        mountOnEnter
-        unmountOnExit
-      >
-        <Monitor className="logs-container">
-          <div className="logs-panel">logs</div>
-          <div className="undo-buttons">undo / redo</div>
-        </Monitor>
-      </CSSTransition>
+        <CSSTransition
+          in={transitionIn}
+          timeout={500}
+          classNames={'transition-center'}
+          mountOnEnter
+          unmountOnExit
+        >
+          <div className="map">
+            <img
+              src={require('assets/game-elements/floating-island.png')}
+              alt={'Floating island background'}
+              height={'90%'}
+            />
+          </div>
+        </CSSTransition>
 
-      <CSSTransition
-        in={transitionIn}
-        timeout={500}
-        classNames={'transition-bottom-right'}
-        mountOnEnter
-        unmountOnExit
-      >
-        <div className="end-container">
-          <Monitor className="end-button">
-            <MonitorButton onClick={endTurn} disabled={fullPlayer?.isReady}>
-              {fullPlayer?.isReady ? t('game.ui.waiting') : t('game.ui.endTurn')}
-            </MonitorButton>
+        <CSSTransition
+          in={transitionIn}
+          timeout={500}
+          classNames={'transition-bottom'}
+          mountOnEnter
+          unmountOnExit
+        >
+          <Monitor className="logs-container">
+            <div className="logs-panel">logs</div>
+            <div className="undo-buttons">undo / redo</div>
           </Monitor>
-        </div>
-      </CSSTransition>
+        </CSSTransition>
 
-      <CSSTransition
-        in={transitionIn}
-        timeout={500}
-        classNames={'transition-right'}
-        mountOnEnter
-        unmountOnExit
-      >
-        <Monitor className="stats-panel">stats</Monitor>
-      </CSSTransition>
-    </div>
+        <CSSTransition
+          in={transitionIn}
+          timeout={500}
+          classNames={'transition-bottom-right'}
+          mountOnEnter
+          unmountOnExit
+        >
+          <div className="end-container">
+            <Monitor className="end-button">
+              <MonitorButton onClick={endTurn} disabled={fullPlayer?.isReady}>
+                {fullPlayer?.isReady ? t('game.ui.waiting') : t('game.ui.endTurn')}
+              </MonitorButton>
+            </Monitor>
+          </div>
+        </CSSTransition>
+
+        <CSSTransition
+          in={transitionIn}
+          timeout={500}
+          classNames={'transition-right'}
+          mountOnEnter
+          unmountOnExit
+        >
+          <Monitor className="stats-panel">
+            <p data-tip="The current state of your country">Player stats</p>
+            <br />
+            {playerRatings(fullPlayer?.ratings)}
+            <br />
+            {playerResources(fullPlayer?.resources)}
+          </Monitor>
+        </CSSTransition>
+      </div>
+    </>
   );
 };
 
