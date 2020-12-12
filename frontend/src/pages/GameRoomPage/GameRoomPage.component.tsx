@@ -7,7 +7,6 @@ import { Monitor } from 'components/monitor';
 import { MonitorButton } from 'components/buttons/MonitorButton';
 
 const GameRoomPage = ({
-  username,
   currentGameId,
   currentGame,
   currentGamePlayers,

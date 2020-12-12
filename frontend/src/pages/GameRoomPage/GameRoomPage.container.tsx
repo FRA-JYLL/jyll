@@ -17,7 +17,6 @@ import { getFullPlayerActionCreator } from 'redux/game';
 
 const mapStateToProps = (state: RootState) => {
   return {
-    username: usernameSelector(state),
     currentGameId: currentGameIdSelector(state),
     currentGame: currentGameSelector(state),
     currentGamePlayers: currentGamePlayersSelector(state),
