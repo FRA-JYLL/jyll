@@ -58,10 +58,10 @@ export const joinGameActionCreator = (id: string, password?: string): JoinGameRe
   };
 };
 
-export const enterGameActionCreator = (id: string): EnterGameRequest => {
+export const enterGameActionCreator = (id: string, isPending: boolean): EnterGameRequest => {
   return {
     type: ENTER_GAME_REQUEST,
-    payload: { id },
+    payload: { id, isPending },
   };
 };
 

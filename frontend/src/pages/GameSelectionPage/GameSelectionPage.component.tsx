@@ -67,8 +67,12 @@ const GameSelectionPage = ({
     joinGame(selectedGameId);
   };
 
-  const enterSelectedGame = () => {
-    enterGame(selectedGameId);
+  const enterSelectedPendingGame = () => {
+    enterGame(selectedGameId, true);
+  };
+
+  const enterSelectedOngoingGame = () => {
+    enterGame(selectedGameId, false);
   };
 
   const leaveSelectedGame = () => {
@@ -85,12 +89,17 @@ const GameSelectionPage = ({
             <p className="side-panel-instructions">
               {t('pages.gameSelection.created', { creationDate: game.creationDate })}
             </p>
+            <p className="side-panel-instructions">
+              {game.isPending ? t('pages.gameSelection.pending') : t('pages.gameSelection.ongoing')}
+            </p>
           </div>
           <div className="game-selection-button-container">
             <MonitorButton
               onClick={
                 alreadyJoined
-                  ? enterSelectedGame
+                  ? game.isPending
+                    ? enterSelectedPendingGame
+                    : enterSelectedOngoingGame
                   : game.hasPassword
                   ? openJoinModal
                   : joinSelectedGameWithoutPassword

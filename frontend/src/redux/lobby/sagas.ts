@@ -37,8 +37,9 @@ import {
 } from 'services/requests';
 import { setNextPageActionCreator, NavigationPage } from 'redux/navigation';
 import { sendAuthenticatedRequest } from 'redux/authentication';
-import { enterGameActionCreator } from './actions';
+import { enterGameActionCreator, getCurrentGamePlayersActionCreator } from './actions';
 import { currentGameIdSelector, userPlayerSelector } from './selectors';
+import { getFullPlayerActionCreator } from 'redux/game';
 
 function* createGameSaga(action: CreateGameRequest): SagaIterator {
   yield put(setNextPageActionCreator(NavigationPage.Loader));
@@ -50,7 +51,7 @@ function* createGameSaga(action: CreateGameRequest): SagaIterator {
 
     if (newGame) {
       yield put({ type: GET_GAME_DETAILS_SUCCESS, payload: { game: newGame } });
-      yield put(enterGameActionCreator(newGame.id));
+      yield put(enterGameActionCreator(newGame.id, true));
     }
   } catch (error) {
     yield put(setNextPageActionCreator(NavigationPage.GameSelection));
@@ -99,7 +100,7 @@ function* joinGameSaga(action: JoinGameRequest): SagaIterator {
       action.payload.password
     );
 
-    yield put(enterGameActionCreator(action.payload.id));
+    yield put(enterGameActionCreator(action.payload.id, true));
   } catch (error) {
     yield put(setNextPageActionCreator(NavigationPage.GameSelection));
     yield put(showToastActionCreator('cannotJoinGameError'));
@@ -109,7 +110,13 @@ function* joinGameSaga(action: JoinGameRequest): SagaIterator {
 function* enterGameSaga(action: EnterGameRequest): SagaIterator {
   yield put({ type: ENTER_GAME_SUCCESS, payload: { id: action.payload.id } });
 
-  yield put(setNextPageActionCreator(NavigationPage.GameRoom));
+  if (action.payload.isPending) {
+    yield put(setNextPageActionCreator(NavigationPage.GameRoom));
+  } else {
+    yield put(getCurrentGamePlayersActionCreator());
+    yield put(getFullPlayerActionCreator());
+    yield put(setNextPageActionCreator(NavigationPage.Game));
+  }
 }
 
 function* getCurrentGamePlayersSaga(): SagaIterator {

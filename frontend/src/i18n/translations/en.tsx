@@ -32,6 +32,8 @@ export default {
       },
       logout: 'LOG OUT',
       created: 'Created {{creationDate}}',
+      pending: 'Pending',
+      ongoing: 'Ongoing',
       open: 'OPEN',
       join: 'JOIN',
       leave: 'LEAVE',

@@ -102,7 +102,7 @@ export interface JoinGameRequest {
 
 export interface EnterGameRequest {
   type: typeof ENTER_GAME_REQUEST;
-  payload: { id: string };
+  payload: { id: string; isPending: boolean };
 }
 
 export interface EnterGameSuccess {
