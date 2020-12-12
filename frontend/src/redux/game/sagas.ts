@@ -15,7 +15,11 @@ import { sendAuthenticatedRequest } from 'redux/authentication';
 import { buildingsBalanceSelector, endTurnDataSelector, playerIdSelector } from './selectors';
 import { backendEndTurnDataFormatter } from './reducers';
 import { currentGameSelector } from 'redux/lobby';
-import { getFullPlayerActionCreator, updateEndTurnDataActionCreator } from './actions';
+import {
+  getFullPlayerActionCreator,
+  resetBuildingActionsActionCreator,
+  updateEndTurnDataActionCreator,
+} from './actions';
 
 function* endTurnRequestSaga(): SagaIterator {
   const currentGame = yield select(currentGameSelector);
@@ -28,6 +32,7 @@ function* endTurnRequestSaga(): SagaIterator {
         currentGame.id,
         backendEndTurnDataFormatter(endTurnData)
       );
+      yield put(resetBuildingActionsActionCreator());
       yield put(getFullPlayerActionCreator());
     } catch (error) {
       if (!Number.isInteger(error)) throw error;

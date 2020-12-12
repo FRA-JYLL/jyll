@@ -4,6 +4,7 @@ export const END_TURN_REQUEST = 'END_TURN_REQUEST';
 export const GET_FULL_PLAYER_REQUEST = 'GET_FULL_PLAYER_REQUEST';
 export const GET_FULL_PLAYER_SUCCESS = 'GET_FULL_PLAYER_SUCCESS';
 export const UPDATE_BUILDINGS_BALANCE = 'UPDATE_BUILDINGS_BALANCE';
+export const RESET_BUILDING_ACTIONS = 'RESET_BUILDING_ACTIONS';
 export const UPDATE_END_TURN_DATA = 'UPDATE_END_TURN_DATA';
 
 export enum buildingActionTypes {
@@ -217,12 +218,20 @@ export interface UpdateBuildingsBalance {
   payload: { classIndex: string; modifier: number };
 }
 
+export interface ResetBuildingActions {
+  type: typeof RESET_BUILDING_ACTIONS;
+}
+
 export interface UpdateEndTurnData {
   type: typeof UPDATE_END_TURN_DATA;
   payload: { endTurnData: EndTurnData };
 }
 
-export type GameActions = GetFullPlayerSuccess | UpdateBuildingsBalance | UpdateEndTurnData;
+export type GameActions =
+  | GetFullPlayerSuccess
+  | UpdateBuildingsBalance
+  | ResetBuildingActions
+  | UpdateEndTurnData;
 
 export interface BuildingsBalance {
   [key: string]: number;

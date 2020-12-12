@@ -20,6 +20,7 @@ import {
   BackendPlayerBuilding,
   UPDATE_BUILDINGS_BALANCE,
   UPDATE_END_TURN_DATA,
+  RESET_BUILDING_ACTIONS,
 } from './types';
 
 const initialLobbyState: GameState = {
@@ -182,6 +183,12 @@ export const gameReducer = (
           ...state.buildingsBalance,
           [classIndex]: (state.buildingsBalance[classIndex] || 0) + modifier,
         },
+      };
+    case RESET_BUILDING_ACTIONS:
+      return {
+        ...state,
+        buildingsBalance: {},
+        endTurnData: { ...state.endTurnData, buildingActions: [] },
       };
     case UPDATE_END_TURN_DATA:
       const endTurnData = action.payload.endTurnData;

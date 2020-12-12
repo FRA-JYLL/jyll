@@ -8,6 +8,8 @@ import {
   EndTurnData,
   UpdateEndTurnData,
   UPDATE_END_TURN_DATA,
+  RESET_BUILDING_ACTIONS,
+  ResetBuildingActions,
 } from './types';
 
 export const endTurnActionCreator = (): EndTurnRequest => {
@@ -32,6 +34,12 @@ export const updateBuildingsBalanceActionCreator = (
   };
 };
 
+export const resetBuildingActionsActionCreator = (): ResetBuildingActions => {
+  return {
+    type: RESET_BUILDING_ACTIONS,
+  };
+};
+
 export const updateEndTurnDataActionCreator = (endTurnData: EndTurnData): UpdateEndTurnData => {
   return {
     type: UPDATE_END_TURN_DATA,
@@ -42,4 +50,5 @@ export const updateEndTurnDataActionCreator = (endTurnData: EndTurnData): Update
 export type EndTurnActionCreator = typeof endTurnActionCreator;
 export type GetFullPlayerActionCreator = typeof getFullPlayerActionCreator;
 export type UpdateBuildingsBalanceActionCreator = typeof updateBuildingsBalanceActionCreator;
+export type ResetBuildingActionsActionCreator = typeof resetBuildingActionsActionCreator;
 export type UpdateEndTurnDataActionCreator = typeof updateEndTurnDataActionCreator;

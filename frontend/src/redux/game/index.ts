@@ -2,12 +2,14 @@ export {
   endTurnActionCreator,
   getFullPlayerActionCreator,
   updateBuildingsBalanceActionCreator,
+  resetBuildingActionsActionCreator,
   updateEndTurnDataActionCreator,
 } from './actions';
 export type {
   EndTurnActionCreator,
   GetFullPlayerActionCreator,
   UpdateBuildingsBalanceActionCreator,
+  ResetBuildingActionsActionCreator,
   UpdateEndTurnDataActionCreator,
 } from './actions';
 export { gameReducer } from './reducers';
@@ -25,6 +27,7 @@ export type {
   GetFullPlayerRequest,
   GetFullPlayerSuccess,
   UpdateBuildingsBalance,
+  ResetBuildingActions,
   UpdateEndTurnData,
 } from './types';
 export {
@@ -32,6 +35,7 @@ export {
   GET_FULL_PLAYER_REQUEST,
   GET_FULL_PLAYER_SUCCESS,
   UPDATE_BUILDINGS_BALANCE,
+  RESET_BUILDING_ACTIONS,
   UPDATE_END_TURN_DATA,
 } from './types';
 export { watchGame } from './sagas';
