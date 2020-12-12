@@ -12,6 +12,7 @@ export const GET_CURRENT_GAME_PLAYERS_REQUEST = 'GET_CURRENT_GAME_PLAYERS_REQUES
 export const GET_CURRENT_GAME_PLAYERS_SUCCESS = 'GET_CURRENT_GAME_PLAYERS_SUCCESS';
 export const LEAVE_GAME_REQUEST = 'LEAVE_GAME_REQUEST';
 export const SET_IS_READY_REQUEST = 'SET_IS_READY_REQUEST';
+export const RESET_CURRENT_GAME_LOBBY_DATA = 'RESET_CURRENT_GAME_LOBBY_DATA';
 
 export interface LobbyGame {
   id: string;
@@ -57,7 +58,8 @@ export type LobbyActions =
   | GetGamesWithUserSuccess
   | GetGameDetailsSuccess
   | EnterGameSuccess
-  | GetCurrentGamePlayersSuccess;
+  | GetCurrentGamePlayersSuccess
+  | ResetCurrentGameLobbyData;
 
 export interface CreateGameRequest {
   type: typeof CREATE_GAME_REQUEST;
@@ -129,6 +131,10 @@ export interface SetIsReadyRequest {
   payload: {
     isReady: boolean;
   };
+}
+
+export interface ResetCurrentGameLobbyData {
+  type: typeof RESET_CURRENT_GAME_LOBBY_DATA;
 }
 
 export interface LobbyState {

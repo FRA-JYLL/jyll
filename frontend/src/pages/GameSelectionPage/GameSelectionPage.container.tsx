@@ -10,6 +10,7 @@ import {
   enterGameActionCreator,
   lobbyGamesSelector,
   leaveGameActionCreator,
+  resetCurrentGameLobbyDataActionCreator,
 } from 'redux/lobby';
 import { RootState } from 'redux/root';
 import GameSelectionPage from './GameSelectionPage.component';
@@ -31,6 +32,7 @@ const mapDispatchToProps = {
   enterGame: enterGameActionCreator,
   leaveGame: leaveGameActionCreator,
   resetGameData: resetGameDataActionCreator,
+  resetCurrentGameLobbyData: resetCurrentGameLobbyDataActionCreator,
 };
 
 export type Props = ReturnType<typeof mapStateToProps> & typeof mapDispatchToProps;

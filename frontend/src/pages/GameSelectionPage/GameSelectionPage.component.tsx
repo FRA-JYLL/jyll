@@ -19,6 +19,7 @@ const GameSelectionPage = ({
   enterGame,
   leaveGame,
   resetGameData,
+  resetCurrentGameLobbyData,
 }: Props) => {
   const { t } = useTranslation();
 
@@ -39,7 +40,8 @@ const GameSelectionPage = ({
 
   useEffect(() => {
     resetGameData();
-  }, [resetGameData]);
+    resetCurrentGameLobbyData();
+  }, [resetGameData, resetCurrentGameLobbyData]);
 
   const [selectedGameId, setSelectedGameId] = React.useState('');
 
