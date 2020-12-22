@@ -3,7 +3,6 @@ import { SagaIterator } from 'redux-saga';
 import {
   CreateGameRequest,
   CREATE_GAME_REQUEST,
-  GetPendingGamesRequest,
   GET_PENDING_GAMES_REQUEST,
   GET_PENDING_GAMES_SUCCESS,
   GetGameDetailsRequest,
@@ -13,7 +12,6 @@ import {
   JOIN_GAME_REQUEST,
   LeaveGameRequest,
   LEAVE_GAME_REQUEST,
-  GetGamesWithUserRequest,
   GET_GAMES_WITH_USER_REQUEST,
   GET_GAMES_WITH_USER_SUCCESS,
   EnterGameRequest,
