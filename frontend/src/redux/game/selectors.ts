@@ -7,6 +7,9 @@ export const endTurnDataSelector = (store: RootState): EndTurnData => store.game
 export const buildingsBalanceSelector = (store: RootState): BuildingsBalance =>
   store.game.buildingsBalance;
 
+export const currentMoneyModifierSelector = (store: RootState): number =>
+  store.game.currentMoneyModifier;
+
 export const fullPlayerSelector = (store: RootState): FullPlayer | undefined =>
   store.game.fullPlayer;
 

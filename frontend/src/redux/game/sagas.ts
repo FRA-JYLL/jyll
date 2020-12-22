@@ -32,7 +32,7 @@ function* endTurnRequestSaga(): SagaIterator {
         currentGame.id,
         backendEndTurnDataFormatter(endTurnData)
       );
-      yield put(resetBuildingActionsActionCreator());
+      yield put(resetBuildingActionsActionCreator()); // TODO: Reset actions when the next turn starts instead. It will be easy to do once the backend sends a turn count.
       yield put(getFullPlayerActionCreator());
     } catch (error) {
       if (!Number.isInteger(error)) throw error;

@@ -28,11 +28,12 @@ export const getFullPlayerActionCreator = (): GetFullPlayerRequest => {
 
 export const updateBuildingsBalanceActionCreator = (
   classIndex: string,
-  modifier: number
+  copiesModifier: number,
+  moneyModifier: number
 ): UpdateBuildingsBalance => {
   return {
     type: UPDATE_BUILDINGS_BALANCE,
-    payload: { classIndex, modifier },
+    payload: { classIndex, copiesModifier, moneyModifier },
   };
 };
 

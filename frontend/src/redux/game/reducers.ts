@@ -30,6 +30,7 @@ const initialGameState: GameState = {
     scienceFocuses: [],
   },
   buildingsBalance: {},
+  currentMoneyModifier: 0,
   fullPlayer: undefined,
 };
 
@@ -177,18 +178,20 @@ export const gameReducer = (
         fullPlayer: fullPlayerFormatter(fullPlayer),
       };
     case UPDATE_BUILDINGS_BALANCE:
-      const { classIndex, modifier } = action.payload;
+      const { classIndex, copiesModifier, moneyModifier } = action.payload;
       return {
         ...state,
         buildingsBalance: {
           ...state.buildingsBalance,
-          [classIndex]: (state.buildingsBalance[classIndex] || 0) + modifier,
+          [classIndex]: (state.buildingsBalance[classIndex] || 0) + copiesModifier,
         },
+        currentMoneyModifier: state.currentMoneyModifier + moneyModifier,
       };
     case RESET_BUILDING_ACTIONS:
       return {
         ...state,
         buildingsBalance: {},
+        currentMoneyModifier: 0,
         endTurnData: { ...state.endTurnData, buildingActions: [] },
       };
     case UPDATE_END_TURN_DATA:

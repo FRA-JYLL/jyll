@@ -18,6 +18,7 @@ export { gameReducer } from './reducers';
 export {
   endTurnDataSelector,
   buildingsBalanceSelector,
+  currentMoneyModifierSelector,
   fullPlayerSelector,
   playerIdSelector,
 } from './selectors';

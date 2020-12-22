@@ -1,6 +1,7 @@
 import { connect } from 'react-redux';
 import {
   buildingsBalanceSelector,
+  currentMoneyModifierSelector,
   endTurnActionCreator,
   endTurnDataSelector,
   fullPlayerSelector,
@@ -16,6 +17,7 @@ const mapStateToProps = (state: RootState) => {
     fullPlayer: fullPlayerSelector(state),
     endTurnData: endTurnDataSelector(state),
     buildingsBalance: buildingsBalanceSelector(state),
+    currentMoneyModifier: currentMoneyModifierSelector(state),
   };
 };
 

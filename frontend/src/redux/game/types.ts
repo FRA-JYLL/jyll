@@ -216,7 +216,7 @@ export interface GetFullPlayerSuccess {
 
 export interface UpdateBuildingsBalance {
   type: typeof UPDATE_BUILDINGS_BALANCE;
-  payload: { classIndex: string; modifier: number };
+  payload: { classIndex: string; copiesModifier: number; moneyModifier: number };
 }
 
 export interface ResetBuildingActions {
@@ -246,5 +246,6 @@ export interface BuildingsBalance {
 export interface GameState {
   endTurnData: EndTurnData;
   buildingsBalance: BuildingsBalance;
+  currentMoneyModifier: number;
   fullPlayer?: FullPlayer;
 }

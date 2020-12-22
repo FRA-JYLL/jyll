@@ -21,6 +21,7 @@ const GamePage = ({
   fullPlayer,
   endTurnData,
   buildingsBalance,
+  currentMoneyModifier,
   updateBuildingsBalance,
   exitGame,
 }: ComponentProps) => {
@@ -53,8 +54,18 @@ const GamePage = ({
       .join(': ')
       .split('"')
       .join('');
-    const addOne = () => updateBuildingsBalance(building.classIndex, 1);
-    const removeOne = () => updateBuildingsBalance(building.classIndex, -1);
+    const addOne = () =>
+      updateBuildingsBalance(
+        building.classIndex,
+        1,
+        (buildingsBalance[building.classIndex] || 0) >= 0 ? -building.cost : 0
+      );
+    const removeOne = () =>
+      updateBuildingsBalance(
+        building.classIndex,
+        -1,
+        (buildingsBalance[building.classIndex] || 0) > 0 ? building.cost : 0
+      );
     return (
       <div className="building-item-container">
         <p data-tip={formattedBuildingJSON}>
@@ -68,7 +79,9 @@ const GamePage = ({
             className="building-modifier-button"
             onClick={addOne}
             disabled={
-              building.copies + (buildingsBalance[building.classIndex] || 0) >= building.quantityCap
+              building.copies + (buildingsBalance[building.classIndex] || 0) >=
+                building.quantityCap ||
+              building.cost > fullPlayer.resources.money + currentMoneyModifier
             }
           >
             +
@@ -106,7 +119,7 @@ const GamePage = ({
     resources && (
       <>
         <p>{'Hydrocarbon: ' + resources.hydrocarbon}</p>
-        <p>{'Money: ' + resources.money}</p>
+        <p>{'Money: ' + ((fullPlayer?.resources.money || 0) + currentMoneyModifier)}</p>
       </>
     );
 
