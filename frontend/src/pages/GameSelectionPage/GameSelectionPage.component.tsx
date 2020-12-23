@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { CreateGameModal, JoinGameModal } from 'components/modals';
 import './GameSelectionPage.scss';
@@ -17,16 +17,31 @@ const GameSelectionPage = ({
   getGamesWithUser,
   joinGame,
   enterGame,
+  leaveGame,
+  resetGameData,
+  resetCurrentGameLobbyData,
 }: Props) => {
   const { t } = useTranslation();
 
+  const refreshPeriod = 2000;
+  const [timer, setTimer] = useState(0);
+  useEffect(() => {
+    const setTimeoutId = setTimeout(() => setTimer(timer + 1), refreshPeriod);
+    return () => clearTimeout(setTimeoutId);
+  }, [timer]);
+
   useEffect(() => {
     getPendingGames();
-  }, [getPendingGames]);
+  }, [getPendingGames, timer]);
 
   useEffect(() => {
     getGamesWithUser();
-  }, [getGamesWithUser]);
+  }, [getGamesWithUser, timer]);
+
+  useEffect(() => {
+    resetGameData();
+    resetCurrentGameLobbyData();
+  }, [resetGameData, resetCurrentGameLobbyData]);
 
   const [selectedGameId, setSelectedGameId] = React.useState('');
 
@@ -59,8 +74,16 @@ const GameSelectionPage = ({
     joinGame(selectedGameId);
   };
 
-  const enterSelectedGame = () => {
-    enterGame(selectedGameId);
+  const enterSelectedPendingGame = () => {
+    enterGame(selectedGameId, true);
+  };
+
+  const enterSelectedOngoingGame = () => {
+    enterGame(selectedGameId, false);
+  };
+
+  const leaveSelectedGame = () => {
+    leaveGame(selectedGameId);
   };
 
   const renderGameInfo = (game?: LobbyGame) => {
@@ -73,19 +96,29 @@ const GameSelectionPage = ({
             <p className="side-panel-instructions">
               {t('pages.gameSelection.created', { creationDate: game.creationDate })}
             </p>
+            <p className="side-panel-instructions">
+              {game.isPending ? t('pages.gameSelection.pending') : t('pages.gameSelection.ongoing')}
+            </p>
           </div>
           <div className="game-selection-button-container">
             <MonitorButton
               onClick={
                 alreadyJoined
-                  ? enterSelectedGame
+                  ? game.isPending
+                    ? enterSelectedPendingGame
+                    : enterSelectedOngoingGame
                   : game.hasPassword
                   ? openJoinModal
                   : joinSelectedGameWithoutPassword
               }
             >
-              {t('pages.gameSelection.join')}
+              {alreadyJoined ? t('pages.gameSelection.open') : t('pages.gameSelection.join')}
             </MonitorButton>
+            {alreadyJoined && (
+              <MonitorButton onClick={leaveSelectedGame}>
+                {t('pages.gameSelection.leave')}
+              </MonitorButton>
+            )}
           </div>
         </>
       )

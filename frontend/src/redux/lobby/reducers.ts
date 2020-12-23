@@ -11,6 +11,7 @@ import {
   GET_CURRENT_GAME_PLAYERS_SUCCESS,
   BackendLobbyPlayer,
   LobbyPlayer,
+  RESET_CURRENT_GAME_LOBBY_DATA,
 } from './types';
 
 const initialLobbyState: LobbyState = {
@@ -115,6 +116,12 @@ export const lobbyReducer = (
       return {
         ...state,
         currentGamePlayers: reducePlayers(players, {}),
+      };
+    case RESET_CURRENT_GAME_LOBBY_DATA:
+      return {
+        ...state,
+        currentGamePlayers: {},
+        currentGameId: undefined,
       };
     default:
       return state;

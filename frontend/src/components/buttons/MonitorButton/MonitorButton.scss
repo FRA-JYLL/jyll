@@ -7,4 +7,9 @@
   background-color: $black;
   line-height: spacing(2.5);
   width: 100%;
+
+  &.disabled {
+    color: $disabled-grey;
+    border-color: $disabled-grey;
+  }
 }

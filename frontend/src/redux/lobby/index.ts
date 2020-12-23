@@ -5,9 +5,11 @@ export {
   getGameDetailsActionCreator,
   joinGameActionCreator,
   enterGameActionCreator,
+  openGameActionCreator,
   getCurrentGamePlayersActionCreator,
   leaveGameActionCreator,
   setIsReadyActionCreator,
+  resetCurrentGameLobbyDataActionCreator,
 } from './actions';
 export type {
   CreateGameActionCreator,
@@ -15,9 +17,11 @@ export type {
   GetGameDetailsActionCreator,
   JoinGameActionCreator,
   EnterGameActionCreator,
+  OpenGameActionCreator,
   GetCurrentGamePlayersActionCreator,
   LeaveGameActionCreator,
   SetIsReadyActionCreator,
+  ResetCurrentGameLobbyDataActionCreator,
 } from './actions';
 export { lobbyReducer } from './reducers';
 export {
@@ -44,10 +48,12 @@ export type {
   JoinGameRequest,
   EnterGameRequest,
   EnterGameSuccess,
+  OpenGame,
   GetCurrentGamePlayersRequest,
   GetCurrentGamePlayersSuccess,
   LeaveGameRequest,
   SetIsReadyRequest,
+  ResetCurrentGameLobbyData,
 } from './types';
 export {
   CREATE_GAME_REQUEST,
@@ -60,9 +66,11 @@ export {
   JOIN_GAME_REQUEST,
   ENTER_GAME_REQUEST,
   ENTER_GAME_SUCCESS,
+  OPEN_GAME,
   GET_CURRENT_GAME_PLAYERS_REQUEST,
   GET_CURRENT_GAME_PLAYERS_SUCCESS,
   LEAVE_GAME_REQUEST,
   SET_IS_READY_REQUEST,
+  RESET_CURRENT_GAME_LOBBY_DATA,
 } from './types';
 export { watchLobby } from './sagas';

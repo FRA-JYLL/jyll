@@ -32,7 +32,11 @@ export default {
       },
       logout: 'LOG OUT',
       created: 'Created {{creationDate}}',
+      pending: 'Pending',
+      ongoing: 'Ongoing',
+      open: 'OPEN',
       join: 'JOIN',
+      leave: 'LEAVE',
       myGames: 'My games',
       publicGames: 'Public games',
     },
@@ -47,6 +51,13 @@ export default {
         ready: 'READY',
         notReady: 'NOT READY',
       },
+    },
+  },
+  game: {
+    ui: {
+      endTurn: 'END TURN',
+      waiting: 'WAIT...',
+      exitGame: 'EXIT GAME',
     },
   },
   toast: {

@@ -6,13 +6,20 @@ export const MonitorButton = ({
   className,
   type,
   onClick,
+  disabled,
 }: {
   children: React.ReactNode;
   className?: string;
   type?: 'button' | 'submit' | 'reset';
   onClick?: () => void;
+  disabled?: boolean;
 }) => (
-  <button className={'monitor-button ' + className || ''} type={type} onClick={onClick}>
+  <button
+    className={(disabled ? 'disabled ' : '') + 'monitor-button ' + className || ''}
+    type={type}
+    onClick={onClick}
+    disabled={disabled}
+  >
     {children}
   </button>
 );

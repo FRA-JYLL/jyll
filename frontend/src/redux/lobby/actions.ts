@@ -17,6 +17,10 @@ import {
   GET_CURRENT_GAME_PLAYERS_REQUEST,
   SetIsReadyRequest,
   SET_IS_READY_REQUEST,
+  ResetCurrentGameLobbyData,
+  RESET_CURRENT_GAME_LOBBY_DATA,
+  OpenGame,
+  OPEN_GAME,
 } from './types';
 
 export const createGameActionCreator = (
@@ -58,10 +62,16 @@ export const joinGameActionCreator = (id: string, password?: string): JoinGameRe
   };
 };
 
-export const enterGameActionCreator = (id: string): EnterGameRequest => {
+export const enterGameActionCreator = (id: string, isPending: boolean): EnterGameRequest => {
   return {
     type: ENTER_GAME_REQUEST,
-    payload: { id },
+    payload: { id, isPending },
+  };
+};
+
+export const openGameActionCreator = (): OpenGame => {
+  return {
+    type: OPEN_GAME,
   };
 };
 
@@ -85,12 +95,20 @@ export const setIsReadyActionCreator = (isReady: boolean): SetIsReadyRequest => 
   };
 };
 
+export const resetCurrentGameLobbyDataActionCreator = (): ResetCurrentGameLobbyData => {
+  return {
+    type: RESET_CURRENT_GAME_LOBBY_DATA,
+  };
+};
+
 export type CreateGameActionCreator = typeof createGameActionCreator;
 export type GetPendingGamesActionCreator = typeof getPendingGamesActionCreator;
 export type GetGamesWithUserActionCreator = typeof getGamesWithUserActionCreator;
 export type GetGameDetailsActionCreator = typeof getGameDetailsActionCreator;
 export type JoinGameActionCreator = typeof joinGameActionCreator;
 export type EnterGameActionCreator = typeof enterGameActionCreator;
+export type OpenGameActionCreator = typeof openGameActionCreator;
 export type GetCurrentGamePlayersActionCreator = typeof getCurrentGamePlayersActionCreator;
 export type LeaveGameActionCreator = typeof leaveGameActionCreator;
 export type SetIsReadyActionCreator = typeof setIsReadyActionCreator;
+export type ResetCurrentGameLobbyDataActionCreator = typeof resetCurrentGameLobbyDataActionCreator;

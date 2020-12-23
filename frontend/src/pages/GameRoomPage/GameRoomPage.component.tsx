@@ -7,7 +7,6 @@ import { Monitor } from 'components/monitor';
 import { MonitorButton } from 'components/buttons/MonitorButton';
 
 const GameRoomPage = ({
-  username,
   currentGameId,
   currentGame,
   currentGamePlayers,
@@ -30,11 +29,17 @@ const GameRoomPage = ({
 
   useEffect(() => {
     currentGameId && getGameDetails(currentGameId);
-  }, [getGameDetails, currentGameId]);
+  }, [getGameDetails, currentGameId, timer]);
 
   useEffect(() => {
     currentGameId && getCurrentGamePlayers();
   }, [getCurrentGamePlayers, currentGameId, timer]);
+
+  useEffect(() => {
+    if (currentGame && !currentGame.isPending) {
+      startGame();
+    }
+  }, [currentGame, startGame]);
 
   const leaveCurrentGame = () => {
     currentGameId && leaveGame(currentGameId);
@@ -49,7 +54,7 @@ const GameRoomPage = ({
     Object.values(currentGamePlayers).map((player: LobbyPlayer) => (
       <div className="player-line" key={player.id}>
         <p className={player.isAdmin ? 'player-name-admin' : undefined}>{player.username}</p>
-        {player.isReady ? (
+        {player.isReady || !currentGame?.isPending ? (
           <p className="player-ready">{t('pages.gameRoom.ready')}</p>
         ) : (
           <p className="player-notReady">{t('pages.gameRoom.notReady')}</p>
@@ -81,7 +86,6 @@ const GameRoomPage = ({
               ? t('pages.gameRoom.buttons.notReady')
               : t('pages.gameRoom.buttons.ready')}
           </MonitorButton>
-          <MonitorButton onClick={startGame}>{t('pages.gameRoom.buttons.start')}</MonitorButton>
         </div>
       </div>
     </Monitor>
