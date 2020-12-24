@@ -12,6 +12,8 @@ import {
   ResetBuildingActions,
   ResetGameData,
   RESET_GAME_DATA,
+  GetNewTurnDataRequest,
+  GET_NEW_TURN_DATA_REQUEST,
 } from './types';
 
 export const endTurnActionCreator = (): EndTurnRequest => {
@@ -56,9 +58,16 @@ export const resetGameDataActionCreator = (): ResetGameData => {
   };
 };
 
+export const getNewTurnDataRequestActionCreator = (): GetNewTurnDataRequest => {
+  return {
+    type: GET_NEW_TURN_DATA_REQUEST,
+  };
+};
+
 export type EndTurnActionCreator = typeof endTurnActionCreator;
 export type GetFullPlayerActionCreator = typeof getFullPlayerActionCreator;
 export type UpdateBuildingsBalanceActionCreator = typeof updateBuildingsBalanceActionCreator;
 export type ResetBuildingActionsActionCreator = typeof resetBuildingActionsActionCreator;
 export type UpdateEndTurnDataActionCreator = typeof updateEndTurnDataActionCreator;
 export type ResetGameDataActionCreator = typeof resetGameDataActionCreator;
+export type GetNewTurnDataRequestActionCreator = typeof getNewTurnDataRequestActionCreator;

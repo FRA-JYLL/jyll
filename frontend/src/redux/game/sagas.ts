@@ -8,13 +8,20 @@ import {
   END_TURN_REQUEST,
   GET_FULL_PLAYER_REQUEST,
   GET_FULL_PLAYER_SUCCESS,
+  GET_NEW_TURN_DATA_REQUEST,
   UPDATE_BUILDINGS_BALANCE,
 } from './types';
-import { getFullPlayerRequest, endTurnRequest } from 'services/requests';
+import { getFullPlayerRequest, endTurnRequest, getGameDetailsRequest } from 'services/requests';
 import { sendAuthenticatedRequest } from 'redux/authentication';
 import { buildingsBalanceSelector, endTurnDataSelector, playerIdSelector } from './selectors';
 import { backendEndTurnDataFormatter } from './reducers';
-import { currentGameSelector } from 'redux/lobby';
+import {
+  BackendLobbyGame,
+  currentGameIdSelector,
+  currentGameSelector,
+  GET_GAME_DETAILS_SUCCESS,
+  LobbyGame,
+} from 'redux/lobby';
 import {
   getFullPlayerActionCreator,
   resetBuildingActionsActionCreator,
@@ -32,7 +39,6 @@ function* endTurnRequestSaga(): SagaIterator {
         currentGame.id,
         backendEndTurnDataFormatter(endTurnData)
       );
-      yield put(resetBuildingActionsActionCreator()); // TODO: Reset actions when the next turn starts instead. It will be easy to do once the backend sends a turn count.
       yield put(getFullPlayerActionCreator());
     } catch (error) {
       if (!Number.isInteger(error)) throw error;
@@ -66,8 +72,33 @@ export function* getFullPlayerRequestSaga(): SagaIterator {
     }
 }
 
+export function* getNewTurnDataRequestSaga(): SagaIterator {
+  const playerId: string | undefined = yield select(playerIdSelector);
+  const currentGameId: string | undefined = yield select(currentGameIdSelector);
+  const currentGameDetails: LobbyGame | undefined = yield select(currentGameSelector);
+  const currentGeneration: number | undefined = currentGameDetails?.generation;
+  if (playerId && currentGameId)
+    try {
+      const newGameDetails: BackendLobbyGame | undefined = yield call(
+        sendAuthenticatedRequest,
+        getGameDetailsRequest,
+        currentGameId
+      );
+
+      if (newGameDetails && newGameDetails.generation !== currentGeneration) {
+        const newFullPlayer = yield call(sendAuthenticatedRequest, getFullPlayerRequest, playerId);
+        yield put({ type: GET_FULL_PLAYER_SUCCESS, payload: { fullPlayer: newFullPlayer } });
+        yield put({ type: GET_GAME_DETAILS_SUCCESS, payload: { game: newGameDetails } });
+        yield put(resetBuildingActionsActionCreator());
+      }
+    } catch (error) {
+      if (!Number.isInteger(error)) throw error;
+    }
+}
+
 export function* watchGame() {
   yield takeEvery(END_TURN_REQUEST, endTurnRequestSaga);
   yield takeEvery(GET_FULL_PLAYER_REQUEST, getFullPlayerRequestSaga);
   yield takeEvery(UPDATE_BUILDINGS_BALANCE, updateEndTurnDataWithBuildingsBalance);
+  yield takeEvery(GET_NEW_TURN_DATA_REQUEST, getNewTurnDataRequestSaga);
 }

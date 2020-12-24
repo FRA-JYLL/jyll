@@ -7,6 +7,7 @@ export const UPDATE_BUILDINGS_BALANCE = 'UPDATE_BUILDINGS_BALANCE';
 export const RESET_BUILDING_ACTIONS = 'RESET_BUILDING_ACTIONS';
 export const UPDATE_END_TURN_DATA = 'UPDATE_END_TURN_DATA';
 export const RESET_GAME_DATA = 'RESET_GAME_DATA';
+export const GET_NEW_TURN_DATA_REQUEST = 'GET_NEW_TURN_DATA_REQUEST';
 
 export enum buildingActionTypes {
   'BUILD' = 'BUILD',
@@ -230,6 +231,10 @@ export interface UpdateEndTurnData {
 
 export interface ResetGameData {
   type: typeof RESET_GAME_DATA;
+}
+
+export interface GetNewTurnDataRequest {
+  type: typeof GET_NEW_TURN_DATA_REQUEST;
 }
 
 export type GameActions =

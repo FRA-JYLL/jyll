@@ -17,13 +17,13 @@ const GamePage = ({
   transitionIn,
   transitionOnExited,
   endTurn,
-  getFullPlayer,
   fullPlayer,
   endTurnData,
   buildingsBalance,
   currentMoneyModifier,
   updateBuildingsBalance,
   exitGame,
+  getNewTurnData,
 }: ComponentProps) => {
   const { t } = useTranslation();
 
@@ -35,8 +35,8 @@ const GamePage = ({
   }, [timer]);
 
   useEffect(() => {
-    getFullPlayer();
-  }, [getFullPlayer, timer]);
+    getNewTurnData();
+  }, [getNewTurnData, timer]);
 
   useEffect(() => {
     ReactTooltip.rebuild();
