@@ -22,6 +22,7 @@ import {
   UPDATE_END_TURN_DATA,
   RESET_BUILDING_ACTIONS,
   RESET_GAME_DATA,
+  SET_PLAYER_IS_READY_LOCALLY,
 } from './types';
 
 const initialGameState: GameState = {
@@ -202,6 +203,13 @@ export const gameReducer = (
       };
     case RESET_GAME_DATA:
       return initialGameState;
+    case SET_PLAYER_IS_READY_LOCALLY:
+      return state.fullPlayer
+        ? {
+            ...state,
+            fullPlayer: { ...state.fullPlayer, isReady: action.payload },
+          }
+        : state;
     default:
       return state;
   }

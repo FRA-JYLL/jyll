@@ -6,6 +6,7 @@ export {
   updateEndTurnDataActionCreator,
   resetGameDataActionCreator,
   getNewTurnDataRequestActionCreator,
+  setPlayerIsReadyLocallyActionCreator,
 } from './actions';
 export type {
   EndTurnActionCreator,
@@ -15,6 +16,7 @@ export type {
   UpdateEndTurnDataActionCreator,
   ResetGameDataActionCreator,
   GetNewTurnDataRequestActionCreator,
+  SetPlayerIsReadyLocallyActionCreator,
 } from './actions';
 export { gameReducer } from './reducers';
 export {
@@ -36,6 +38,7 @@ export type {
   UpdateEndTurnData,
   ResetGameData,
   GetNewTurnDataRequest,
+  SetPlayerIsReadyLocally,
 } from './types';
 export {
   END_TURN_REQUEST,
@@ -46,5 +49,6 @@ export {
   UPDATE_END_TURN_DATA,
   RESET_GAME_DATA,
   GET_NEW_TURN_DATA_REQUEST,
+  SET_PLAYER_IS_READY_LOCALLY,
 } from './types';
 export { getFullPlayerRequestSaga, watchGame } from './sagas';

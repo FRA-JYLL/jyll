@@ -23,23 +23,23 @@ import {
   LobbyGame,
 } from 'redux/lobby';
 import {
-  getFullPlayerActionCreator,
   resetBuildingActionsActionCreator,
+  setPlayerIsReadyLocallyActionCreator,
   updateEndTurnDataActionCreator,
 } from './actions';
 
 function* endTurnRequestSaga(): SagaIterator {
-  const currentGame = yield select(currentGameSelector);
+  const currentGameId = yield select(currentGameIdSelector);
   const endTurnData = yield select(endTurnDataSelector);
-  if (currentGame)
+  if (currentGameId)
     try {
       yield call(
         sendAuthenticatedRequest,
         endTurnRequest,
-        currentGame.id,
+        currentGameId,
         backendEndTurnDataFormatter(endTurnData)
       );
-      yield put(getFullPlayerActionCreator());
+      yield put(setPlayerIsReadyLocallyActionCreator(true));
     } catch (error) {
       if (!Number.isInteger(error)) throw error;
     }
