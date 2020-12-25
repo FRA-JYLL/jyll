@@ -1,4 +1,4 @@
-from .game import GameSerializer
+from .game import GameSerializer, GameGenerationSerializer
 from .player import PlayerSerializer
 from .building import BuildingSerializer
 from .resources import ResourcesSerializer
@@ -12,6 +12,7 @@ from .production import PlayerProductionSerializer, BuildingProductionSerializer
 
 __all__ = [
     GameSerializer,
+    GameGenerationSerializer,
     PlayerSerializer,
     PlayerRatingsSerializer,
     BuildingRatingsSerializer,

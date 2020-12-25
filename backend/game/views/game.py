@@ -6,6 +6,7 @@ from rest_framework.permissions import IsAuthenticated
 from game.models import Game, Player
 from game.serializers import (
     GameSerializer,
+    GameGenerationSerializer,
     PlayerSerializer,
     HydrocarbonSupplySerializer,
     PlayerTurnSerializer,
@@ -172,3 +173,26 @@ class GameViewSet(
         run_player_turn.delay(player.id, serializer.validated_data)
 
         return Response(status=status.HTTP_200_OK)
+
+    @action(detail=True, methods=["get"])
+    def generation(self, request, *args, **kwargs):
+        """View to get the generation field only"""
+        # Get the requested game id (line taken from GenericAPIView.get_object())
+        lookup_url_kwarg = self.lookup_url_kwarg or self.lookup_field
+
+        # Check that user controls a player in the game
+        if (
+            Player.objects.filter(
+                game__id=self.kwargs[lookup_url_kwarg], user=request.user
+            ).first()
+            is None
+        ):
+            raise PermissionDenied(detail="You are not playing in this game")
+
+        # Retrieve the game (the SQL query only asks for the `id` and `generation` fields)
+        game_generation = Game.objects.only("generation").get(
+            id=self.kwargs[lookup_url_kwarg]
+        )
+        serializer = GameGenerationSerializer(game_generation)
+
+        return Response(serializer.data)

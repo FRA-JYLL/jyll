@@ -21,3 +21,10 @@ class GameSerializer(serializers.ModelSerializer):
 
     def get_has_password(self, game):
         return game.password is not None
+
+
+class GameGenerationSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Game
+        fields = ["generation"]
+        read_only_fields = ["generation"]

@@ -158,3 +158,26 @@ class GameApiTests(APITestCase):
         self.client.force_authenticate(user=external_user)
         response = self.client.get(url)
         self.assertEqual(response.status_code, status.HTTP_403_FORBIDDEN)
+
+    def test_get_generation(self):
+        initial_generation = GameApiTests.game.generation
+        self.client.force_authenticate(user=GameApiTests.user)
+
+        # Run a first try with the current generation
+        url = reverse("game-generation", args=[GameApiTests.game.id])
+        response = self.client.get(url)
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
+        self.assertEqual(response.data["generation"], initial_generation)
+
+        # Increment the generation and check again
+        GameApiTests.game.generation += 1
+        GameApiTests.game.save()
+        response = self.client.get(url)
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
+        self.assertEqual(response.data["generation"], initial_generation + 1)
+
+        # Check that a user not playing in a game cannot get its generation
+        external_user = User.objects.create_user(username="Chihaya")
+        self.client.force_authenticate(user=external_user)
+        response = self.client.get(url)
+        self.assertEqual(response.status_code, status.HTTP_403_FORBIDDEN)
