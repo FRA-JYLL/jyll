@@ -13,4 +13,5 @@ urlpatterns = [
     path("admin/", admin.site.urls),
     path("api/", include(users_urls)),
     path("api/", include(router.urls)),
+    path("silk/", include("silk.urls", namespace="silk")),
 ]
