@@ -35,8 +35,8 @@ const GamePage = ({
   }, [timer]);
 
   useEffect(() => {
-    getNewTurnData();
-  }, [getNewTurnData, timer]);
+    if (!fullPlayer || fullPlayer.isReady) getNewTurnData();
+  }, [getNewTurnData, fullPlayer, timer]);
 
   useEffect(() => {
     ReactTooltip.rebuild();
