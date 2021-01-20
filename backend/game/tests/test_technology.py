@@ -45,3 +45,11 @@ class TechnologyTests(TestCase):
         )
         tech.develop()
         self.assertEqual(tech.current_level, 1)
+
+    def test_building_built_from_tech_has_no_cost(self):
+        """Check that adding copies of a building with a tech doesn't decrease the money of the player."""
+        player = Player.objects.first()
+        initial_um = player.resources.money
+        tech = player.technologies.select_subclasses().get(class_index=1)
+        tech.develop()
+        self.assertEqual(Player.objects.first().resources.money, initial_um)

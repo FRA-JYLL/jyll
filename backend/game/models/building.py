@@ -84,7 +84,7 @@ class Building(BaseModel):
             )
         ]
 
-    def build(self):
+    def build(self, pay_cost=True):
         """Build a new copy of the building."""
         assert self.copies < self.quantity_cap
 
@@ -92,9 +92,10 @@ class Building(BaseModel):
         self.save()
 
         # pay the building cost
-        player_resources = self.player.resources
-        player_resources.money -= self.cost
-        player_resources.save()
+        if pay_cost:
+            player_resources = self.player.resources
+            player_resources.money -= self.cost
+            player_resources.save()
 
         # add the building production and ratings
         self.player.ratings.add(self.ratings)
@@ -119,7 +120,9 @@ class Building(BaseModel):
 
         additional_copies = data.get("copies", 0)
         for copy in range(additional_copies):
-            self.build()
+            self.build(
+                pay_cost=False
+            )  # Players shouldn't spend money for buildings built as a side effect
         self.save()
 
     def __str__(self):
@@ -162,9 +165,9 @@ class ScienceBuilding(Building):
     class Meta:
         abstract = True
 
-    def build(self):
+    def build(self, pay_cost=True):
         ScienceBuildingCopy.objects.create(building=self)
-        super().build()
+        super().build(pay_cost=pay_cost)
 
 
 # ----- Building subclasses -----

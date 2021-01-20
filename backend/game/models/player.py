@@ -16,7 +16,7 @@ class PlayerManager(models.Manager):
             user.username + " already controls a player in this game !"
         )
 
-        # if is_admin is set to True check that game if empty (i.e. there is no admin yet)
+        # if is_admin is set to True check that game is empty (i.e. there is no admin yet)
         if is_admin:
             assert game.players.count() == 0, "There is already an admin in this game"
 
