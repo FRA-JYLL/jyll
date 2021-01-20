@@ -11,19 +11,14 @@ import {
   GET_NEW_TURN_DATA_REQUEST,
   UPDATE_BUILDINGS_BALANCE,
 } from './types';
-import {
-  getFullPlayerRequest,
-  endTurnRequest,
-  getGameDetailsRequest,
-  getGameGenerationRequest,
-} from 'services/requests';
+import { getFullPlayerRequest, endTurnRequest, getGameGenerationRequest } from 'services/requests';
 import { sendAuthenticatedRequest } from 'redux/authentication';
 import { buildingsBalanceSelector, endTurnDataSelector, playerIdSelector } from './selectors';
 import { backendEndTurnDataFormatter } from './reducers';
 import {
   currentGameIdSelector,
   currentGameSelector,
-  GET_GAME_DETAILS_SUCCESS,
+  GET_GAME_GENERATION_SUCCESS,
   LobbyGame,
 } from 'redux/lobby';
 import {
@@ -91,13 +86,11 @@ export function* getNewTurnDataRequestSaga(): SagaIterator {
 
       if (newGeneration?.generation !== currentGeneration) {
         const newFullPlayer = yield call(sendAuthenticatedRequest, getFullPlayerRequest, playerId);
-        const newGameDetails = yield call(
-          sendAuthenticatedRequest,
-          getGameDetailsRequest,
-          currentGameId
-        );
         yield put({ type: GET_FULL_PLAYER_SUCCESS, payload: { fullPlayer: newFullPlayer } });
-        yield put({ type: GET_GAME_DETAILS_SUCCESS, payload: { game: newGameDetails } });
+        yield put({
+          type: GET_GAME_GENERATION_SUCCESS,
+          payload: { gameId: currentGameId, generation: newGeneration?.generation },
+        });
         yield put(resetBuildingActionsActionCreator());
       }
     } catch (error) {

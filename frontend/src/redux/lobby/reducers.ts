@@ -12,6 +12,7 @@ import {
   BackendLobbyPlayer,
   LobbyPlayer,
   RESET_CURRENT_GAME_LOBBY_DATA,
+  GET_GAME_GENERATION_SUCCESS,
 } from './types';
 
 const initialLobbyState: LobbyState = {
@@ -106,6 +107,15 @@ export const lobbyReducer = (
         games: {
           ...state.games,
           [game.id]: lobbyGameFormatter(game),
+        },
+      };
+    case GET_GAME_GENERATION_SUCCESS:
+      const { gameId, generation } = action.payload;
+      return {
+        ...state,
+        games: {
+          ...state.games,
+          [gameId]: { ...state.games[gameId], generation },
         },
       };
     case ENTER_GAME_SUCCESS:
