@@ -5,6 +5,8 @@ export const GET_GAMES_WITH_USER_REQUEST = 'GET_GAMES_WITH_USER_REQUEST';
 export const GET_GAMES_WITH_USER_SUCCESS = 'GET_GAMES_WITH_USER_SUCCESS';
 export const GET_GAME_DETAILS_REQUEST = 'GET_GAME_DETAILS_REQUEST';
 export const GET_GAME_DETAILS_SUCCESS = 'GET_GAME_DETAILS_SUCCESS';
+export const GET_GAME_GENERATION_REQUEST = 'GET_GAME_GENERATION_REQUEST';
+export const GET_GAME_GENERATION_SUCCESS = 'GET_GAME_GENERATION_SUCCESS';
 export const JOIN_GAME_REQUEST = 'JOIN_GAME_REQUEST';
 export const ENTER_GAME_REQUEST = 'ENTER_GAME_REQUEST';
 export const ENTER_GAME_SUCCESS = 'ENTER_GAME_SUCCESS';
@@ -21,6 +23,7 @@ export interface LobbyGame {
   creationDate: string;
   isPending: boolean;
   hasPassword: boolean;
+  generation: number;
 }
 
 export interface BackendLobbyGame {
@@ -29,6 +32,7 @@ export interface BackendLobbyGame {
   creation_date: string;
   is_pending: boolean;
   has_password: boolean;
+  generation: number;
 }
 
 export interface LobbyUser {
@@ -58,6 +62,7 @@ export type LobbyActions =
   | GetPendingGamesSuccess
   | GetGamesWithUserSuccess
   | GetGameDetailsSuccess
+  | GetGameGenerationSuccess
   | EnterGameSuccess
   | GetCurrentGamePlayersSuccess
   | ResetCurrentGameLobbyData;
@@ -96,6 +101,16 @@ export interface GetGameDetailsRequest {
 export interface GetGameDetailsSuccess {
   type: typeof GET_GAME_DETAILS_SUCCESS;
   payload: { game: BackendLobbyGame };
+}
+
+export interface GetGameGenerationRequest {
+  type: typeof GET_GAME_GENERATION_REQUEST;
+  payload: { id: string };
+}
+
+export interface GetGameGenerationSuccess {
+  type: typeof GET_GAME_GENERATION_SUCCESS;
+  payload: { gameId: string; generation: number };
 }
 
 export interface JoinGameRequest {

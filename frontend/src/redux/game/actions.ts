@@ -12,6 +12,10 @@ import {
   ResetBuildingActions,
   ResetGameData,
   RESET_GAME_DATA,
+  GetNewTurnDataRequest,
+  GET_NEW_TURN_DATA_REQUEST,
+  SetPlayerIsReadyLocally,
+  SET_PLAYER_IS_READY_LOCALLY,
 } from './types';
 
 export const endTurnActionCreator = (): EndTurnRequest => {
@@ -56,9 +60,24 @@ export const resetGameDataActionCreator = (): ResetGameData => {
   };
 };
 
+export const getNewTurnDataRequestActionCreator = (): GetNewTurnDataRequest => {
+  return {
+    type: GET_NEW_TURN_DATA_REQUEST,
+  };
+};
+
+export const setPlayerIsReadyLocallyActionCreator = (isReady: boolean): SetPlayerIsReadyLocally => {
+  return {
+    type: SET_PLAYER_IS_READY_LOCALLY,
+    payload: isReady,
+  };
+};
+
 export type EndTurnActionCreator = typeof endTurnActionCreator;
 export type GetFullPlayerActionCreator = typeof getFullPlayerActionCreator;
 export type UpdateBuildingsBalanceActionCreator = typeof updateBuildingsBalanceActionCreator;
 export type ResetBuildingActionsActionCreator = typeof resetBuildingActionsActionCreator;
 export type UpdateEndTurnDataActionCreator = typeof updateEndTurnDataActionCreator;
 export type ResetGameDataActionCreator = typeof resetGameDataActionCreator;
+export type GetNewTurnDataRequestActionCreator = typeof getNewTurnDataRequestActionCreator;
+export type SetPlayerIsReadyLocallyActionCreator = typeof setPlayerIsReadyLocallyActionCreator;

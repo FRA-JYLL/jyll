@@ -145,6 +145,24 @@ export const getGameDetailsRequest = async (
   return payload;
 };
 
+export const getGameGenerationRequest = async (
+  accessToken: string,
+  id: string
+): Promise<{ generation: number }> => {
+  const response = await fetch(`${apiBaseUrl}/game/${id}/generation/`, {
+    method: 'GET',
+    headers: {
+      Authorization: `Bearer ${accessToken}`,
+    },
+  });
+
+  if (!response.ok) throw response.status;
+
+  const payload = await response.json();
+
+  return payload;
+};
+
 export const joinGameRequest = async (accessToken: string, id: string, password?: string) => {
   const response = await fetch(`${apiBaseUrl}/game/${id}/join/`, {
     method: 'POST',

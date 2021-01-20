@@ -21,6 +21,8 @@ import {
   RESET_CURRENT_GAME_LOBBY_DATA,
   OpenGame,
   OPEN_GAME,
+  GetGameGenerationRequest,
+  GET_GAME_GENERATION_REQUEST,
 } from './types';
 
 export const createGameActionCreator = (
@@ -51,6 +53,13 @@ export const getGamesWithUserActionCreator = (): GetGamesWithUserRequest => {
 export const getGameDetailsActionCreator = (id: string): GetGameDetailsRequest => {
   return {
     type: GET_GAME_DETAILS_REQUEST,
+    payload: { id },
+  };
+};
+
+export const getGameGenerationActionCreator = (id: string): GetGameGenerationRequest => {
+  return {
+    type: GET_GAME_GENERATION_REQUEST,
     payload: { id },
   };
 };
@@ -105,6 +114,7 @@ export type CreateGameActionCreator = typeof createGameActionCreator;
 export type GetPendingGamesActionCreator = typeof getPendingGamesActionCreator;
 export type GetGamesWithUserActionCreator = typeof getGamesWithUserActionCreator;
 export type GetGameDetailsActionCreator = typeof getGameDetailsActionCreator;
+export type GetGameGenerationActionCreator = typeof getGameGenerationActionCreator;
 export type JoinGameActionCreator = typeof joinGameActionCreator;
 export type EnterGameActionCreator = typeof enterGameActionCreator;
 export type OpenGameActionCreator = typeof openGameActionCreator;
